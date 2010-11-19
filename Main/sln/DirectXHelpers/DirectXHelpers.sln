@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Interop.D3DImageEx", "..\..\src\Interop.D3DImageEx\Interop.D3DImageEx.vcproj", "{C10E7AA0-71BE-4993-9D6A-B7CA1AE954AE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectX", "..\..\src\WindowsAPICodePack\1.0.1\DirectX\DirectX\DirectX.vcproj", "{446B1E21-65A1-4F56-AA2C-D2E24058B2B8}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://depot.cs.msu.su:8080/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ..\\..\\src\\Interop.D3DImageEx\\Interop.D3DImageEx.vcproj
+		SccProjectName1 = ../../src/Interop.D3DImageEx
+		SccLocalPath1 = ..\\..\\src\\Interop.D3DImageEx
+		SccProjectUniqueName2 = ..\\..\\src\\WindowsAPICodePack\\1.0.1\\DirectX\\DirectX\\DirectX.vcproj
+		SccProjectName2 = ../../src/WindowsAPICodePack/1.0.1/DirectX/DirectX
+		SccLocalPath2 = ..\\..\\src\\WindowsAPICodePack\\1.0.1\\DirectX\\DirectX
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C10E7AA0-71BE-4993-9D6A-B7CA1AE954AE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C10E7AA0-71BE-4993-9D6A-B7CA1AE954AE}.Debug|Win32.Build.0 = Debug|Win32
+		{C10E7AA0-71BE-4993-9D6A-B7CA1AE954AE}.Debug|x64.ActiveCfg = Debug|x64
+		{C10E7AA0-71BE-4993-9D6A-B7CA1AE954AE}.Debug|x64.Build.0 = Debug|x64
+		{C10E7AA0-71BE-4993-9D6A-B7CA1AE954AE}.Release|Win32.ActiveCfg = Release|Win32
+		{C10E7AA0-71BE-4993-9D6A-B7CA1AE954AE}.Release|Win32.Build.0 = Release|Win32
+		{C10E7AA0-71BE-4993-9D6A-B7CA1AE954AE}.Release|x64.ActiveCfg = Release|x64
+		{C10E7AA0-71BE-4993-9D6A-B7CA1AE954AE}.Release|x64.Build.0 = Release|x64
+		{446B1E21-65A1-4F56-AA2C-D2E24058B2B8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{446B1E21-65A1-4F56-AA2C-D2E24058B2B8}.Debug|Win32.Build.0 = Debug|Win32
+		{446B1E21-65A1-4F56-AA2C-D2E24058B2B8}.Debug|x64.ActiveCfg = Debug|x64
+		{446B1E21-65A1-4F56-AA2C-D2E24058B2B8}.Debug|x64.Build.0 = Debug|x64
+		{446B1E21-65A1-4F56-AA2C-D2E24058B2B8}.Release|Win32.ActiveCfg = Release|Win32
+		{446B1E21-65A1-4F56-AA2C-D2E24058B2B8}.Release|Win32.Build.0 = Release|Win32
+		{446B1E21-65A1-4F56-AA2C-D2E24058B2B8}.Release|x64.ActiveCfg = Release|x64
+		{446B1E21-65A1-4F56-AA2C-D2E24058B2B8}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

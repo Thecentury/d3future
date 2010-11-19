@@ -1,0 +1,53 @@
+﻿<Window x:Class="JamsSample.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+        Title="DynamicDataDisplay Sample - Yandex Traffic" WindowState="Maximized" Loaded="Window_Loaded"
+        Icon="{x:Static d3:D3IconHelper.DynamicDataDisplayWhiteIcon}">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<d3:ChartPlotter Name="plotter" Visible="37.2,31.4,1,0.6">
+			<d3:Map Name="mailMap">
+				<d3:Map.SourceTileServer>
+					<d3:YandexRoadServer/>
+					<!--<d3:MailRuMapsServer/>-->
+				</d3:Map.SourceTileServer>
+			</d3:Map>
+			<d3:Map Name="jamsMap" Mode="OnlineOnly">
+				<d3:Map.SourceTileServer>
+					<d3:YandexTrafficServer x:Name="jamsServer"/>
+					<!--<d3:MailRuJamsServer/>-->
+				</d3:Map.SourceTileServer>
+			</d3:Map>
+
+			<Border BorderBrush="Black" BorderThickness="1" Background="#AAFFFFFF" Canvas.Top="10" Canvas.Right="10" CornerRadius="5">
+				<TextBlock Text="{Binding ElementName=jamsServer, Path=TrafficTime}" Margin="5"/>
+			</Border>
+
+			<Button Content="&lt;" Name="backBtn" Click="backBtn_Click" Canvas.Bottom="10" Canvas.Right="100"/>
+			<Button Content="R" Name="reloadBtn" Click="reloadBtn_Click" Canvas.Bottom="10" Canvas.Right="85"/>
+			<Button Content="F" Name="failedBtn" Click="failedBtn_Click" Canvas.Bottom="10" Canvas.Right="70"/>
+			<Button Content="&gt;" Name="fwdBtn" Click="fwdBtn_Click" Canvas.Bottom="10" Canvas.Right="50"/>
+		</d3:ChartPlotter>
+
+		<Border BorderBrush="DarkGray" BorderThickness="1" Grid.Row="1">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				
+				<TextBlock Text="Select time to show traffic for:" Grid.Column="0"
+						   Margin="3" HorizontalAlignment="Center"
+						   VerticalAlignment="Center" FontStyle="{x:Static FontStyles.Italic}"
+						   Foreground="#FF101010"/>
+				
+				<d3:DateTimeSelector Name="dateTimeSelector" Grid.Column="1"/>
+			</Grid>
+		</Border>
+	</Grid>
+</Window>

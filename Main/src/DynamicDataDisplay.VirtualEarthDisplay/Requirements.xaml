@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="DynamicDataDisplay.VirtualEarthDisplay.Requirements"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:ClassModifier="internal">
+    <GroupBox Header="Attention">
+        <StackPanel HorizontalAlignment="Left">
+            <TextBlock>
+            You need to install some nessesary components for Virtual Earth 3D
+            </TextBlock>
+            <TextBlock/>
+            <TextBlock>
+            The 32 bit MSI for VE3D can be downloaded
+            <Hyperlink Click="Hyperlink_Click">
+                here
+            </Hyperlink>
+            </TextBlock>
+            <TextBlock>
+            The 64 bit MSI for VE3D can be downloaded
+            <Hyperlink Click="Hyperlink_Click_1">
+                here
+            </Hyperlink>
+            </TextBlock>
+            <TextBlock/>
+            <TextBlock>
+            Please, install all nessesary components and restart your program
+            </TextBlock>
+        </StackPanel>
+    </GroupBox>
+</UserControl>

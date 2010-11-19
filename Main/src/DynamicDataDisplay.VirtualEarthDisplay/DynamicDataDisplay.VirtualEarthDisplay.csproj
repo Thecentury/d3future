@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FE359F12-2878-4F86-8A28-1F84729F1587}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DynamicDataDisplay.VirtualEarthDisplay</RootNamespace>
+    <AssemblyName>DynamicDataDisplay.VirtualEarthDisplay</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Ccr.Core, Version=2.0.913.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\ext\DssRuntime\2.0.913.0\bin\Microsoft.Ccr.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.MapPoint.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\ext\VirtualEarth3D\Microsoft.MapPoint.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.MapPoint.Geometry, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\ext\VirtualEarth3D\Microsoft.MapPoint.Geometry.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.MapPoint.Rendering3D, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\ext\VirtualEarth3D\Microsoft.MapPoint.Rendering3D.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.MapPoint.Rendering3D.Utility, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\ext\VirtualEarth3D\Microsoft.MapPoint.Rendering3D.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.MapPoint.UtilityPartialTrust, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\ext\VirtualEarth3D\Microsoft.MapPoint.UtilityPartialTrust.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GlobeViewControl.xaml.cs">
+      <DependentUpon>GlobeViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuButton.xaml.cs">
+      <DependentUpon>MenuButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requirements.xaml.cs">
+      <DependentUpon>Requirements.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualEarthViewBase.cs">
+      <SubType>MapPoint</SubType>
+    </Compile>
+    <Compile Include="Visualization\ColorMap\ColorMapActor.cs" />
+    <Compile Include="Visualization\ColorMap\ColorMapDataSource.cs" />
+    <Compile Include="Visualization\ColorMap\ColorMapHelper.NonUniform.cs" />
+    <Compile Include="Visualization\ColorMap\ColorMapHelper.Warped.cs" />
+    <Compile Include="Visualization\ColorMap\ColorMapLayer.cs" />
+    <Compile Include="Visualization\ColorMap\PixelArray.cs" />
+    <Compile Include="Visualization\ColorMap\RasterTriangle.cs" />
+    <Compile Include="Visualization\ColorMap\StaticColorMaps.cs" />
+    <Compile Include="Visualization\DataVisualizationPlugin.cs" />
+    <Compile Include="Visualization\GeoRect.cs" />
+    <Compile Include="Visualization\IMouseCheck.cs" />
+    <Compile Include="Visualization\IRectDataSource2D.cs" />
+    <Compile Include="Visualization\Isolines\IsolinesLayer.cs" />
+    <Compile Include="Visualization\Isolines\RunningIsoline.cs" />
+    <Compile Include="Visualization\Isolines\StaticIsolines.cs" />
+    <Compile Include="Visualization\IVisualizationProvider.cs" />
+    <Compile Include="Visualization\MathHelper.cs" />
+    <Compile Include="Visualization\MeshLayer.cs" />
+    <Compile Include="Visualization\NonUniformDataSource2D.cs" />
+    <Compile Include="Visualization\PointSet.cs" />
+    <Compile Include="Visualization\PointSetElement.cs" />
+    <Compile Include="Visualization\Probes\ProbesActor.cs" />
+    <Compile Include="Visualization\Probes\ProbesDataSource.cs" />
+    <Compile Include="Visualization\Probes\ProbesHelper.cs" />
+    <Compile Include="Visualization\Probes\ProbesLayer.cs" />
+    <Compile Include="Visualization\Probes\StaticProbes.cs" />
+    <Compile Include="Visualization\Quad.cs" />
+    <Compile Include="Visualization\Trajectories\Trajectories.cs" />
+    <Compile Include="Visualization\Trajectories\TrajectoriesDataSource.cs" />
+    <Compile Include="Visualization\Trajectories\TrajectoriesLayer.cs" />
+    <Compile Include="Visualization\VisualizationDataSource.cs" />
+    <Compile Include="Visualization\VisualPushpin.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="GlobeViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MenuButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Requirements.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Main\DynamicDataDisplay\src\DynamicDataDisplay\DynamicDataDisplay.csproj">
+      <Project>{ECD37682-DF7E-409F-912D-0965634556B5}</Project>
+      <Name>DynamicDataDisplay %28DynamicDataDisplay\DynamicDataDisplay%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\VEFS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\VEFTW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Road.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Labels.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Visualization\Probes\ProbeSample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Visualization\VectorMarkers\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,68 @@
+﻿<Window x:Class="Section_with_potentials.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+		xmlns:local="clr-namespace:Lines3D"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" WindowState="Maximized">
+    <Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Border BorderThickness="2" BorderBrush="Gray" Background="LightGray" Grid.Column="0">
+			<d3:TrackballDecorator>
+				<d3:Interactive3DDecorator>
+					<Viewport3D IsHitTestVisible="False" IsEnabled="False" Name="viewport">
+						<d3:Axes Extent="6"/>
+						<!--<d3:StreamLineChart3D x:Name="chart" DataSource="{Binding}" Bounds="-1,-1,0 2,2,2">
+							<d3:StreamLineChart3D.Pattern>
+								<d3:BottomPattern3D/>
+							</d3:StreamLineChart3D.Pattern>
+						</d3:StreamLineChart3D>-->
+						<d3:BoundsMesh Bounds="0,0,0   1,1,1"/>
+
+						<d3:VectorChart3D x:Name="vectorChart3D"/>
+
+						<d3:SectionChartXY x:Name="sectionChartZ" ThirdCoordinate="{Binding Path=SliderPercentage, ElementName=sectionZ}"
+										   Center="0.5,0.5"/>
+						<d3:SectionChartXZ x:Name="sectionChartY" ThirdCoordinate="{Binding Path=SliderPercentage, ElementName=sectionY}" 
+										   Center="0.5,0.5"/>
+						<d3:SectionChartYZ x:Name="sectionChartX" ThirdCoordinate="{Binding Path=SliderPercentage, ElementName=sectionX}" 
+										   Center="0.5,0.5"/>
+
+						<ModelVisual3D>
+							<ModelVisual3D.Content>
+								<Model3DGroup>
+									<AmbientLight Color="#7F7F7F"/>
+									<DirectionalLight Color="#FFFFFFFF" Direction="0,0,-1"/>
+								</Model3DGroup>
+							</ModelVisual3D.Content>
+						</ModelVisual3D>
+
+						<Viewport3D.Camera>
+							<PerspectiveCamera Position="0 0 6" UpDirection="0 1 0"
+										LookDirection="0 0 -1" FieldOfView="45"/>
+						</Viewport3D.Camera>
+					</Viewport3D>
+				</d3:Interactive3DDecorator>
+			</d3:TrackballDecorator>
+		</Border>
+
+		<Border BorderThickness="2" BorderBrush="Gray" Grid.Column="1">
+			<TabControl Name="tabControl" SelectionChanged="tabControl_SelectionChanged">
+				<TabItem Header="XY Section">
+					<local:SectionControl Variable="Z" x:Name="zSection" Header="Z ratio:"
+												  SliderValueChanged="zSection_SliderValueChanged"/>
+				</TabItem>
+				<TabItem Header="XZ Section">
+					<local:SectionControl Variable="Y" x:Name="ySection" Header="Y ratio:"
+												  SliderValueChanged="ySection_SliderValueChanged"/>
+				</TabItem>
+				<TabItem Header="YZ Section">
+					<local:SectionControl Variable="Z" x:Name="xSection" Header="X ratio:"
+												  SliderValueChanged="xSection_SliderValueChanged"/>
+				</TabItem>
+			</TabControl>
+		</Border>
+	</Grid>
+</Window>

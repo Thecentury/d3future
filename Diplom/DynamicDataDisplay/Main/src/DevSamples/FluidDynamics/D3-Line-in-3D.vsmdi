@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestLists xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestList name="Filters" id="061c0a76-cac5-47ad-89a3-e35c5d7718dd" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
+    <TestLinks>
+      <TestLink id="86600f13-6160-f3d3-55c1-0aa8e0c301f2" name="TestOnNarrowAndWideSequence" storage="..\..\..\src\dynamicdatadisplay.tests\bin\debug\dynamicdatadisplay.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="df648f13-b7b9-8e84-7b20-8f99ae2ab6f4" name="TestOnWideSequence" storage="..\..\..\src\dynamicdatadisplay.tests\bin\debug\dynamicdatadisplay.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="852d50b9-a9db-dd33-fb4a-599cf0483945" name="TestOnNarrowSequence" storage="..\..\..\src\dynamicdatadisplay.tests\bin\debug\dynamicdatadisplay.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    </TestLinks>
+  </TestList>
+  <TestList name="Lists of Tests" id="8c43106b-9dc1-4907-a29f-aa66a61bf5b6" />
+</TestLists>

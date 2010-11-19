@@ -1,0 +1,28 @@
+﻿<RulesCollection xmlns="clr-namespace:CodeplexUploadHelper">
+	<DeleteFolder FolderPath="src\DynamicDataDisplay.VirtualEarthDisplay"/>
+	<DeleteFolder FolderPath="src\DynamicDataDisplay.Maps.Extra"/>
+	<DeleteFolder FolderPath="sln\_Targets"/>
+
+	<Newline/>
+	
+	<DeleteFile FilePath="sln\TFSBuild.proj"/>
+	<DeleteFile FilePath="sln\TFSBuild.rsp"/>
+	
+	<Newline/>
+
+	<DeleteFile FilePath="sln\DynamicDataDisplay\TFSBuild.proj"/>
+	<DeleteFile FilePath="sln\DynamicDataDisplay\TFSBuild.rsp"/>
+
+	<Newline/>
+	
+	<DeleteFolder FolderPath="src\DevSamples\ZipSample"/>
+	<DeleteFolder FolderPath="src\DevSamples\YandexTrafficSample"/>
+	<DeleteFolder FolderPath="src\DevSamples\MultipleChildren_VS_rendering"/>
+	<DeleteFolder FolderPath="src\DevSamples\D33D"/>
+	<DeleteFolder FolderPath="src\Auxiliary"/>
+	
+	<RecursiveDeleteFolder FolderName="bin"/>
+	<RecursiveDeleteFolder FolderName="obj"/>
+
+	<!--<DeleteProject ProjectName="D33D"/>-->
+</RulesCollection>

@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--<UsingTask TaskName="ShaderBuildTask.PixelShaderCompile" AssemblyFile="$(ProjectDir)..\..\lib\ShaderBuildTask.dll" />-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EB04A4CD-DDE6-49EB-8FB6-39B35482D792}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Research.DynamicDataDisplay.Maps</RootNamespace>
+    <AssemblyName>DynamicDataDisplay.Maps</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>DynamicDataDisplay.snk</AssemblyOriginatorKeyFile>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\DynamicDataDisplay.Maps.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseXBAP|AnyCPU' ">
+    <OutputPath>bin\ReleaseXBAP\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>bin\Release\DynamicDataDisplay.Maps.XML</DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Auxiliary\Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Auxiliary\ImageHelper.cs" />
+    <Compile Include="Charts\Map.DebugMenu.cs" />
+    <Compile Include="Charts\TiledRendering\CapturingPlotter.xaml.cs">
+      <DependentUpon>CapturingPlotter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charts\MapElement.cs" />
+    <Compile Include="Charts\MapMagnifyingGlass.cs" />
+    <Compile Include="Charts\NewMap.cs" />
+    <Compile Include="Charts\TiledRendering\IRenderingTileServer.cs" />
+    <Compile Include="Charts\TiledRendering\OneThreadRenderingMap.cs" />
+    <Compile Include="Charts\TiledRendering\RenderingMap.cs" />
+    <Compile Include="Charts\TiledRendering\RenderTileProvider.cs" />
+    <Compile Include="Charts\TiledRendering\RenderTileServer.cs" />
+    <Compile Include="Charts\TiledRendering\ThreadedRenderTileServer.cs" />
+    <Compile Include="Charts\VectorFields\Convolution\ConvolutionEffect.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConvolutionEffect.fx</DependentUpon>
+    </Compile>
+    <Compile Include="Charts\VectorFields\Convolution\Filters\TransparencyFilter.cs" />
+    <Compile Include="Charts\VectorFields\FluidDynamics\FluidDynamicsChart2D.cs" />
+    <Compile Include="Charts\VectorFields\FluidDynamics\InteractiveFluidDynamicsChart2D.cs" />
+    <Compile Include="Charts\VectorFields\FluidDynamics\VectorFieldFluidDynamicsChart2D.cs" />
+    <Compile Include="Charts\VectorFields\PatternChart2D.cs" />
+    <Compile Include="Charts\VectorFields\PointSetPatterns\BorderPattern.cs" />
+    <Compile Include="Charts\VectorFields\PointSetPatterns\CirclePattern.cs" />
+    <Compile Include="Charts\VectorFields\Convolution\ConvolutionColor.cs" />
+    <Compile Include="Charts\VectorFields\PointSetPatterns\DiagonalPattern.cs" />
+    <Compile Include="Charts\VectorFields\PointSetPatterns\EmptyPattern.cs" />
+    <Compile Include="Charts\VectorFields\PointSetPatterns\GridPattern.cs" />
+    <Compile Include="Charts\VectorFields\PointSetPatterns\PlusPattern.cs" />
+    <Compile Include="Charts\VectorFields\PointSetPatterns\PointSetPattern.cs" />
+    <Compile Include="Charts\VectorFields\PointSetPatterns\RandomPattern.cs" />
+    <Compile Include="Charts\VectorFields\PointSetPatterns\SinglePointPattern.cs" />
+    <Compile Include="Charts\VectorFields\PointSetPatterns\XPattern.cs" />
+    <Compile Include="Charts\VectorFields\CrossSection\CrossSectionChartBase.cs" />
+    <Compile Include="Charts\VectorFields\CrossSection\VerticalCrossSectionChart.cs" />
+    <Compile Include="Charts\VectorFields\CrossSection\HorizontalCrossSectionChart.cs" />
+    <Compile Include="Charts\VectorFields\ParticlesEmission\DynamicParticlesEmitter.cs" />
+    <Compile Include="Charts\VectorFields\ParticlesEmission\ParticlesEmitter.cs" />
+    <Compile Include="Charts\VectorFields\ParticlesEmission\ParticlesEmitterBase.cs" />
+    <Compile Include="Charts\VectorFields\SmokeDynamics\FluidImage.cs" />
+    <Compile Include="Charts\VectorFields\SmokeDynamics\FluidSolver.cs" />
+    <Compile Include="Charts\VectorFields\SmokeDynamics\FluidVectorChart2D.cs" />
+    <Compile Include="Charts\VectorFields\StreamLine2D\Filters\FilterBase.cs" />
+    <Compile Include="Charts\VectorFields\StreamLine2D\Filters\FrequencyFilter.cs" />
+    <Compile Include="Charts\VectorFields\StreamLine2D\StreamLineChartBase.cs" />
+    <Compile Include="Charts\VectorFields\Convolution\IntPoint.cs" />
+    <Compile Include="Charts\VectorFields\Convolution\Filters\VectorFieldConvolutionFilter.cs" />
+    <Compile Include="Charts\VectorFields\Convolution\Filters\MagnitudeFilter.cs" />
+    <Compile Include="Charts\VectorFields\Convolution\Filters\NormalizeFilter.cs" />
+    <Compile Include="Charts\VectorFields\Convolution\ShaderVectorFieldConvolutionChart.cs" />
+    <Compile Include="Charts\VectorFields\Convolution\VectorFieldConvolutionChart.cs" />
+    <Compile Include="Charts\VectorFields\Convolution\VectorFieldExtensions.cs" />
+    <Compile Include="Charts\VectorFields\StreamLine2D\DynamicStreamLineChart.cs" />
+    <Compile Include="Charts\VectorFields\StreamLine2D\StreamLineChart.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\BoundsMesh.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\GridChart3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\IsoSurface\IsoSurface.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\IsoSurface\IsoSurface Data Types.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\IsoSurface\MathHelper.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\MeshHelper.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\PointSetPatterns3D\BackPattern3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\PointSetPatterns3D\LeftPattern3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\PointSetPatterns3D\PointSetPattern3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\PointSetPatterns3D\PreSelectedPointsPattern3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\PointSetPatterns3D\RandomPattern3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\PointSetPatterns3D\SinglePointPattern3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\PotentialFieldChart3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Section3D\BillboardChartBase.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\ConvolutionStack.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Section3D\SectionChartYZ.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Section3D\Section3DChartBase.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Section3D\SectionChartXY.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Section3D\SectionChartXZ.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Section3D\Viewport2DBillboardXY.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Section3D\Viewport2DBillboardBase.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Section3D\Viewport2DBillboardXZ.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Section3D\Viewport2DBillboardYZ.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Streamline3D\DynamicStreamlineChart3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Streamline3D\StreamlineChart3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\Streamline3D\StreamlineChartBase3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\UniformField3DWrapper.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\VectorChart3D.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\VectorChartModel3DBase.cs" />
+    <Compile Include="Charts\VectorFields\UniformField2DWrapper.cs" />
+    <Compile Include="Charts\VectorFields\ThreeDimensional\VectorBasedMeshChart.xaml.cs">
+      <DependentUpon>VectorBasedMeshChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charts\VectorFields\VectorField2D\Triangle.cs" />
+    <Compile Include="Charts\VectorFields\VectorField2D\VectorFieldChart2D.cs" />
+    <Compile Include="Charts\VectorFields\VectorFieldChartBase.cs" />
+    <Compile Include="CoordinateType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DeepZoom\Collection.cs" />
+    <Compile Include="DeepZoom\DeepZoomFileServer.cs" />
+    <Compile Include="DeepZoom\DeepZoomTileProvider.cs" />
+    <Compile Include="DeepZoom\DeepZoomTileServer.cs" />
+    <Compile Include="DeepZoom\DeepZoomViewer.cs" />
+    <Compile Include="DeepZoom\DisplayRect.cs" />
+    <Compile Include="DeepZoom\I.cs" />
+    <Compile Include="DeepZoom\Image.cs" />
+    <Compile Include="DeepZoom\uint32rect.cs" />
+    <Compile Include="DeepZoom\uint32size.cs" />
+    <Compile Include="DeepZoom\Viewport.cs" />
+    <Compile Include="Degree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EffectLibrary.cs" />
+    <Compile Include="MapsTraceSource.cs" />
+    <Compile Include="Servers\MemoryServers\LRUMemoryCache.cs" />
+    <Compile Include="Servers\Network\InternetCacheServer.cs" />
+    <Compile Include="Servers\Network\NetworkAvailabilityManager.cs" />
+    <Compile Include="TileProvider.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\FileServers\CacheLocation.cs" />
+    <Compile Include="Servers\FileServers\AutoDisposableFileServer.cs" />
+    <Compile Include="Servers\MemoryServers\LRUMemoryCacheBase.cs" />
+    <Compile Include="Servers\MemoryServers\MemoryTileServer.cs" />
+    <Compile Include="Servers\MemoryServers\WeakRefMemoryTileServer.cs" />
+    <Compile Include="Servers\FileServers\AsyncFileSystemServer.cs" />
+    <Compile Include="Servers\FileServers\EmptyWriteableTileServer.cs" />
+    <Compile Include="Servers\FileServers\WriteableFileSystemTileServer.cs" />
+    <Compile Include="Servers\FileServers\DefaultPathProvider.cs" />
+    <Compile Include="Servers\FileServers\ReadonlyTileServer.cs" />
+    <Compile Include="Servers\FileServers\ReadonlyTileCache.cs" />
+    <Compile Include="Servers\FileServers\TilePathProvider.cs" />
+    <Compile Include="Servers\FileServers\VEPathProvider.cs" />
+    <Compile Include="Servers\FileServers\ZipFileTileServer.cs" />
+    <Compile Include="Servers\IDirectAccessTileServer.cs" />
+    <Compile Include="Servers\ITileStore.cs" />
+    <Compile Include="Servers\ITileSystem.cs" />
+    <Compile Include="Servers\IWriteableTileServer.cs" />
+    <Compile Include="Servers\ModeChangedEventArgs.cs" />
+    <Compile Include="Servers\Network\SourceTileServer.cs" />
+    <Compile Include="Servers\Network\OpenStreetMapRenderer.cs" />
+    <Compile Include="Servers\Network\OpenStreetMapServer.cs" />
+    <Compile Include="Servers\TileServerStatistics.cs" />
+    <Compile Include="Servers\EmptyTileServer.cs" />
+    <Compile Include="Servers\FileServers\FileSystemTileServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Servers\ITileServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Charts\Map.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Charts\MapTileUIElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MapTileProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Charts\MercatorShaderMap.cs" />
+    <Compile Include="MercatorShader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Servers\Network\NetworkTileServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PendingBitmapSet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servers\ResourcesServers\ResourcesTileServer.cs" />
+    <Compile Include="Servers\ResourcesServers\VEHybridResourceServer.cs" />
+    <Compile Include="Servers\ResourcesServers\VERoadResourceServer.cs" />
+    <Compile Include="Set.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TileIndex.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Servers\TileResultEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Servers\TileServerBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Servers\TileServerSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VisibleTileInfo.cs" />
+    <None Include="Charts\VectorFields\Convolution\ConvolutionEffect.fx">
+      <Generator>ShaderEffectGenerator</Generator>
+      <LastGenOutput>ConvolutionEffect.cs</LastGenOutput>
+    </None>
+    <Resource Include="Charts\VectorFields\Convolution\ConvolutionEffect.ps">
+      <DependentUpon>ConvolutionEffect.fx</DependentUpon>
+    </Resource>
+    <Compile Include="Charts\VectorFields\ThreeDimensional\IsoSurface\IsoSurface.Arrays.cs" />
+    <None Include="MercatorShader.fx" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DynamicDataDisplay.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DynamicDataDisplay.Maps.Readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Resource Include="MercatorShader.ps">
+      <CustomToolNamespace>DynamicDataDisplay.Maps.g.resources</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\3DTools\3DTools.csproj">
+      <Project>{5F603892-DE40-4246-A969-1C6717AFE35D}</Project>
+      <Name>3DTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicDataDisplay.SampleDataSources\DynamicDataDisplay.SampleDataSources.csproj">
+      <Project>{5B37453D-5AE8-4BD2-92FE-0A3AD9B18848}</Project>
+      <Name>DynamicDataDisplay.SampleDataSources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicDataDisplay\DynamicDataDisplay.csproj">
+      <Project>{ECD37682-DF7E-409F-912D-0965634556B5}</Project>
+      <Name>DynamicDataDisplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Petzold.Media3D\Petzold.Media3D.csproj">
+      <Project>{BEBED159-4DB6-4550-8342-7F3607177B71}</Project>
+      <Name>Petzold.Media3D</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Charts\TiledRendering\CapturingPlotter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charts\VectorFields\ThreeDimensional\VectorBasedMeshChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BreakingChanges.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!--<Target Name="EffectCompile" Condition="'@(Effect)' != '' ">
+    <PixelShaderCompile Sources="@(Effect)">
+      <Output TaskParameter="Outputs" ItemName="Resource" />
+    </PixelShaderCompile>
+  </Target>
+  <PropertyGroup>
+    -->
+  <!--Add effect compilation to the PrepareResourcesDependsOn so that the effect fx  get compiled before resources are collected-->
+  <!--
+    <PrepareResourcesDependsOn>EffectCompile;$(PrepareResourcesDependsOn)</PrepareResourcesDependsOn>
+  </PropertyGroup>-->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

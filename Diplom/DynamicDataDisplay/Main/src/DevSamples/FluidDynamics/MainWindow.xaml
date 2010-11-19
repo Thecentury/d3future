@@ -1,0 +1,23 @@
+﻿<Window x:Class="FluidDynamics.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+        Title="DynamicDataDisplay — Fluid Dynamics Sample" Height="400" Width="400">
+	<Grid>
+		<!--<d3:FluidDynamicsChart2D/>-->
+		<!--<d3:InteractiveFluidDynamicsChart2D/>-->
+		<!--<d3:VectorFieldFluidDynamicsChart2D DataSource="{Binding}"/>-->
+		<d3:FluidImage Name="fluidImage"/>
+		<!--<d3:ChartPlotter RemoveMouseNavigation="True" RemoveKeyboardNavigation="True">
+			<d3:VectorFieldConvolutionChart DataSource="{Binding}"/>
+			<d3:FluidVectorChart2D DataSource="{Binding}" VelocityFactor="0.1" SkipFrames="1" Opacity="0.3">
+				<d3:FluidVectorChart2D.Pattern>
+					<d3:EmptyPattern/>
+				</d3:FluidVectorChart2D.Pattern>
+			</d3:FluidVectorChart2D>
+		</d3:ChartPlotter>-->
+	</Grid>
+</Window>
+
+<!--<d3:SinglePointPattern Point="0.03,0.03"/>-->
+	

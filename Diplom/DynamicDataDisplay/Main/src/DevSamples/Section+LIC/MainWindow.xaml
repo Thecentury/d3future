@@ -1,0 +1,89 @@
+﻿<Window x:Class="Section_LIC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+        Title="MainWindow" WindowState="Maximized">
+	<Grid>
+		<d3:TrackballDecorator>
+			<d3:Interactive3DDecorator>
+				<Viewport3D IsHitTestVisible="False" IsEnabled="False">
+
+					<Viewport3D.Camera>
+						<PerspectiveCamera Position="0 0 6" UpDirection="0 1 0"
+                                   LookDirection="0 0 -1" FieldOfView="45">
+						</PerspectiveCamera>
+					</Viewport3D.Camera>
+
+					<d3:Axes Extent="6"/>
+					<d3:BoundsMesh Bounds="0,0,0   1,1,1"/>
+
+					<d3:Viewport2DBillboardXY x:Name="vpXY" Center="0.5, 0.5" Width="1" Height="1" ThirdCoordinate="0.01">
+						<d3:Viewport2DBillboardXY.Visual>
+							<d3:ChartPlotter Name="plotterXY" MainHorizontalAxis="{x:Null}" MainVerticalAxis="{x:Null}"
+												 Width="500" Height="500" Visible="0,0,1,1">
+								<d3:VectorFieldConvolutionChart DataSource="{Binding}"/>
+							</d3:ChartPlotter>
+						</d3:Viewport2DBillboardXY.Visual>
+					</d3:Viewport2DBillboardXY>
+
+					<d3:Viewport2DBillboardXZ x:Name="vpXZ" Center="0.5, 0.5" Width="1" Height="1" ThirdCoordinate="0.01">
+						<d3:Viewport2DBillboardXZ.Visual>
+							<d3:ChartPlotter Name="plotterXZ" MainHorizontalAxis="{x:Null}" MainVerticalAxis="{x:Null}"
+												 Width="500" Height="500" Visible="0,0,1,1">
+								<d3:VectorFieldConvolutionChart DataSource="{Binding}"/>
+							</d3:ChartPlotter>
+						</d3:Viewport2DBillboardXZ.Visual>
+					</d3:Viewport2DBillboardXZ>
+
+					<d3:Viewport2DBillboardYZ x:Name="vpYZ" Center="0.5, 0.5" Width="1" Height="1" ThirdCoordinate="0.01">
+						<d3:Viewport2DBillboardYZ.Visual>
+							<d3:ChartPlotter Name="plotterYZ" MainHorizontalAxis="{x:Null}" MainVerticalAxis="{x:Null}"
+												 Width="500" Height="500" Visible="0,0,1,1">
+								<d3:VectorFieldConvolutionChart DataSource="{Binding}"/>
+							</d3:ChartPlotter>
+						</d3:Viewport2DBillboardYZ.Visual>
+					</d3:Viewport2DBillboardYZ>
+
+					<!--lights-->
+					<ModelVisual3D>
+						<ModelVisual3D.Content>
+							<Model3DGroup>
+								<AmbientLight Color="#7F7F7F"/>
+								<DirectionalLight Color="#FFFFFFFF" Direction="0,0,-1"/>
+								<DirectionalLight Color="#FFFFFFFF" Direction="-1,0,0"/>
+								<DirectionalLight Color="#FFFFFFFF" Direction="0,-1,0"/>
+							</Model3DGroup>
+						</ModelVisual3D.Content>
+					</ModelVisual3D>
+
+				</Viewport3D>
+			</d3:Interactive3DDecorator>
+		</d3:TrackballDecorator>
+
+		<Canvas>
+			<Canvas.Resources>
+				<Style TargetType="{x:Type Slider}">
+					<Setter Property="Minimum" Value="0.01"/>
+					<Setter Property="Maximum" Value="99.9"/>
+					<Setter Property="Width" Value="200"/>
+					<Setter Property="AutoToolTipPlacement" Value="BottomRight"/>
+				</Style>
+			</Canvas.Resources>
+
+			<StackPanel Orientation="Vertical" Canvas.Bottom="20" Canvas.Left="20">
+				<StackPanel>
+					<Label>X:</Label>
+					<Slider Name="xSlider" ValueChanged="xSlider_ValueChanged"/>
+				</StackPanel>
+				<StackPanel>
+					<Label>Y:</Label>
+					<Slider Name="ySlider" ValueChanged="ySlider_ValueChanged"/>
+				</StackPanel>
+				<StackPanel>
+					<Label>Z:</Label>
+					<Slider Name="zSlider" ValueChanged="zSlider_ValueChanged"/>
+				</StackPanel>
+			</StackPanel>
+		</Canvas>
+	</Grid>
+</Window>

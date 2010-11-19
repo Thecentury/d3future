@@ -1,0 +1,5 @@
+﻿v0.4:
+* TileIndex's level property change its type from int to double.
+* Changed the location of TileIndex with {x=0, y=0} - now it is point {0, 0}
+
+"pack://application:,,,/DynamicDataDisplay.Maps;component/ConvolutionEffect.ps"

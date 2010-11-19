@@ -1,0 +1,18 @@
+syntax: glob
+
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*.ncb
+*.suo
+*.log
+*.scc
+[Bb]in
+[Dd]ebug*/
+obj/
+[Rr]elease*/
+[Tt]est [Rr]esults

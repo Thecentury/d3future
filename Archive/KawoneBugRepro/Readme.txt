@@ -1,0 +1,1 @@
+﻿This is a repro of Kawone's bug - http://dynamicdatadisplay.codeplex.com/Thread/View.aspx?ThreadId=50835

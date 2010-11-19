@@ -1,0 +1,3 @@
+﻿fxc.exe /E PixShader /T ps_4_0_level_9_1 /Fo Render.ps Render.hlsl
+fxc.exe /E VertShader /T vs_4_0_level_9_1 /Fo Render.vs Render.hlsl
+fxc.exe /E GeomShader /T gs_4_0 /Fo Render.gs Render.hlsl

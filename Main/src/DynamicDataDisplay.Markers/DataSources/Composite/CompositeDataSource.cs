@@ -6,6 +6,7 @@ using System.Collections;
 
 namespace DynamicDataDisplay.Markers.DataSources
 {
+
 	public class CompositeDataSource : PointDataSourceBase
 	{
 		public CompositeDataSource(DataSourcePartCollection parts)

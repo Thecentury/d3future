@@ -15,4 +15,4 @@ syntax: glob
 [Dd]ebug*/
 obj/
 [Rr]elease*/
-[Tt]est [Rr]esults
+[Tt]est[Rr]esults

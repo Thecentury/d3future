@@ -3,7 +3,7 @@
 										xmlns:local="clr-namespace:Microsoft.Research.DynamicDataDisplay.Charts"
 										>
 	<Style TargetType="{x:Type Panel}" x:Key="gridStyle">
-		<Setter Property="Grid.ClipToBounds" Value="False"/>
+		<Setter Property="Grid.ClipToBounds" Value="True"/>
 	</Style>
 
 	<RotateTransform Angle="-90" x:Key="additionalLabelsTransformLeft"/>

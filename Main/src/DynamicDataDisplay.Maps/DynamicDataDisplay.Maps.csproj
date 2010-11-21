@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Charts\ColorMap.cs" />
     <Compile Include="Charts\Map.DebugMenu.cs" />
     <Compile Include="Charts\TiledRendering\CapturingPlotter.xaml.cs">
       <DependentUpon>CapturingPlotter.xaml</DependentUpon>

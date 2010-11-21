@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Data;
 using Microsoft.Research.DynamicDataDisplay.Maps.Servers;
-/*using System.Collections;
+using System.Collections;
 using Microsoft.Research.DynamicDataDisplay.Maps.Servers.Network;
 using Microsoft.Research.DynamicDataDisplay.Common;
 using System.ComponentModel;
@@ -175,9 +175,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts.TiledRendering
 		private DataRect GetRegion(IEnumerable<VisibleTileInfo> visibleTiles)
 		{
 			var visibleBoundsSeq = visibleTiles.Select(t => t.VisibleBounds);
-			if (visibleBoundsSeq.Count() == 0)
+			int count = visibleBoundsSeq.Count();
+			if (count == 0)
 				return DataRect.Empty;
-			else if (visibleBoundsSeq.Count() == 1)
+			else if (count == 1)
 				return visibleBoundsSeq.First();
 			else return visibleBoundsSeq.Aggregate((r1, r2) => DataRect.Union(r1, r2));
 		}
@@ -191,4 +192,3 @@ namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts.TiledRendering
 		}
 	}
 }
-*/

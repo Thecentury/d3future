@@ -167,7 +167,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Maps
 			});
 		}
 
-        protected virtual void ReportFailure(TileIndex id)
+		protected virtual void ReportFailure(TileIndex id)
 		{
 			MapsTraceSource.Instance.ServerInformationTraceSource.TraceInformation("{0}: failed id = {1}", GetCustomName(), id);
 

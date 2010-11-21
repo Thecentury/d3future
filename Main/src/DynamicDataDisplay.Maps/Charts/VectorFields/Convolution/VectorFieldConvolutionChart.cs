@@ -59,7 +59,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts
 			bmp = new WriteableBitmap(width, height, 96, 96, PixelFormats.Pbgra32, null);
 			Source = bmp;
 
-			Task.Create(((_) => CreateConvolutionBmp(width, height)));
+			Task task = new Task(() => CreateConvolutionBmp(width, height));
+			task.Start();
 		}
 
 		#endregion // end of Properties
@@ -157,7 +158,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts
 
 			pixels.CopyTo(effectivePixels, 0);
 
-			Parallel.For(0, pixelsCount, i =>
+			System.Threading.Tasks.Parallel.For(0, pixelsCount, i =>
 			{
 				if (i % 1000 == 0)
 					UpdateBitmap(effectivePixels);

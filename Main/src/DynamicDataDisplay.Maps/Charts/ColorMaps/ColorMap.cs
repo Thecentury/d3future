@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Research.DynamicDataDisplay.DataSources;
 using System.Windows;
+using Microsoft.Research.DynamicDataDisplay.Charts.Maps;
 
 namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts
 {
-	public class ColorMap : FrameworkElement, IPlotterElement
+	public class ColorMap : Map, IPlotterElement
 	{
 		private Plotter2D plotter;
 

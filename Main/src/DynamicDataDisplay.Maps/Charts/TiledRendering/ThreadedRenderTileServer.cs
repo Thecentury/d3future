@@ -1,5 +1,4 @@
-﻿/*
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +14,7 @@ using System.Windows.Media;
 using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 using System.ComponentModel;
 using Microsoft.Research.DynamicDataDisplay.Charts;
+using System.Collections.Concurrent;
 
 namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts.TiledRendering
 {
@@ -175,7 +175,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts.TiledRendering
 		void Hooks_DispatcherInactive(object sender, EventArgs e)
 		{
 			TileIndex id;
-			if (!isRendering[GetIndex()] && waitingIndexes.TryRemove(out id))
+			if (!isRendering[GetIndex()] && waitingIndexes.TryTake(out id))
 			{
 				RenderToBitmapCore(id);
 			}
@@ -268,4 +268,3 @@ namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts.TiledRendering
 		#endregion
 	}
 }
-*/

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Research.DynamicDataDisplay.Charts.Maps;
-/*using System.Windows;
+using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Data;
 using Microsoft.Research.DynamicDataDisplay.Maps.Servers;
@@ -37,4 +37,3 @@ namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts.TiledRendering
 		}
 	}
 }
-*/

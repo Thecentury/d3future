@@ -129,19 +129,19 @@ namespace Microsoft.Research.DynamicDataDisplay.Maps.Servers.Network
 		}
 
 
-        public override int GetHashCode()
-        {
-            return GetType().GetHashCode();
-        }
+		public override int GetHashCode()
+		{
+			return GetType().GetHashCode();
+		}
 
-        private bool deleteFileCacheOnUpdate = false;
-        public bool DeleteFileCacheOnUpdate
-        {
-            get { return deleteFileCacheOnUpdate; }
-            protected set { deleteFileCacheOnUpdate = value; }
-        }
+		private bool deleteFileCacheOnUpdate = false;
+		public bool DeleteFileCacheOnUpdate
+		{
+			get { return deleteFileCacheOnUpdate; }
+			protected set { deleteFileCacheOnUpdate = value; }
+		}
 
-        public virtual void CancelRunningOperations() { }
+		public virtual void CancelRunningOperations() { }
 
 		#region IDisposable Members
 

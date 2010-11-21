@@ -676,6 +676,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			}
 		}
 
+		double cachedPartLength;
+		double[] originalScreenTicks;
 		private Range<double> axisLongRange;
 		private GeometryGroup geomGroup = new GeometryGroup();
 		internal void UpdateUI()
@@ -700,17 +702,19 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				InvalidateMeasure();
 			}
 
-			if (UseSmoothPanning)
-			{
-				Range<double> doubleRange = new Range<double>(convertToDouble(range.Min), convertToDouble(range.Max));
+			Range<double> currentDoubleRange = new Range<double>(convertToDouble(range.Min), convertToDouble(range.Max));
 
+			bool sameLength = Math.Abs(cachedPartLength - currentDoubleRange.GetLength()) < 0.01 || cachedPartLength == 0;
+
+			if (UseSmoothPanning && sameLength)
+			{
 				// current range is included into axisLongRange
-				if (doubleRange < axisLongRange)
+				if (currentDoubleRange < axisLongRange)
 				{
 					var axisContent = (FrameworkElement)mainGrid.Children[0];
 
-					double leftScreen = ((axisLongRange.Min - doubleRange.Min) / doubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
-					double rightScreen = ((axisLongRange.Max - doubleRange.Max) / doubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
+					double leftScreen = ((axisLongRange.Min - currentDoubleRange.Min) / currentDoubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
+					double rightScreen = ((axisLongRange.Max - currentDoubleRange.Max) / currentDoubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
 
 					StackCanvas.SetCoordinate(axisContent, leftScreen);
 
@@ -719,17 +723,32 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				}
 				else
 				{
-					// rebuild entire ticks
-					double length = doubleRange.GetLength();
-					double min = doubleRange.Min - length;
-					double max = doubleRange.Max + length;
+					double length = currentDoubleRange.GetLength();
+					cachedPartLength = length;
+
+					// cached axis part is three times longer
+					double min = currentDoubleRange.Min - length;
+					double max = currentDoubleRange.Max + length;
 					Range<T> widerRange = new Range<T>(convertFromDouble(min), convertFromDouble(max));
 					axisLongRange = new Range<double>(min, max);
 
+					// rebuild entire ticks
 					FillParts(widerRange);
+					originalScreenTicks = screenTicks.ToArray();
 				}
 
-				// updating screen ticks
+				// updating screen ticks (for axis grid)
+				// 3 is a ratio of cached area to visible area
+				double shift = (currentDoubleRange.Min - (axisLongRange.Min + axisLongRange.GetLength() / 3)) * getSize(transform.ScreenRect.Size);
+
+				if (!placement.IsBottomOrTop())
+					shift *= -1;
+
+				screenTicks = originalScreenTicks.ToArray();
+				for (int i = 0; i < originalScreenTicks.Length; i++)
+				{
+					screenTicks[i] -= shift;
+				}
 			}
 			else
 			{

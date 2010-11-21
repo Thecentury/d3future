@@ -30,7 +30,7 @@ namespace AxesApp
 
 		void Window1_Loaded(object sender, RoutedEventArgs e)
 		{
-			plotter.EnableSmoothAxesPanningForNumericAxes = true;
+			plotter.EnableSmoothPanningForNumericAxes = true;
 		}
 	}
 }

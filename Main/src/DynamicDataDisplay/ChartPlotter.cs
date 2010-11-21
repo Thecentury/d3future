@@ -47,7 +47,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// <value>
 		/// 	<c>true</c> if enable smooth axes panning for numeric axes; otherwise, <c>false</c>.
 		/// </value>
-		public bool EnableSmoothAxesPanningForNumericAxes
+		public bool EnableSmoothPanningForNumericAxes
 		{
 			get { throw new NotImplementedException(); }
 			set

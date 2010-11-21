@@ -82,7 +82,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			RaiseTicksChanged();
 		}
 
-		public bool UseSmoothPanning
+		/// <summary>
+		/// Gets or sets a value indicating whether to use smooth panning, when axis ticks are not being repainted after each chart panning.
+		/// </summary>
+		/// <value><c>true</c> if use smooth panning; otherwise, <c>false</c>.</value>
+		public override bool UseSmoothPanning
 		{
 			get { return axisControl.UseSmoothPanning; }
 			set { axisControl.UseSmoothPanning = value; }

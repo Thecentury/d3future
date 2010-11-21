@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +11,9 @@ using Microsoft.Research.DynamicDataDisplay.Charts.Axes;
 
 namespace Microsoft.Research.DynamicDataDisplay
 {
-	/// <summary>Chart plotter is a plotter that renders axis and grid</summary>
+	/// <summary>
+	/// Chart plotter is a plotter that renders axis and grid
+	/// </summary>
 	public class ChartPlotter : Plotter2D
 	{
 		private GeneralAxis horizontalAxis = new HorizontalAxis();
@@ -36,6 +39,24 @@ namespace Microsoft.Research.DynamicDataDisplay
 		{
 			get { return newLegend.Style; }
 			set { newLegend.Style = value; }
+		}
+
+		/// <summary>
+		/// Sets a value indicating whether to enable smooth axes panning for numeric axes.
+		/// </summary>
+		/// <value>
+		/// 	<c>true</c> if enable smooth axes panning for numeric axes; otherwise, <c>false</c>.
+		/// </value>
+		public bool EnableSmoothAxesPanningForNumericAxes
+		{
+			get { throw new NotImplementedException(); }
+			set
+			{
+				foreach (var axis in Children.OfType<NumericAxis>())
+				{
+					axis.UseSmoothPanning = value;
+				}
+			}
 		}
 
 		/// <summary>
@@ -297,7 +318,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 						{
 							Children.Remove(verticalAxis);
 						}
-                        value.Visibility = verticalAxis.Visibility;
+						value.Visibility = verticalAxis.Visibility;
 					}
 					SetIsDefaultAxis(value, true);
 
@@ -394,7 +415,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 						{
 							Children.Remove(horizontalAxis);
 						}
-                        value.Visibility = horizontalAxis.Visibility;
+						value.Visibility = horizontalAxis.Visibility;
 					}
 					SetIsDefaultAxis(value, true);
 

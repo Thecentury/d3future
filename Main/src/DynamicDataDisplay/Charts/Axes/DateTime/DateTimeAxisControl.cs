@@ -20,7 +20,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			MajorLabelProvider = new MajorDateTimeLabelProvider();
 
 			ConvertToDouble = dt => dt.Ticks;
-			ConvertFromDouble = d => new DateTime((long)d);
+			ConvertFromDouble = d =>
+			{
+				if (d < 0)
+					d = 0;
+				return new DateTime((long)d);
+			};
 
 			Range = new Range<DateTime>(DateTime.Now, DateTime.Now.AddYears(1));
 		}

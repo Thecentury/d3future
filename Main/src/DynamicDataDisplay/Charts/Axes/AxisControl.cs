@@ -23,7 +23,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 	[TemplatePart(Name = "PART_AdditionalLabelsCanvas", Type = typeof(StackCanvas))]
 	[TemplatePart(Name = "PART_CommonLabelsCanvas", Type = typeof(StackCanvas))]
 	[TemplatePart(Name = "PART_TicksPath", Type = typeof(Path))]
-	[TemplatePart(Name = "PART_ContentsGrid", Type = typeof(Grid))]
+	[TemplatePart(Name = "PART_ContentsGrid", Type = typeof(Panel))]
 	public abstract class AxisControl<T> : AxisControlBase
 	{
 		private const string templateKey = "axisControlTemplate";
@@ -728,6 +728,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 					FillParts(widerRange);
 				}
+
+				// updating screen ticks
 			}
 			else
 			{

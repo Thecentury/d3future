@@ -24,6 +24,13 @@ namespace AxesApp
 			InitializeComponent();
 			//var genericPlotter = plotter.GetGenericPlotter<DateTime, double>();
 			//genericPlotter.DataRect = new Microsoft.Research.DynamicDataDisplay.GenericRect<DateTime, double>(DateTime.Now, 0, DateTime.Now.AddMinutes(60), 1);
+
+			Loaded += new RoutedEventHandler(Window1_Loaded);
+		}
+
+		void Window1_Loaded(object sender, RoutedEventArgs e)
+		{
+			plotter.EnableSmoothAxesPanningForNumericAxes = true;
 		}
 	}
 }

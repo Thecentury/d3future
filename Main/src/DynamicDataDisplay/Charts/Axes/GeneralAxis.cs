@@ -101,6 +101,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Axes
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public abstract MinorTickInfo<double>[] MinorScreenTicks { get; }
 
+		public abstract bool UseSmoothPanning
+		{
+			get;
+			set;
+		}
+
 		#region IPlotterElement Members
 
 		private Plotter2D plotter;

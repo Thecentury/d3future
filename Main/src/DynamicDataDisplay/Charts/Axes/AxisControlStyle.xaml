@@ -2,7 +2,7 @@
 										xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 										xmlns:local="clr-namespace:Microsoft.Research.DynamicDataDisplay.Charts"
 										>
-	<Style TargetType="{x:Type Grid}" x:Key="gridStyle">
+	<Style TargetType="{x:Type Panel}" x:Key="gridStyle">
 		<Setter Property="Grid.ClipToBounds" Value="False"/>
 	</Style>
 
@@ -91,7 +91,7 @@
 	</ControlTemplate>
 
 	<ControlTemplate x:Key="smoothAxisControlTemplateTop">
-		<local:StackCanvas Background="{TemplateBinding Background}" Style="{StaticResource gridStyle}" x:Name="PART_ContentsGrid">
+		<local:StackCanvas Background="{TemplateBinding Background}" ClipToBounds="True" x:Name="PART_ContentsGrid">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
@@ -111,7 +111,7 @@
 	</ControlTemplate>
 
 	<ControlTemplate x:Key="smoothAxisControlTemplateLeft">
-		<local:StackCanvas Background="{TemplateBinding Background}" Style="{StaticResource gridStyle}" x:Name="PART_ContentsGrid">
+		<local:StackCanvas Background="{TemplateBinding Background}" ClipToBounds="True" x:Name="PART_ContentsGrid">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
@@ -132,7 +132,7 @@
 	</ControlTemplate>
 
 	<ControlTemplate x:Key="smoothAxisControlTemplateRight">
-		<local:StackCanvas Background="{TemplateBinding Background}" Style="{StaticResource gridStyle}" x:Name="PART_ContentsGrid">
+		<local:StackCanvas Background="{TemplateBinding Background}" ClipToBounds="True" x:Name="PART_ContentsGrid">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>

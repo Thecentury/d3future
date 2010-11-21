@@ -712,14 +712,16 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				if (currentDoubleRange < axisLongRange)
 				{
 					var axisContent = (FrameworkElement)mainGrid.Children[0];
-
-					double leftScreen = ((axisLongRange.Min - currentDoubleRange.Min) / currentDoubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
-					double rightScreen = ((axisLongRange.Max - currentDoubleRange.Max) / currentDoubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
-
+					double leftScreen;
+					if (placement.IsBottomOrTop())
+						leftScreen = ((axisLongRange.Min - currentDoubleRange.Min) / currentDoubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
+					else
+						leftScreen = (-1 - (axisLongRange.Min - currentDoubleRange.Min) / currentDoubleRange.GetLength()) * getSize(transform.ScreenRect.Size);
 					StackCanvas.SetCoordinate(axisContent, leftScreen);
 
 					// this call should be commented
-					//StackCanvas.SetEndCoordinate(axisContent, rightScreen);
+					// double rightScreen = ((axisLongRange.Max - currentDoubleRange.Max) / currentDoubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
+					// StackCanvas.SetEndCoordinate(axisContent, rightScreen);
 				}
 				else
 				{

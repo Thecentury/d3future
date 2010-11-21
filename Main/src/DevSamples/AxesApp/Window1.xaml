@@ -5,7 +5,9 @@
 		xmlns:local="clr-namespace:AxesApp"
 	Title="Window1" Height="300" Width="300">
 	<Grid>
-		<d3:ChartPlotter Name="plotter" MainHorizontalAxis="{x:Null}">
+		<d3:ChartPlotter Name="plotter">
+			<d3:NumericAxis Placement="Top"/>
+			<d3:NumericAxis Placement="Right"/>
 			<!--<d3:ChartPlotter.MainHorizontalAxis>
 				<d3:HorizontalDateTimeAxis MajorLabelBackgroundBrush="AliceBlue" MajorLabelRectangleBorderProperty="DarkBlue"/>
 			</d3:ChartPlotter.MainHorizontalAxis>

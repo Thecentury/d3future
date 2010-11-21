@@ -75,7 +75,7 @@
 
 	<!-- Smooth panning -->
 	<ControlTemplate x:Key="smoothAxisControlTemplateBottom">
-		<local:StackCanvas x:Name="PART_ContentsGrid" ClipToBounds="True" Background="{TemplateBinding Background}">
+		<local:StackCanvas x:Name="PART_ContentsGrid" ClipToBounds="True" Background="{TemplateBinding Background}" Placement="Bottom">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
@@ -91,7 +91,7 @@
 	</ControlTemplate>
 
 	<ControlTemplate x:Key="smoothAxisControlTemplateTop">
-		<local:StackCanvas Background="{TemplateBinding Background}" ClipToBounds="True" x:Name="PART_ContentsGrid">
+		<local:StackCanvas Background="{TemplateBinding Background}" ClipToBounds="True" x:Name="PART_ContentsGrid" Placement="Top">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
@@ -111,7 +111,7 @@
 	</ControlTemplate>
 
 	<ControlTemplate x:Key="smoothAxisControlTemplateLeft">
-		<local:StackCanvas Background="{TemplateBinding Background}" ClipToBounds="True" x:Name="PART_ContentsGrid">
+		<local:StackCanvas Background="{TemplateBinding Background}" ClipToBounds="True" x:Name="PART_ContentsGrid" Placement="Left">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
@@ -132,7 +132,7 @@
 	</ControlTemplate>
 
 	<ControlTemplate x:Key="smoothAxisControlTemplateRight">
-		<local:StackCanvas Background="{TemplateBinding Background}" ClipToBounds="True" x:Name="PART_ContentsGrid">
+		<local:StackCanvas Background="{TemplateBinding Background}" ClipToBounds="True" x:Name="PART_ContentsGrid" Placement="Right">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>

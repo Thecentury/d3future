@@ -717,6 +717,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 						leftScreen = ((axisLongRange.Min - currentDoubleRange.Min) / currentDoubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
 					else
 						leftScreen = (-1 - (axisLongRange.Min - currentDoubleRange.Min) / currentDoubleRange.GetLength()) * getSize(transform.ScreenRect.Size);
+
 					StackCanvas.SetCoordinate(axisContent, leftScreen);
 
 					// this call should be commented

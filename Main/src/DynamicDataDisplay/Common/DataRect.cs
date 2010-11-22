@@ -8,6 +8,7 @@ using Microsoft.Research.DynamicDataDisplay.Common;
 using System.Windows.Markup;
 using System.Globalization;
 using System.ComponentModel;
+using Microsoft.Research.DynamicDataDisplay.Charts;
 
 namespace Microsoft.Research.DynamicDataDisplay
 {
@@ -348,6 +349,16 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 				height = value;
 			}
+		}
+
+		public Range<double> HorizontalRange
+		{
+			get { return new Range<double>(xMin, XMax); }
+		}
+
+		public Range<double> VerticalRange
+		{
+			get { return new Range<double>(yMin, YMax); }
 		}
 
 		private static readonly DataRect emptyRect = CreateEmptyRect();

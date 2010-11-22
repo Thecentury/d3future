@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="LimitedConcurrencyLevelTaskScheduler.cs" />
     <Compile Include="MandelbrotServer.cs" />
     <Compile Include="MandelbrotSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

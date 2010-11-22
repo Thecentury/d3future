@@ -703,7 +703,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			}
 
 			Range<double> currentDoubleRange = new Range<double>(convertToDouble(range.Min), convertToDouble(range.Max));
-
 			bool sameLength = Math.Abs(cachedPartLength - currentDoubleRange.GetLength()) < 0.01 || cachedPartLength == 0;
 
 			if (UseSmoothPanning && sameLength)

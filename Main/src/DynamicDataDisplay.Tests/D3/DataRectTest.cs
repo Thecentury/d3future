@@ -12,7 +12,7 @@ namespace DynamicDataDisplay.Tests.D3
 	public class DataRectTest
 	{
 		[TestMethod]
-		public void TestInfiniteRectContainsEverything()
+		public void InfiniteRectContainsEverything()
 		{
 			var infinite = DataRect.Infinite;
 
@@ -56,6 +56,20 @@ namespace DynamicDataDisplay.Tests.D3
 			Assert.AreEqual(expected, intersection2);
 		}
 
+		[TestMethod]
+		public void CreateInfiniteDataRect()
+		{
+			DataRect r = DataRect.Create(0, 0, 0, Double.PositiveInfinity);
 
+			Assert.AreEqual(Double.PositiveInfinity, r.Height);
+		}
+
+		[TestMethod]
+		public void CreateDataRectWithInfiniteMinAndMax()
+		{
+			DataRect r = DataRect.Create(Double.NegativeInfinity, 0, Double.PositiveInfinity, 0);
+
+			Assert.AreEqual(Double.PositiveInfinity, r.Width);
+		}
 	}
 }

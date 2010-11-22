@@ -6,6 +6,9 @@ using System.Windows;
 
 namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts.VectorFields
 {
+	/// <summary>
+	/// Provides interpolated values for uniform fields in a given field position.
+	/// </summary>
 	internal sealed class UniformFieldWrapper
 	{
 		private readonly Vector[,] field;

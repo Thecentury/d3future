@@ -10,6 +10,8 @@ using System.Diagnostics;
 using Microsoft.Research.DynamicDataDisplay.Common.Palettes;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Threading.Tasks.Schedulers;
 
 namespace Microsoft.Research.DynamicDataDisplay.Fractals
 {
@@ -17,7 +19,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Fractals
 	{
 		private const int size = 128;
 
-		ConcurrentStack<TaskInfo> tasks = new ConcurrentStack<TaskInfo>();
+		private readonly ConcurrentStack<TaskInfo> tasks = new ConcurrentStack<TaskInfo>();
+		private readonly LimitedConcurrencyLevelTaskScheduler scheduler = new LimitedConcurrencyLevelTaskScheduler(1);
+		private readonly TaskFactory factory;
+
 		public MandelbrotServer()
 		{
 			TileWidth = size;
@@ -30,6 +35,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Fractals
 
 			// todo number of processors being used is a problem - too small is slow, too big blocks all other threads, including rendering thread, so
 			// application stops to respond.
+
+			factory = new TaskFactory(scheduler);
 		}
 
 		public override bool Contains(TileIndex id)
@@ -61,8 +68,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Fractals
 
 		private void CreateTask(TileIndex id, DataRect bounds)
 		{
-			Task task = new Task(() =>
+			Task task = factory.StartNew(() =>
 			{
+				Thread.CurrentThread.Priority = ThreadPriority.Lowest;
+
 				var set = new MandelbrotSet(size, bounds);
 				set.Palette = new HsbPalette();
 				var bmp = set.Draw();
@@ -71,7 +80,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Fractals
 
 				LookForNextTask();
 			});
-			task.Start();
 		}
 
 		private void LookForNextTask()

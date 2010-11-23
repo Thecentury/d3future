@@ -241,6 +241,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LargeStockDataSample", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorMapSample", "..\..\src\DevSamples\ColorMapSample\ColorMapSample.csproj", "{938E7CDE-E87C-4AC3-B1C3-CBB4A6AAFA4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkTileServerMemoryTest", "..\..\src\DevSamples\NetworkTileServerMemoryTest\NetworkTileServerMemoryTest.csproj", "{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = DynamicDataDisplay4.vsmdi
@@ -1742,6 +1744,21 @@ Global
 		{938E7CDE-E87C-4AC3-B1C3-CBB4A6AAFA4D}.ReleaseXBAP|Mixed Platforms.Build.0 = Release|x86
 		{938E7CDE-E87C-4AC3-B1C3-CBB4A6AAFA4D}.ReleaseXBAP|x86.ActiveCfg = Release|x86
 		{938E7CDE-E87C-4AC3-B1C3-CBB4A6AAFA4D}.ReleaseXBAP|x86.Build.0 = Release|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.Debug|x86.ActiveCfg = Debug|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.Debug|x86.Build.0 = Debug|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.Release|Any CPU.ActiveCfg = Release|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.Release|x86.ActiveCfg = Release|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.Release|x86.Build.0 = Release|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.ReleaseXBAP|Any CPU.ActiveCfg = Release|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.ReleaseXBAP|Mixed Platforms.ActiveCfg = Release|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.ReleaseXBAP|Mixed Platforms.Build.0 = Release|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.ReleaseXBAP|x86.ActiveCfg = Release|x86
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A}.ReleaseXBAP|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1841,6 +1858,7 @@ Global
 		{B4CC8BE1-93C0-4C55-AE18-90AB1552CCF4} = {6D27EA21-720C-4988-AF86-E9F3A43711C7}
 		{14FCB1A1-3012-472D-910E-8CA6DAE1FC6C} = {6D27EA21-720C-4988-AF86-E9F3A43711C7}
 		{938E7CDE-E87C-4AC3-B1C3-CBB4A6AAFA4D} = {6D27EA21-720C-4988-AF86-E9F3A43711C7}
+		{A4C28FBA-1499-45C5-B1B9-502D14DE6F7A} = {6D27EA21-720C-4988-AF86-E9F3A43711C7}
 		{3FFA5335-B1CC-4785-831A-30A9606ECA4C} = {5A8BE4CB-56E9-4C89-971E-841391120556}
 	EndGlobalSection
 EndGlobal

@@ -11,6 +11,7 @@ using Microsoft.Research.DynamicDataDisplay.Common.DataSearch;
 using System.Diagnostics;
 using System.Windows.Markup;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 
 namespace Microsoft.Research.DynamicDataDisplay.Charts
 {
@@ -153,6 +154,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			get { return marker; }
 			protected set
 			{
+				Contract.Assert(value != null);
+
 				marker = value;
 				marker.DataContext = followDataContext;
 				PropertyChanged.Raise(this, "Marker");

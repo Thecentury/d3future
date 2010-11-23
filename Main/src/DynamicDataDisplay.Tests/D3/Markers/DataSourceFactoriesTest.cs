@@ -16,6 +16,28 @@ namespace DynamicDataDisplay.Tests.D3.Markers
 	public class DataSourceFactoriesTest
 	{
 		[TestMethod]
+		public void CreateDataSourceFromDataSource()
+		{
+			EnumerablePointDataSource ds = new EnumerablePointDataSource(Enumerable.Range(0, 0).Select(i => new Point()));
+			var store = DataSourceFactoryStore.Current;
+
+			var newDs = store.BuildDataSource(ds);
+
+			Assert.AreEqual(ds, newDs);
+		}
+
+		[TestMethod]
+		public void CreateIEnumerablePointDataSource()
+		{
+			var seq = Enumerable.Range(0, 0).Select(i => new Point());
+			var store = DataSourceFactoryStore.Current;
+
+			var ds = store.BuildDataSource(seq);
+
+			Assert.IsInstanceOfType(ds, typeof(EnumerablePointDataSource));
+		}
+
+		[TestMethod]
 		public void CreateDataSourceFromPointArray()
 		{
 			Point[] pts = new Point[] { new Point(0.1, 0.2) };
@@ -35,17 +57,6 @@ namespace DynamicDataDisplay.Tests.D3.Markers
 			var newDs = store.BuildDataSource(ds);
 
 			Assert.AreEqual(ds, newDs);
-		}
-
-		[TestMethod]
-		public void CreateDataSourceFromIEnumerable()
-		{
-			var data = new EnumerableClass();
-			var store = DataSourceFactoryStore.Current;
-
-			var ds = store.BuildDataSource(data);
-
-			Assert.IsInstanceOfType(ds, typeof(EnumerablePointDataSource));
 		}
 
 		[TestMethod]
@@ -92,8 +103,18 @@ namespace DynamicDataDisplay.Tests.D3.Markers
 			Assert.IsInstanceOfType(ds, typeof(XmlElementDataSource));
 		}
 
+		[TestMethod]
+		public void CreateDataSourceFromIEnumerable()
+		{
+			var data = new EnumerableClass();
+			var store = DataSourceFactoryStore.Current;
 
-		// todo create tests fro all dataSourcefactories
+			var ds = store.BuildDataSource(data);
+
+			Assert.IsInstanceOfType(ds, typeof(EnumerableDataSource));
+		}
+
+		// todo create dataSourceFactory for XElement.
 
 		/// <summary>
 		/// Class that implements IEnumerable. Used for testing the creation of GenericIEnumerableDataSource.

@@ -116,7 +116,6 @@
     <Compile Include="D3\GenericPlotterTest.cs" />
     <Compile Include="D3\Markers\DataSourceFactoriesTest.cs" />
     <Compile Include="D3\Markers\DevMarkerChartTest.cs" />
-    <Compile Include="D3\Markers\EmptyDataSource2d.cs" />
     <Compile Include="D3\PointSelectorTest.cs" />
     <Compile Include="D3\RangeTest.cs" />
     <Compile Include="D3\RingArrayTest.cs" />

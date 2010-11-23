@@ -36,6 +36,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Maps
 			}
 
 			MapsTraceSource.Instance.ServerInformationTraceSource.TraceInformation(builder.ToString());
+
+			Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
 		}
 
 		private readonly TileServerStatistics statistics = new TileServerStatistics();

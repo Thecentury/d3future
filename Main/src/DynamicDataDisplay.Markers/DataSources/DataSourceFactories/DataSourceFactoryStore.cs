@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 using Microsoft.Research.DynamicDataDisplay.Charts.NewLine;
+using Microsoft.Research.DynamicDataDisplay.Markers.DataSources.DataSourceFactories;
 
 namespace DynamicDataDisplay.Markers.DataSources.DataSourceFactories
 {
@@ -18,6 +19,7 @@ namespace DynamicDataDisplay.Markers.DataSources.DataSourceFactories
 			RegisterFactory(new GenericIEnumerableFactory());
 			RegisterFactory(new GenericIDataSource2DFactory());
 			RegisterFactory(new XmlElementFactory());
+			RegisterFactory(new EnumerableDataSourceFactory());
 		}
 
 		private static DataSourceFactoryStore current = new DataSourceFactoryStore();

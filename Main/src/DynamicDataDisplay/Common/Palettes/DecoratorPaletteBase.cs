@@ -30,6 +30,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Common.Palettes
 		/// Gets or sets the palette being decorated.
 		/// </summary>
 		/// <value>The palette.</value>
+		[NotNull]
 		public IPalette Palette
 		{
 			get { return palette; }

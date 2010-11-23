@@ -15,6 +15,7 @@ namespace DynamicDataDisplay.Markers.DataSources.DataSourceFactories
 			if (array != null)
 			{
 				var dataSource = new PointArrayDataSource(array);
+				return dataSource;
 			}
 
 			return null;

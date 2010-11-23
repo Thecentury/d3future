@@ -23,6 +23,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		private readonly Legend legend = new Legend();
 
 		private NewLegend newLegend = new NewLegend();
+		[NotNull]
 		public NewLegend NewLegend
 		{
 			get { return newLegend; }
@@ -32,7 +33,13 @@ namespace Microsoft.Research.DynamicDataDisplay
 		public ItemsPanelTemplate LegendPanelTemplate
 		{
 			get { return newLegend.ItemsPanel; }
-			set { newLegend.ItemsPanel = value; }
+			set
+			{
+				if (newLegend == null)
+					throw new ArgumentNullException("LegendPanelTemplate");
+
+				newLegend.ItemsPanel = value;
+			}
 		}
 
 		public Style LegendStyle
@@ -47,6 +54,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// <value>
 		/// 	<c>true</c> if enable smooth axes panning for numeric axes; otherwise, <c>false</c>.
 		/// </value>
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool EnableSmoothPanningForNumericAxes
 		{
 			get { throw new NotImplementedException(); }

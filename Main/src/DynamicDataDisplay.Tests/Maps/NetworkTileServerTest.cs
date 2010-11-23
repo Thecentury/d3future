@@ -11,7 +11,7 @@ namespace DynamicDataDisplay.Tests.Maps
 	public class NetworkTileServerTest
 	{
 		[TestMethod]
-		public void TestGCCollectsServer()
+		public void GCCollectsTileServer()
 		{
 			var server = new OpenStreetMapServer();
 			WeakReference reference = new WeakReference(server);

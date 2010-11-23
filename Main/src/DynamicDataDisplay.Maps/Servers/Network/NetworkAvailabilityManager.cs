@@ -4,11 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Net.NetworkInformation;
+using System.Collections.ObjectModel;
 
 namespace Microsoft.Research.DynamicDataDisplay.Maps.Servers.Network
 {
 	public sealed class NetworkAvailabilityManager : WeakEventManager
 	{
+		/// <summary>
+		/// Collection of connected listeners, for debug purposes.
+		/// </summary>
+		private static readonly ObservableCollection<IWeakEventListener> listeners = new ObservableCollection<IWeakEventListener>();
+
 		private NetworkAvailabilityManager()
 		{
 			NetworkChange.NetworkAvailabilityChanged += NetworkChange_NetworkAvailabilityChanged;
@@ -17,11 +23,13 @@ namespace Microsoft.Research.DynamicDataDisplay.Maps.Servers.Network
 		public static void AddListener(IWeakEventListener listener)
 		{
 			CurrentManager.ProtectedAddListener(typeof(NetworkChange), listener);
+			listeners.Add(listener);
 		}
 
 		public static void RemoveListener(IWeakEventListener listener)
 		{
 			CurrentManager.ProtectedRemoveListener(typeof(NetworkChange), listener);
+			listeners.Remove(listener);
 		}
 
 		protected override void StartListening(object source)

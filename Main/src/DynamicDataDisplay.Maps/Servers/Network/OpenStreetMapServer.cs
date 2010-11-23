@@ -24,7 +24,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Maps.Network
 			ServerName = "Open Street Maps";
 
 			XCycling = true;
-            MaxLatitude = 85.2878;
+			MaxLatitude = 85.2878;
 			MinLevel = 0;
 			MaxLevel = 17;
 			MaxConcurrentDownloads = 3;
@@ -43,7 +43,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Maps.Network
 			}
 		}
 		
-        protected override string CreateRequestUriCore(TileIndex index)
+		protected override string CreateRequestUriCore(TileIndex index)
 		{
 			int z = (int)index.Level;
 			int shift = MapTileProvider.GetSideTilesCount(z) / 2;

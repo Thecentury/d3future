@@ -128,7 +128,6 @@
     <Compile Include="Charts\VectorFields\Convolution\MagnitudeFilter.cs" />
     <Compile Include="Charts\VectorFields\Convolution\NormalizeFilter.cs" />
     <Compile Include="Charts\VectorFields\Convolution\VectorFieldConvolutionChart.cs" />
-    <Compile Include="Charts\VectorFields\Convolution\VectorFieldConvolutionEffect.cs" />
     <Compile Include="Charts\VectorFields\Convolution\VectorFieldExtensions.cs" />
     <Compile Include="Charts\VectorFields\Streamlines\StreamLineChart.cs" />
     <Compile Include="Charts\VectorFields\UniformFieldWrapper.cs" />

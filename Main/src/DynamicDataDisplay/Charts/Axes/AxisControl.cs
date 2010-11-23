@@ -1149,6 +1149,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		}
 
 		private Func<double, T> convertFromDouble;
+		/// <summary>
+		/// Convertation function for use in smooth axes panning.
+		/// Converts from axis value to double.
+		/// </summary>
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Func<double, T> ConvertFromDouble
 		{
 			get { return convertFromDouble; }

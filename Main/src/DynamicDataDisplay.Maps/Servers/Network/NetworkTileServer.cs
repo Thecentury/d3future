@@ -52,7 +52,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Maps
 		}
 
 		//private readonly ConcurrentStack<TileIndex> waitingIDs = new ConcurrentStack<TileIndex>();
-        private readonly Stack<TileIndex> waitingIDs = new Stack<TileIndex>();
+		private readonly Stack<TileIndex> waitingIDs = new Stack<TileIndex>();
 
 		private bool firstCall = true;
 		public override void BeginLoadImage(TileIndex id)
@@ -73,8 +73,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Maps
 
 			if (runningDownloadsNum >= MaxConcurrentDownloads)
 			{
-                lock(waitingIDs)
-				    waitingIDs.Push(id);
+				lock(waitingIDs)
+					waitingIDs.Push(id);
 				return;
 			}
 
@@ -94,12 +94,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Maps
 			}
 			else
 			{
-                ThreadPool.QueueUserWorkItem(new WaitCallback(dummy => {
+				ThreadPool.QueueUserWorkItem(new WaitCallback(dummy => {
 				//Task.Create(o =>
 				//{
 					request.BeginGetResponse(ResponseReadyCallback, new ResponseCallbackInfo { ID = id, Request = request });
 				//}).WithExceptionThrowingInDispatcher(Dispatcher);
-                }));
+				}));
 			}
 		}
 
@@ -116,19 +116,19 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Maps
 		{
 			if (runningDownloadsNum < MaxConcurrentDownloads)
 			{
-                TileIndex id = new TileIndex();
-                lock (waitingIDs)
-                    if (waitingIDs.Count > 0)
-                        id = waitingIDs.Pop();
-                    else
-                        return;
-                BeginLoadImage(id);
-                
-                // commented by bs
+				TileIndex id = new TileIndex();
+				lock (waitingIDs)
+					if (waitingIDs.Count > 0)
+						id = waitingIDs.Pop();
+					else
+						return;
+				BeginLoadImage(id);
+				
+				// commented by bs
 				//if (waitingIDs.TryPop(out id))
 				//{
 				//	//Debug.WriteLine("ID = " + id + " removed from queue");
-			    //	BeginLoadImage(id);
+				//	BeginLoadImage(id);
 				//}
 			}
 		}

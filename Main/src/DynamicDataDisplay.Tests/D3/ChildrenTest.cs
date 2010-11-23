@@ -49,6 +49,7 @@ namespace DynamicDataDisplay.Test
 		public void TestAllElementsAddRemove()
 		{
 			ChartPlotter plotter = new ChartPlotter();
+			plotter.PerformLoad();
 
 			var types = GetAllCharts();
 
@@ -72,6 +73,30 @@ namespace DynamicDataDisplay.Test
 			{
 				Assert.IsNull(item.Plotter, item.ToString());
 			}
+		}
+
+		[TestMethod]
+		public void CheckThatSegmentHasProperPlotter()
+		{
+			ChartPlotter plotter = new ChartPlotter();
+			plotter.PerformLoad();
+			Segment segment = new Segment();
+
+			plotter.Children.Add(segment);
+
+			Assert.AreEqual(plotter, segment.Plotter);
+		}
+
+		[TestMethod]
+		public void CheckThatSegmentHasNullPlotterAfterDisconnection()
+		{
+			ChartPlotter plotter = new ChartPlotter();
+			Segment segment = new Segment();
+
+			plotter.Children.Add(segment);
+			plotter.Children.Remove(segment);
+
+			Assert.IsNull(segment.Plotter);
 		}
 
 		private List<Type> GetAllCharts()
@@ -108,7 +133,7 @@ namespace DynamicDataDisplay.Test
 		}
 
 		[TestMethod]
-		public void TestSettingSameValueAsWasGot()
+		public void SettingSameValueAsWasGot()
 		{
 			var types = GetAllExportedClasses();
 			var properties = from type in types
@@ -138,10 +163,12 @@ namespace DynamicDataDisplay.Test
 				{
 					try
 					{
-						property.SetValue(instance, property.GetValue(instance, null), null);
+						var value = property.GetValue(instance, null);
+						property.SetValue(instance, value, null);
 					}
 					catch (ArgumentNullException) { }
 					catch (TargetInvocationException) { }
+					catch (NotImplementedException) { }
 				}
 			}
 
@@ -158,7 +185,16 @@ namespace DynamicDataDisplay.Test
 		}
 
 		[TestMethod]
-		public void TestSettingPropertiesBeforeAddingToPlotter()
+		public void SetLegendPanelTemplate()
+		{
+			ChartPlotter plotter = new ChartPlotter();
+
+			var template = plotter.LegendPanelTemplate;
+			plotter.LegendPanelTemplate = template;
+		}
+
+		[TestMethod]
+		public void SettingPropertiesBeforeAddingToPlotter()
 		{
 			var types = GetAllCharts();
 			var properties = from type in types

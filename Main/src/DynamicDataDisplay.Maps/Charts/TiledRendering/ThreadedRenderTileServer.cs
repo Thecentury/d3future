@@ -15,9 +15,11 @@ using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 using System.ComponentModel;
 using Microsoft.Research.DynamicDataDisplay.Charts;
 using System.Collections.Concurrent;
+using Microsoft.Research.DynamicDataDisplay.Common;
 
 namespace Microsoft.Research.DynamicDataDisplay.Maps.Charts.TiledRendering
 {
+	[SkipPropertyCheck]
 	public class ThreadedRenderTileServer : SourceTileServer, IRenderingTileServer
 	{
 		private Thread[] renderingThreads;

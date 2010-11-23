@@ -102,6 +102,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			legendItems.Clear();
 
 			if (!LegendVisible) return;
+			if (plotter == null) return;
 
 			foreach (var chart in plotter.Children.OfType<DependencyObject>())
 			{

@@ -170,8 +170,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 					// make dispatcher execute all operations in its queue;
 					// so that markers will appear on the screen step-by-step,
 					// making application more responsive.
-                    
-                    // This line is dangerous, it causes WI 1677
+					
+					// This line is dangerous, it causes WI 1677
 					// Dispatcher.Invoke(() => { }, DispatcherPriority.Background);
 				}
 			}
@@ -201,6 +201,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				IndexWrapper<Point> indexWrapper = (IndexWrapper<Point>)dataItem;
 				dataItem = indexWrapper.Data;
 				indexInData = indexWrapper.Index;
+			}
+
+			if (markerGenerator == null)
+			{
+				markerGenerator = MarkerBuilder;
 			}
 
 			marker = markerGenerator.CreateMarker(dataItem);

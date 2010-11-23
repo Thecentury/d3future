@@ -30,8 +30,12 @@ namespace Microsoft.Research.DynamicDataDisplay.ViewportConstraints
 
 			foreach (var chart in viewport.ContentBoundsHosts)
 			{
-                var plotterElement = chart as IPlotterElement;
-				var visual = viewport.Plotter.VisualBindings[plotterElement];
+				var plotterElement = chart as IPlotterElement;
+				//var visual = viewport.Plotter.VisualBindings[plotterElement];
+				var visual = plotterElement as DependencyObject;
+				if (visual == null)
+					continue;
+
 				var points = (ReadOnlyCollection<Point>)PointsGraphBase.GetVisiblePoints(visual);
 				if (points != null)
 				{

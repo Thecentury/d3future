@@ -181,20 +181,20 @@ namespace Microsoft.Research.DynamicDataDisplay
 		{
 			base.OnApplyTemplate();
 
-			addedVisualElements.Clear();
+			//addedVisualElements.Clear();
 
-			foreach (var item in GetAllPanels())
-			{
-				INotifyingPanel panel = item as INotifyingPanel;
-				if (panel != null)
-				{
-					panel.ChildrenCreated -= notifyingItem_ChildrenCreated;
-					if (panel.NotifyingChildren != null)
-					{
-						panel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
-					}
-				}
-			}
+			//foreach (var item in GetAllPanels())
+			//{
+			//    INotifyingPanel panel = item as INotifyingPanel;
+			//    if (panel != null)
+			//    {
+			//        panel.ChildrenCreated -= notifyingItem_ChildrenCreated;
+			//        if (panel.NotifyingChildren != null)
+			//        {
+			//            panel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
+			//        }
+			//    }
+			//}
 
 			var headerPanel = GetPart<StackPanel>("PART_HeaderPanel");
 			MigrateChildren(this.headerPanel, headerPanel);
@@ -243,17 +243,17 @@ namespace Microsoft.Research.DynamicDataDisplay
 			Content = contentsGrid;
 			AddLogicalChild(contentsGrid);
 
-			foreach (var notifyingItem in GetAllPanels())
-			{
-				INotifyingPanel panel = notifyingItem as INotifyingPanel;
-				if (panel != null)
-				{
-					if (panel.NotifyingChildren == null)
-						panel.ChildrenCreated += notifyingItem_ChildrenCreated;
-					else
-						panel.NotifyingChildren.CollectionChanged += OnVisualCollectionChanged;
-				}
-			}
+			//foreach (var notifyingItem in GetAllPanels())
+			//{
+			//    INotifyingPanel panel = notifyingItem as INotifyingPanel;
+			//    if (panel != null)
+			//    {
+			//        if (panel.NotifyingChildren == null)
+			//            panel.ChildrenCreated += notifyingItem_ChildrenCreated;
+			//        else
+			//            panel.NotifyingChildren.CollectionChanged += OnVisualCollectionChanged;
+			//    }
+			//}
 		}
 
 		private void MigrateChildren(Panel previousParent, Panel currentParent)
@@ -278,152 +278,152 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
-		private void notifyingItem_ChildrenCreated(object sender, EventArgs e)
-		{
-			INotifyingPanel panel = (INotifyingPanel)sender;
+		//private void notifyingItem_ChildrenCreated(object sender, EventArgs e)
+		//{
+		//    INotifyingPanel panel = (INotifyingPanel)sender;
 
-			SubscribePanelEvents(panel);
-		}
+		//    SubscribePanelEvents(panel);
+		//}
 
-		private void SubscribePanelEvents(INotifyingPanel panel)
-		{
-			panel.ChildrenCreated -= notifyingItem_ChildrenCreated;
+		//private void SubscribePanelEvents(INotifyingPanel panel)
+		//{
+		//    panel.ChildrenCreated -= notifyingItem_ChildrenCreated;
 
-			panel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
-			panel.NotifyingChildren.CollectionChanged += OnVisualCollectionChanged;
-		}
+		//    panel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
+		//    panel.NotifyingChildren.CollectionChanged += OnVisualCollectionChanged;
+		//}
 
-		private void OnVisualCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			if (e.NewItems != null)
-			{
-				foreach (var item in e.NewItems)
-				{
-					INotifyingPanel notifyingPanel = item as INotifyingPanel;
-					if (notifyingPanel != null)
-					{
-						if (notifyingPanel.NotifyingChildren != null)
-						{
-							notifyingPanel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
-							notifyingPanel.NotifyingChildren.CollectionChanged += OnVisualCollectionChanged;
-						}
-						else
-						{
-							notifyingPanel.ChildrenCreated += notifyingItem_ChildrenCreated;
-						}
-					}
+		//private void OnVisualCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		//{
+		//    if (e.NewItems != null)
+		//    {
+		//        foreach (var item in e.NewItems)
+		//        {
+		//            INotifyingPanel notifyingPanel = item as INotifyingPanel;
+		//            if (notifyingPanel != null)
+		//            {
+		//                if (notifyingPanel.NotifyingChildren != null)
+		//                {
+		//                    notifyingPanel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
+		//                    notifyingPanel.NotifyingChildren.CollectionChanged += OnVisualCollectionChanged;
+		//                }
+		//                else
+		//                {
+		//                    notifyingPanel.ChildrenCreated += notifyingItem_ChildrenCreated;
+		//                }
+		//            }
 
-					OnVisualChildAdded((UIElement)item, (UIElementCollection)sender);
-				}
-			}
-			if (e.OldItems != null)
-			{
-				foreach (var item in e.OldItems)
-				{
-					INotifyingPanel notifyingPanel = item as INotifyingPanel;
-					if (notifyingPanel != null)
-					{
-						notifyingPanel.ChildrenCreated -= notifyingItem_ChildrenCreated;
-						if (notifyingPanel.NotifyingChildren != null)
-						{
-							notifyingPanel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
-						}
-					}
+		//            OnVisualChildAdded((UIElement)item, (UIElementCollection)sender);
+		//        }
+		//    }
+		//    if (e.OldItems != null)
+		//    {
+		//        foreach (var item in e.OldItems)
+		//        {
+		//            INotifyingPanel notifyingPanel = item as INotifyingPanel;
+		//            if (notifyingPanel != null)
+		//            {
+		//                notifyingPanel.ChildrenCreated -= notifyingItem_ChildrenCreated;
+		//                if (notifyingPanel.NotifyingChildren != null)
+		//                {
+		//                    notifyingPanel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
+		//                }
+		//            }
 
-					OnVisualChildRemoved((UIElement)item, (UIElementCollection)sender);
-				}
-			}
-		}
+		//            OnVisualChildRemoved((UIElement)item, (UIElementCollection)sender);
+		//        }
+		//    }
+		//}
 
-		private readonly VisualBindingCollection visualBindingCollection = new VisualBindingCollection();
-		public VisualBindingCollection VisualBindings
-		{
-			get { return visualBindingCollection; }
-		}
+		//private readonly VisualBindingCollection visualBindingCollection = new VisualBindingCollection();
+		//public VisualBindingCollection VisualBindings
+		//{
+		//    get { return visualBindingCollection; }
+		//}
 
-		protected virtual void OnVisualChildAdded(UIElement target, UIElementCollection uIElementCollection)
-		{
-			IPlotterElement element = null;
-			if (addingElements.Count > 0)
-			{
-				element = addingElements.Peek();
+		//protected virtual void OnVisualChildAdded(UIElement target, UIElementCollection uIElementCollection)
+		//{
+		//IPlotterElement element = null;
+		//if (addingElements.Count > 0)
+		//{
+		//    element = addingElements.Peek();
 
-				var dict = visualBindingCollection.Cache;
-				var proxy = dict[element];
+		//    var dict = visualBindingCollection.Cache;
+		//    var proxy = dict[element];
 
-				List<UIElement> visualElements;
-				if (!addedVisualElements.ContainsKey(element))
-				{
-					visualElements = new List<UIElement>();
-					addedVisualElements.Add(element, visualElements);
-				}
-				else
-				{
-					visualElements = addedVisualElements[element];
-				}
+		//    List<UIElement> visualElements;
+		//    if (!addedVisualElements.ContainsKey(element))
+		//    {
+		//        visualElements = new List<UIElement>();
+		//        addedVisualElements.Add(element, visualElements);
+		//    }
+		//    else
+		//    {
+		//        visualElements = addedVisualElements[element];
+		//    }
 
-				visualElements.Add(target);
+		//    visualElements.Add(target);
 
-				SetBindings(proxy, target);
-			}
-		}
+		//    SetBindings(proxy, target);
+		//}
+		//}
 
-		private void SetBindings(UIElement proxy, UIElement target)
-		{
-			if (proxy != target)
-			{
-				foreach (var property in GetPropertiesToSetBindingOn())
-				{
-					BindingOperations.SetBinding(target, property, new Binding { Path = new PropertyPath(property.Name), Source = proxy, Mode = BindingMode.TwoWay });
-				}
-			}
-		}
+		//private void SetBindings(UIElement proxy, UIElement target)
+		//{
+		//    if (proxy != target)
+		//    {
+		//        foreach (var property in GetPropertiesToSetBindingOn())
+		//        {
+		//            BindingOperations.SetBinding(target, property, new Binding { Path = new PropertyPath(property.Name), Source = proxy, Mode = BindingMode.TwoWay });
+		//        }
+		//    }
+		//}
 
-		private void RemoveBindings(UIElement proxy, UIElement target)
-		{
-			if (proxy != target)
-			{
-				foreach (var property in GetPropertiesToSetBindingOn())
-				{
-					BindingOperations.ClearBinding(target, property);
-				}
-			}
-		}
+		//private void RemoveBindings(UIElement proxy, UIElement target)
+		//{
+		//    if (proxy != target)
+		//    {
+		//        foreach (var property in GetPropertiesToSetBindingOn())
+		//        {
+		//            BindingOperations.ClearBinding(target, property);
+		//        }
+		//    }
+		//}
 
-		private IEnumerable<DependencyProperty> GetPropertiesToSetBindingOn()
-		{
-			yield return UIElement.OpacityProperty;
-			yield return UIElement.VisibilityProperty;
-			yield return UIElement.IsHitTestVisibleProperty;
-			//yield return FrameworkElement.DataContextProperty;
-		}
+		//private IEnumerable<DependencyProperty> GetPropertiesToSetBindingOn()
+		//{
+		//    yield return UIElement.OpacityProperty;
+		//    yield return UIElement.VisibilityProperty;
+		//    yield return UIElement.IsHitTestVisibleProperty;
+		//    //yield return FrameworkElement.DataContextProperty;
+		//}
 
-		protected virtual void OnVisualChildRemoved(UIElement target, UIElementCollection uiElementCollection)
-		{
-			IPlotterElement element = null;
-			if (removingElements.Count > 0)
-			{
-				element = removingElements.Peek();
+		//protected virtual void OnVisualChildRemoved(UIElement target, UIElementCollection uiElementCollection)
+		//{
+		//    IPlotterElement element = null;
+		//    if (removingElements.Count > 0)
+		//    {
+		//        element = removingElements.Peek();
 
-				var dict = visualBindingCollection.Cache;
-				var proxy = dict[element];
+		//        var dict = visualBindingCollection.Cache;
+		//        var proxy = dict[element];
 
-				if (addedVisualElements.ContainsKey(element))
-				{
-					var list = addedVisualElements[element];
-					list.Remove(target);
+		//        if (addedVisualElements.ContainsKey(element))
+		//        {
+		//            var list = addedVisualElements[element];
+		//            list.Remove(target);
 
-					if (list.Count == 0)
-					{
-						dict.Remove(element);
-					}
+		//            if (list.Count == 0)
+		//            {
+		//                dict.Remove(element);
+		//            }
 
-					addedVisualElements.Remove(element);
-				}
+		//            addedVisualElements.Remove(element);
+		//        }
 
-				RemoveBindings(proxy, target);
-			}
-		}
+		//        RemoveBindings(proxy, target);
+		//    }
+		//}
 
 		internal virtual IEnumerable<Panel> GetAllPanels()
 		{
@@ -524,113 +524,114 @@ namespace Microsoft.Research.DynamicDataDisplay
 			{
 				addingElements.Push(child);
 				currentChild = child;
-				try
+				//try
+				//{
+				//UIElement visualProxy = CreateVisualProxy(child);
+				////visualBindingCollection.Cache.Add(child, visualProxy);
+
+				if (performChildChecks && child.Plotter != null)
 				{
-					UIElement visualProxy = CreateVisualProxy(child);
-					visualBindingCollection.Cache.Add(child, visualProxy);
+					throw new InvalidOperationException(Strings.Exceptions.PlotterElementAddedToAnotherPlotter);
+				}
 
-					if (performChildChecks && child.Plotter != null)
-					{
-						throw new InvalidOperationException(Strings.Exceptions.PlotterElementAddedToAnotherPlotter);
-					}
+				//FrameworkElement styleableElement = child as FrameworkElement;
+				//if (styleableElement != null)
+				//{
+				//    Type key = styleableElement.GetType();
+				//    if (genericResources.Contains(key))
+				//    {
+				//        Style elementStyle = (Style)genericResources[key];
+				//        styleableElement.Style = elementStyle;
+				//    }
+				//}
 
-					FrameworkElement styleableElement = child as FrameworkElement;
-					if (styleableElement != null)
+				if (performChildChecks)
+				{
+					child.OnPlotterAttached(this);
+					if (child.Plotter != this)
 					{
-						Type key = styleableElement.GetType();
-						if (genericResources.Contains(key))
-						{
-							Style elementStyle = (Style)genericResources[key];
-							styleableElement.Style = elementStyle;
-						}
-					}
-
-					if (performChildChecks)
-					{
-						child.OnPlotterAttached(this);
-						if (child.Plotter != this)
-						{
-							throw new InvalidOperationException(Strings.Exceptions.InvalidParentPlotterValue);
-						}
-					}
-
-					DependencyObject dependencyObject = child as DependencyObject;
-					if (dependencyObject != null)
-					{
-						SetPlotter(dependencyObject, this);
+						throw new InvalidOperationException(Strings.Exceptions.InvalidParentPlotterValue);
 					}
 				}
-				finally
+
+				DependencyObject dependencyObject = child as DependencyObject;
+				if (dependencyObject != null)
 				{
-					addingElements.Pop();
-					currentChild = null;
+					SetPlotter(dependencyObject, this);
 				}
+				//}
+				//finally
+				//{
+				//    addingElements.Pop();
+				//    currentChild = null;
+				//}
 			}
 		}
 
-		private UIElement CreateVisualProxy(IPlotterElement child)
-		{
-			if (visualBindingCollection.Cache.ContainsKey(child))
-				throw new InvalidOperationException(Strings.Exceptions.VisualBindingsWrongState);
+		//private UIElement CreateVisualProxy(IPlotterElement child)
+		//{
+		//    // todo investigate why in D3.Samples there is an exception.
+		//    if (visualBindingCollection.Cache.ContainsKey(child))
+		//        throw new InvalidOperationException(Strings.Exceptions.VisualBindingsWrongState);
 
-			UIElement result = child as UIElement;
+		//    UIElement result = child as UIElement;
 
-			if (result == null)
-			{
-				result = new UIElement();
-			}
+		//    if (result == null)
+		//    {
+		//        result = new UIElement();
+		//    }
 
-			return result;
-		}
+		//    return result;
+		//}
 
-		private readonly Stack<IPlotterElement> removingElements = new Stack<IPlotterElement>();
+		//private readonly Stack<IPlotterElement> removingElements = new Stack<IPlotterElement>();
 		protected virtual void OnChildRemoving(IPlotterElement child)
 		{
 			if (child != null)
 			{
-				currentChild = child;
-				removingElements.Push(child);
-				try
+				//currentChild = child;
+				//removingElements.Push(child);
+				//try
+				//{
+				// todo probably here child.Plotter can be null.
+				if (performChildChecks && child.Plotter != this && child.Plotter != null)
 				{
-					// todo probably here child.Plotter can be null.
-					if (performChildChecks && child.Plotter != this && child.Plotter != null)
+					throw new InvalidOperationException(Strings.Exceptions.InvalidParentPlotterValueRemoving);
+				}
+
+				if (performChildChecks)
+				{
+					if (child.Plotter != null)
+						child.OnPlotterDetaching(this);
+
+					if (child.Plotter != null)
 					{
-						throw new InvalidOperationException(Strings.Exceptions.InvalidParentPlotterValueRemoving);
-					}
-
-					if (performChildChecks)
-					{
-						if (child.Plotter != null)
-							child.OnPlotterDetaching(this);
-
-						if (child.Plotter != null)
-						{
-							throw new InvalidOperationException(Strings.Exceptions.ParentPlotterNotNull);
-						}
-					}
-
-					DependencyObject dependencyObject = child as DependencyObject;
-					if (dependencyObject != null)
-					{
-						SetPlotter(dependencyObject, null);
-					}
-
-					visualBindingCollection.Cache.Remove(child);
-
-					if (addedVisualElements.ContainsKey(child) && addedVisualElements[child].Count > 0)
-					{
-						throw new InvalidOperationException(String.Format(Strings.Exceptions.PlotterElementDidnotCleanedAfterItself, child.ToString()));
+						throw new InvalidOperationException(Strings.Exceptions.ParentPlotterNotNull);
 					}
 				}
-				finally
+
+				DependencyObject dependencyObject = child as DependencyObject;
+				if (dependencyObject != null)
 				{
-					currentChild = null;
-					removingElements.Pop();
+					SetPlotter(dependencyObject, null);
 				}
+
+				//    visualBindingCollection.Cache.Remove(child);
+
+				//    if (addedVisualElements.ContainsKey(child) && addedVisualElements[child].Count > 0)
+				//    {
+				//        throw new InvalidOperationException(String.Format(Strings.Exceptions.PlotterElementDidnotCleanedAfterItself, child.ToString()));
+				//    }
+				//}
+				//finally
+				//{
+				//    currentChild = null;
+				//    removingElements.Pop();
+				//}
 			}
 		}
 
-		private readonly Dictionary<IPlotterElement, List<UIElement>> addedVisualElements = new Dictionary<IPlotterElement, List<UIElement>>();
+		//private readonly Dictionary<IPlotterElement, List<UIElement>> addedVisualElements = new Dictionary<IPlotterElement, List<UIElement>>();
 
 		#endregion
 

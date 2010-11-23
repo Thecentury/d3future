@@ -360,15 +360,15 @@ namespace Microsoft.Research.DynamicDataDisplay
 						continue;
 
 					var plotter = (Plotter2D)plotterElement.Plotter;
-					var visual = plotter.VisualBindings[plotterElement];
-					if (visual.Visibility == Visibility.Visible)
-					{
-						DataRect contentBounds = Viewport2D.GetContentBounds(item);
-						if (contentBounds.Width.IsNaN() || contentBounds.Height.IsNaN())
-							continue;
+					//var visual = plotter.VisualBindings[plotterElement];
+					//if (visual.Visibility == Visibility.Visible)
+					//{
+					DataRect contentBounds = Viewport2D.GetContentBounds(item);
+					if (contentBounds.Width.IsNaN() || contentBounds.Height.IsNaN())
+						continue;
 
-						bounds.UnionFinite(contentBounds);
-					}
+					bounds.UnionFinite(contentBounds);
+					//}
 				}
 
 				if (useApproximateContentBoundsComparison)

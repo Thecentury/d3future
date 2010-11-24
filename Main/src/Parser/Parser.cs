@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 
 namespace MathParser
 {
@@ -12,13 +13,11 @@ namespace MathParser
 
 		public Parser(params string[] parameters)
 		{
-			if (parameters == null)
-				throw new ArgumentNullException("parameters");
+			Contract.Assert(parameters != null);
 
 			foreach (var parameter in parameters)
 			{
-				if (String.IsNullOrEmpty(parameter))
-					throw new ArgumentNullException("parameter");
+				Contract.Assert(!String.IsNullOrEmpty(parameter));
 
 				Parameters.Add(parameter);
 			}

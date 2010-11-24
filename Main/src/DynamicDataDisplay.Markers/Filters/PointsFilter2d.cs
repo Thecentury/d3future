@@ -12,18 +12,14 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Filters
 {
 	public abstract class PointsFilter2d : DependencyObject, IDisposable, IWeakEventListener
 	{
-		private IDataSourceEnvironment environment;
-		protected internal IDataSourceEnvironment Environment
+		private DataSourceEnvironment environment;
+		protected internal DataSourceEnvironment Environment
 		{
 			get { return environment; }
 			set
 			{
 				environment = value;
-
-				environment.Plotter.Dispatcher.Invoke(() =>
-				{
-					Viewport = environment.Plotter.Viewport;
-				}, DispatcherPriority.Send);
+				throw new NotImplementedException();
 			}
 		}
 
@@ -74,72 +70,72 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Filters
 
 		#region IDisposable Members
 
-        public void Dispose() // Do this method ever called?
+		public void Dispose() // Do this method ever called?
 		{
-            ExtendedPropertyChangedEventManager.RemoveListener(viewport, this);
+			ExtendedPropertyChangedEventManager.RemoveListener(viewport, this);
 		}
 
 		#endregion
 
-        #region IWeakEventListener Members
+		#region IWeakEventListener Members
 
-        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
-        {
-            if (managerType == typeof(ExtendedPropertyChangedEventManager))
-            {
-                OnViewportPropertyChanged((ExtendedPropertyChangedEventArgs)e);
-                return true;
-            }
-            return false;
-        }
+		public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+		{
+			if (managerType == typeof(ExtendedPropertyChangedEventManager))
+			{
+				OnViewportPropertyChanged((ExtendedPropertyChangedEventArgs)e);
+				return true;
+			}
+			return false;
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 
-    public class ExtendedPropertyChangedEventManager : WeakEventManager
-    {
-        private ExtendedPropertyChangedEventManager() { }
+	public class ExtendedPropertyChangedEventManager : WeakEventManager
+	{
+		private ExtendedPropertyChangedEventManager() { }
 
-        public static void AddListener(Viewport2D vp, IWeakEventListener listener)
-        {
-            ExtendedPropertyChangedEventManager.CurrentManager.ProtectedAddListener(vp, listener);
-        }
+		public static void AddListener(Viewport2D vp, IWeakEventListener listener)
+		{
+			ExtendedPropertyChangedEventManager.CurrentManager.ProtectedAddListener(vp, listener);
+		}
 
-        public static void RemoveListener(Viewport2D vp, IWeakEventListener listener)
-        {
-            ExtendedPropertyChangedEventManager.CurrentManager.ProtectedRemoveListener(vp, listener);
-        }
+		public static void RemoveListener(Viewport2D vp, IWeakEventListener listener)
+		{
+			ExtendedPropertyChangedEventManager.CurrentManager.ProtectedRemoveListener(vp, listener);
+		}
 
-        protected override void StartListening(object source)
-        {
-            Viewport2D vp = (Viewport2D)source;
-            vp.PropertyChanged += ViewportPropertyChanged;
-        }
+		protected override void StartListening(object source)
+		{
+			Viewport2D vp = (Viewport2D)source;
+			vp.PropertyChanged += ViewportPropertyChanged;
+		}
 
-        void ViewportPropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
-        {
-            base.DeliverEvent(sender, e);
-        }
+		void ViewportPropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
+		{
+			base.DeliverEvent(sender, e);
+		}
 
-        protected override void StopListening(object source)
-        {
-            Viewport2D vp = (Viewport2D)source;
-            vp.PropertyChanged -= ViewportPropertyChanged; 
-        }
+		protected override void StopListening(object source)
+		{
+			Viewport2D vp = (Viewport2D)source;
+			vp.PropertyChanged -= ViewportPropertyChanged; 
+		}
 
-        private static ExtendedPropertyChangedEventManager CurrentManager
-        {
-            get
-            {
-                Type managerType = typeof(ExtendedPropertyChangedEventManager);
-                ExtendedPropertyChangedEventManager manager = (ExtendedPropertyChangedEventManager)WeakEventManager.GetCurrentManager(managerType);
-                if (manager == null)
-                {
-                    manager = new ExtendedPropertyChangedEventManager();
-                    WeakEventManager.SetCurrentManager(managerType, manager);
-                }
-                return manager;
-            }
-        }
-    }
+		private static ExtendedPropertyChangedEventManager CurrentManager
+		{
+			get
+			{
+				Type managerType = typeof(ExtendedPropertyChangedEventManager);
+				ExtendedPropertyChangedEventManager manager = (ExtendedPropertyChangedEventManager)WeakEventManager.GetCurrentManager(managerType);
+				if (manager == null)
+				{
+					manager = new ExtendedPropertyChangedEventManager();
+					WeakEventManager.SetCurrentManager(managerType, manager);
+				}
+				return manager;
+			}
+		}
+	}
 }

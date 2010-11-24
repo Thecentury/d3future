@@ -34,7 +34,7 @@ namespace DynamicDataDisplay.Markers.DataSources
 			get { return parts; }
 		}
 
-		protected override IEnumerable GetDataCore()
+		protected override IEnumerable GetDataCore(DataSourceEnvironment environment)
 		{
 			return new CompositeEnumerable(parts);
 		}

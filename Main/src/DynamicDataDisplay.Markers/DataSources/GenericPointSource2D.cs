@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections;
 using Microsoft.Research.DynamicDataDisplay.DataSources;
 using System.Windows;
+using System.Diagnostics.Contracts;
 
 namespace DynamicDataDisplay.Markers.DataSources
 {
@@ -12,15 +13,14 @@ namespace DynamicDataDisplay.Markers.DataSources
 	{
 		public GenericDataSource2D(IDataSource2D<T> dataSource)
 		{
-			if (dataSource == null)
-				throw new ArgumentNullException("dataSource");
+			Contract.Assert(dataSource != null);
 
 			this.dataSource = dataSource;
 		}
 
 		private readonly IDataSource2D<T> dataSource;
 
-		protected override IEnumerable GetDataCore()
+		protected override IEnumerable GetDataCore(DataSourceEnvironment environment)
 		{
 			int width = dataSource.Width;
 			int height = dataSource.Height;
@@ -36,11 +36,6 @@ namespace DynamicDataDisplay.Markers.DataSources
 					yield return piece;
 				}
 			}
-		}
-
-		public override IEnumerable GetData(int startingIndex)
-		{
-			throw new NotImplementedException();
 		}
 
 		public override object GetDataType()

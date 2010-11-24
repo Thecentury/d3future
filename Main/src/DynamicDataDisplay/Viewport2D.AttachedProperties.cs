@@ -87,7 +87,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 				Plotter2D plotter2d = element.Plotter as Plotter2D;
 				if (plotter2d != null)
 				{
-                    plotter2d.Viewport.UpdateContentBoundsHosts();
+					plotter2d.Viewport.UpdateContentBoundsHosts();
 				}
 			}
 		}

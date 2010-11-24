@@ -15,10 +15,14 @@ using System.Threading;
 
 namespace DynamicDataDisplay.Markers.DataSources
 {
-	public abstract class PointDataSourceBase : DispatcherObject, INotifyCollectionChanged, IDisposable
+	public abstract class PointDataSourceBase : INotifyCollectionChanged
 	{
 		#region Protected
 
+		/// <summary>
+		/// Tries to subscribe on collection changed event, if collection supports it.
+		/// </summary>
+		/// <param name="collection">The collection.</param>
 		protected void TrySubscribeOnCollectionChanged(object collection)
 		{
 			INotifyCollectionChanged observableCollection = collection as INotifyCollectionChanged;
@@ -26,6 +30,10 @@ namespace DynamicDataDisplay.Markers.DataSources
 				observableCollection.CollectionChanged += OnCollectionChanged;
 		}
 
+		/// <summary>
+		/// Tries to unsubscribe from collection changed event, if collection supports it.
+		/// </summary>
+		/// <param name="collection">The collection.</param>
 		protected void TryUnsubscribeFromCollectionChanged(object collection)
 		{
 			INotifyCollectionChanged observableCollection = collection as INotifyCollectionChanged;
@@ -33,123 +41,90 @@ namespace DynamicDataDisplay.Markers.DataSources
 				observableCollection.CollectionChanged -= OnCollectionChanged;
 		}
 
+		/// <summary>
+		/// Called when collection changes.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
 		protected virtual void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			CollectionChanged.Raise(this, e);
-		}
-
-		protected void RaiseCollectionChanged(NotifyCollectionChangedEventArgs e)
 		{
 			CollectionChanged.Raise(this, e);
 		}
 
 		#endregion // end of Protected
 
+		/// <summary>
+		/// Core method for getting data.
+		/// </summary>
+		/// <param name="environment">The environment.</param>
+		/// <returns></returns>
+		protected abstract IEnumerable GetDataCore(DataSourceEnvironment environment);
+
 		#region Public interface
 
+		/// <summary>
+		/// Occurs when the underlying collection changes.
+		/// </summary>
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
+		/// <summary>
+		/// Raises the collection reset event.
+		/// Can be used to notify about collection changed event when collection doesn't implement INotifyCollectionChanged interface.
+		/// </summary>
 		public void RaiseCollectionReset()
 		{
 			CollectionChanged.Raise(this);
 		}
 
-		[Obsolete]
-		public void RaiseAdded(object parameters)
+		/// <summary>
+		/// Gets the data, used by marker chart.
+		/// </summary>
+		/// <param name="environment">The environment.</param>
+		/// <returns></returns>
+		public IEnumerable GetData(DataSourceEnvironment environment)
 		{
-			throw new NotImplementedException();
-		}
+			IEnumerable data = GetDataCore(environment);
 
-		public IEnumerable GetData()
-		{
 			return data;
 		}
 
-		IEnumerable data;
-		public void PrepairData(bool async)
+		/// <summary>
+		/// Gets the point data, used by line chart.
+		/// </summary>
+		/// <param name="environment">The environment.</param>
+		/// <returns></returns>
+		public IEnumerable<Point> GetPointData(DataSourceEnvironment environment)
 		{
-			if (!async)
-			{
-				data = GetDataCore();
-			}
-			else
-			{
-#if  !RELEASEXBAP
-				ThreadPool.QueueUserWorkItem((unused) =>
-				{
-					// todo probably get rid of those tries and catches
-					try
-					{
-						data = GetDataCore();
-					}
-					catch (Exception exc)
-					{
-						Debug.WriteLine("Exception in PrepairData: " + exc.Message);
-						data = new Point[0]; // Empty set of points
-					}
-					try
-					{
-						DataPrepaired.Raise(this);
-					}
-					catch (Exception exc)
-					{
-						Debug.WriteLine("Exception in DataPrepaired event handler: " + exc.Message);
-					}
-				});//.WithExceptionThrowingInDispatcher(Dispatcher);
-#else 
-				data = GetDataCore();
-#endif
-			}
+			IEnumerable data = GetDataCore(environment);
+
+			return data.Cast<object>().Select(o => DataToPoint(o));
 		}
 
-		public event EventHandler DataPrepaired;
-
-		[Obsolete("Incomplete")]
-		public virtual IEnumerable GetData(int startingIndex)
+		/// <summary>
+		/// Gets the type of the data.
+		/// </summary>
+		/// <returns></returns>
+		public virtual object GetDataType()
 		{
-			throw new NotImplementedException();
+			return typeof(Object);
 		}
-
-		protected abstract IEnumerable GetDataCore();
-
-		public abstract object GetDataType();
-
-		private IDataSourceEnvironment environment = null;
-		public IDataSourceEnvironment Environment
-		{
-			get { return environment; }
-			set
-			{
-				environment = value;
-				OnEnvironmentChanged();
-			}
-		}
-
-		protected virtual void OnEnvironmentChanged()
-		{
-		}
-
-		private readonly NewFilterCollection filters = new NewFilterCollection();
 
 		#region Conversion delegates
 
+		/// <summary>
+		/// Gets or sets the data to point conversion delegate.
+		/// </summary>
+		/// <value>The data to point.</value>
 		public Func<object, Point> DataToPoint { get; set; }
+
+		/// <summary>
+		/// Gets or sets the point to data conversion delegate.
+		/// </summary>
+		/// <value>The point to data.</value>
 		public Func<Point, object> PointToData { get; set; }
 
 		#endregion // end of Conversion delegates
 
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public NewFilterCollection Filters { get { return filters; } }
-
 		#endregion // end of Public interface
-
-		#region IDisposable Members
-
-		public void Dispose()
-		{
-			filters.Clear();
-		}
-
-		#endregion
 	}
 }

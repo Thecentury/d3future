@@ -3,27 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Research.DynamicDataDisplay;
+using System.Windows;
 
 namespace DynamicDataDisplay.Markers.DataSources
 {
-	internal class DataSourceEnvironment : IDataSourceEnvironment
+	public class DataSourceEnvironment
 	{
-		#region IDataSourceEnvironment Members
+		public Rect Output { get; internal set; }
+		public DataRect Visible { get; internal set; }
+		public CoordinateTransform Transform { get; internal set; }
 
-		private Plotter2D plotter;
-		public Plotter2D Plotter
-		{
-			get { return plotter; }
-			internal set { this.plotter = value; }
-		}
-
-		private bool firstDraw = false;
-		public bool FirstDraw
-		{
-			get { return firstDraw; }
-			internal set { firstDraw = value; }
-		}
-
-		#endregion
+		public DataRect? ContentBounds { get; set; }
 	}
 }

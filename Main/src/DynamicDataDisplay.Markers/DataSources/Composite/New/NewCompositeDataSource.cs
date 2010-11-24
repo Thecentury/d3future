@@ -9,7 +9,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources.Composite.Ne
 {
 	public class NewCompositeDataSource : PointDataSourceBase
 	{
-		protected override IEnumerable GetDataCore()
+		protected override IEnumerable GetDataCore(DataSourceEnvironment environment)
 		{
 			throw new NotImplementedException();
 		}

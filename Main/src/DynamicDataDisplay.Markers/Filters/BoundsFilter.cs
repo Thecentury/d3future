@@ -11,7 +11,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Filters
 	{
 		protected internal override IEnumerable<IndexWrapper<Point>> Filter(IEnumerable<IndexWrapper<Point>> series)
 		{
-			var visible = this.Environment.Plotter.Viewport.Visible;
+			var visible = this.Environment.Visible;
 			var increasedVisible = visible.ZoomOutFromCenter(2.0);
 
 			return series.Where(wrapper => increasedVisible.Contains(wrapper.Data));

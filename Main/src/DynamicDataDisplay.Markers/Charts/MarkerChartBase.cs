@@ -133,17 +133,17 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				return;
 
 			var dataSource = DataSource;
-			dataSource.Environment = new DataSourceEnvironment { Plotter = this.Plotter, FirstDraw = true };
+			//dataSource.Environment = new DataSourceEnvironment { Plotter = this.Plotter, FirstDraw = true };
 
-			if (!continueAfterDataPrepaired)
-			{
-				dataSource.PrepairData(getDataAsyncronously);
-				if (getDataAsyncronously)
-				{
-					LongOperationsIndicator.BeginLongOperation(this);
-					return;
-				}
-			}
+			//if (!continueAfterDataPrepaired)
+			//{
+			//    dataSource.PrepairData(getDataAsyncronously);
+			//    if (getDataAsyncronously)
+			//    {
+			//        LongOperationsIndicator.BeginLongOperation(this);
+			//        return;
+			//    }
+			//}
 
 			CurrentItemsPanel.Children.Clear();
 
@@ -160,7 +160,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			if (viewportPanel != null)
 				viewportPanel.OverallViewportBounds = DataRect.Empty;
 
-			foreach (var dataItem in dataSource.GetData())
+			// todo here should be not null, but DataSourceEnvironment
+			foreach (var dataItem in dataSource.GetData(null))
 			{
 				CreateAndAddMarker(dataItem, lastIndex);
 				lastIndex++;

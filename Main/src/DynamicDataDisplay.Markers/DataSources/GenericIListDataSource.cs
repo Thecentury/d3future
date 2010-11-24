@@ -25,14 +25,9 @@ namespace DynamicDataDisplay.Markers.DataSources
 			get { return collection; }
 		}
 
-		protected override IEnumerable GetDataCore()
+		protected override IEnumerable GetDataCore(DataSourceEnvironment environment)
 		{
 			return collection;
-		}
-
-		public override IEnumerable GetData(int startingIndex)
-		{
-			throw new NotImplementedException();
 		}
 
 		public override object GetDataType()

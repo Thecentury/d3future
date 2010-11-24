@@ -131,7 +131,6 @@
     <Compile Include="DataSources\Composite\DynamicItem.cs" />
     <Compile Include="DataSources\Composite\New\NewCompositeDataSource.cs" />
     <Compile Include="DataSources\DataSource2DPiece.cs" />
-    <Compile Include="DataSources\DataSourceEnvironment.cs" />
     <Compile Include="DataSources\DataSourceFactories\DataSourceDataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\DataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\DataSourceFactoryStore.cs" />
@@ -149,7 +148,7 @@
     <Compile Include="DataSources\GenericIEnumerableDataSource.cs" />
     <Compile Include="DataSources\GenericIListDataSource.cs" />
     <Compile Include="DataSources\GenericPointSource2D.cs" />
-    <Compile Include="DataSources\IDataSourceEnvironment.cs" />
+    <Compile Include="DataSources\DataSourceEnvironment.cs" />
     <Compile Include="DataSources\IEnumerableHelper.cs" />
     <Compile Include="DataSources\PointArrayDataSource.cs" />
     <Compile Include="DataSources\ValueConvertersFactories\CharValueConverterFactory.cs" />

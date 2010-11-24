@@ -23,12 +23,7 @@ namespace DynamicDataDisplay.Markers.DataSources
 			this.xmlElement = xmlElement;
 		}
 
-		public override IEnumerable GetData(int startingIndex)
-		{
-			throw new NotImplementedException();
-		}
-
-		protected override IEnumerable GetDataCore()
+		protected override IEnumerable GetDataCore(DataSourceEnvironment environment)
 		{
 			var xmlElement = this.xmlElement;
 			do

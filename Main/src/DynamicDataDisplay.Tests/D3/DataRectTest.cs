@@ -71,5 +71,127 @@ namespace DynamicDataDisplay.Tests.D3
 
 			Assert.AreEqual(Double.PositiveInfinity, r.Width);
 		}
+
+		[TestMethod]
+		public void UniteWithEndlessRect()
+		{
+			DataRect endless = DataRect.Create(0, 0, Double.PositiveInfinity, 1);
+			DataRect r = DataRect.Create(-1, -1, 2, 2);
+
+			DataRect union = endless;
+			union.Union(r);
+
+			Assert.AreEqual(DataRect.Create(-1, -1, Double.PositiveInfinity, 2), union);
+		}
+
+		[TestMethod]
+		public void UniteWithEmptyRect()
+		{
+			DataRect empty = DataRect.Empty;
+			DataRect pointRect = new DataRect(new Point(0, 0), new Vector(0, 0));
+
+			empty.Union(pointRect);
+
+			Assert.AreEqual(new Point(0, 0), empty.Location);
+			Assert.AreEqual(0, empty.Width);
+			Assert.AreEqual(0, empty.Height);
+		}
+
+		[TestMethod]
+		public void UniteWithEmptyRectAndFiniteRect()
+		{
+			DataRect empty = DataRect.Empty;
+			DataRect pointRect = new DataRect(new Point(0, 1), new Vector(2, 3));
+
+			empty.Union(pointRect);
+
+			Assert.AreEqual(new Point(0, 1), empty.Location);
+			Assert.AreEqual(2, empty.Width);
+			Assert.AreEqual(3, empty.Height);
+		}
+
+		[TestMethod]
+		public void UnionXWithEmpty()
+		{
+			DataRect empty = DataRect.Empty;
+
+			empty.UnionX(0);
+
+			Assert.AreEqual(0, empty.XMin);
+
+			empty.UnionX(1);
+
+			Assert.AreEqual(0, empty.XMin);
+			Assert.AreEqual(1, empty.Width);
+		}
+
+		[TestMethod]
+		public void UnionYWithEmpty()
+		{
+			DataRect empty = DataRect.Empty;
+
+			empty.UnionY(0);
+
+			Assert.AreEqual(0, empty.YMin);
+
+			empty.UnionY(1);
+
+			Assert.AreEqual(0, empty.YMin);
+			Assert.AreEqual(1, empty.Height);
+		}
+
+		[TestMethod]
+		public void UnionX()
+		{
+			DataRect rect = new DataRect(0, 0, 1, 1);
+
+			rect.UnionX(0.5);
+
+			Assert.AreEqual(0, rect.XMin);
+			Assert.AreEqual(1, rect.Width);
+			Assert.AreEqual(0, rect.YMin);
+			Assert.AreEqual(1, rect.Height);
+
+			rect.UnionX(-1);
+
+			Assert.AreEqual(-1, rect.XMin);
+			Assert.AreEqual(2, rect.Width);
+			Assert.AreEqual(0, rect.YMin);
+			Assert.AreEqual(1, rect.Height);
+
+			rect.UnionX(2);
+
+			Assert.AreEqual(-1, rect.XMin);
+			Assert.AreEqual(3, rect.Width);
+			Assert.AreEqual(0, rect.YMin);
+			Assert.AreEqual(1, rect.Height);
+		}
+
+		[TestMethod]
+		public void UnionY()
+		{
+			DataRect rect = new DataRect(0, 0, 1, 1);
+
+			rect.UnionY(0.5);
+
+			Assert.AreEqual(0, rect.XMin);
+			Assert.AreEqual(1, rect.Width);
+			Assert.AreEqual(0, rect.YMin);
+			Assert.AreEqual(1, rect.Height);
+
+			rect.UnionY(-1);
+
+			Assert.AreEqual(0, rect.XMin);
+			Assert.AreEqual(1, rect.Width);
+			Assert.AreEqual(-1, rect.YMin);
+			Assert.AreEqual(2, rect.Height);
+
+			rect.UnionY(2);
+
+			Assert.AreEqual(0, rect.XMin);
+			Assert.AreEqual(1, rect.Width);
+			Assert.AreEqual(-1, rect.YMin);
+			Assert.AreEqual(3, rect.Height);
+		}
 	}
 }

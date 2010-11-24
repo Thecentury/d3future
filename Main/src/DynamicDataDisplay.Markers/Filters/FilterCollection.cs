@@ -38,7 +38,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Filters
 			item.Changed -= OnItemChanged;
 		}
 
-		internal IEnumerable<IndexWrapper<Point>> Filter(IEnumerable<IndexWrapper<Point>> points, IDataSourceEnvironment environment)
+		internal IEnumerable<IndexWrapper<Point>> Filter(IEnumerable<IndexWrapper<Point>> points, DataSourceEnvironment environment)
 		{
 			foreach (var filter in Items)
 			{

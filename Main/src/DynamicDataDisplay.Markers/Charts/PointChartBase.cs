@@ -34,9 +34,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		protected PointChartBase()
 		{
 			AttachToItemsPanel();
-
-			filters.CollectionChanged += filters_CollectionChanged;
-
 		}
 
 		protected void AttachToItemsPanel()
@@ -63,7 +60,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 					viewportItemsPanel.OnPlotterAttached(plotter);
 				}
 			}
-
 			else
 			{
 				this.Content = currentItemsPanel;
@@ -308,14 +304,14 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			if (prevSource != null)
 			{
 				prevSource.CollectionChanged -= OnDataSourceChanged;
-				prevSource.DataPrepaired -= DataSource_OnDataPrepaired;
+				//prevSource.DataPrepaired -= DataSource_OnDataPrepaired;
 			}
 			if (currSource != null)
 			{
 				currSource.CollectionChanged += OnDataSourceChanged;
-				currSource.DataPrepaired += DataSource_OnDataPrepaired;
+				//currSource.DataPrepaired += DataSource_OnDataPrepaired;
 
-				currSource.Filters.AddMany(filters);
+				//currSource.Filters.AddMany(filters);
 			}
 
 			RaiseDataSourceReplaced(prevSource, currSource);
@@ -483,36 +479,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		}
 
 		#endregion // Mappings
-
-		#region Filters
-
-		private readonly NewFilterCollection filters = new NewFilterCollection();
-		public NewFilterCollection Filters
-		{
-			get { return filters; }
-		}
-
-		private void filters_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			if (e.Action == NotifyCollectionChangedAction.Reset)
-			{
-				// todo is dirty.
-				OnDataSourceChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-			}
-			else
-			{
-				var dataSource = DataSource;
-				if (dataSource != null)
-				{
-					using (dataSource.Filters.BlockEvents(true))
-					{
-						dataSource.Filters.ApplyChanges(e);
-					}
-				}
-			}
-		}
-
-		#endregion // end of Filters
 
 		#endregion
 

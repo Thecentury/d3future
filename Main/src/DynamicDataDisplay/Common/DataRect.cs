@@ -20,6 +20,15 @@ namespace Microsoft.Research.DynamicDataDisplay
 	[TypeConverter(typeof(DataRectConverter))]
 	public struct DataRect : IEquatable<DataRect>, IFormattable
 	{
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+		private double xMin;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+		private double yMin;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+		private double width;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+		private double height;
+
 		#region Ctors
 
 		/// <summary>
@@ -128,22 +137,49 @@ namespace Microsoft.Research.DynamicDataDisplay
 			return rect;
 		}
 
+		/// <summary>
+		/// Creates DataRect from the points.
+		/// </summary>
+		/// <param name="x1">The x1.</param>
+		/// <param name="y1">The y1.</param>
+		/// <param name="x2">The x2.</param>
+		/// <param name="y2">The y2.</param>
+		/// <returns></returns>
 		public static DataRect FromPoints(double x1, double y1, double x2, double y2)
 		{
 			return new DataRect(new Point(x1, y1), new Point(x2, y2));
 		}
 
+		/// <summary>
+		/// Creates DataRect from the size and coordinates of its center.
+		/// </summary>
+		/// <param name="center">The center.</param>
+		/// <param name="width">The width.</param>
+		/// <param name="height">The height.</param>
+		/// <returns></returns>
 		public static DataRect FromCenterSize(Point center, double width, double height)
 		{
 			DataRect rect = new DataRect(center.X - width / 2, center.Y - height / 2, width, height);
 			return rect;
 		}
 
+		/// <summary>
+		/// Creates DataRect from the size and coordinates of its center.
+		/// </summary>
+		/// <param name="center">The center.</param>
+		/// <param name="size">The size.</param>
+		/// <returns></returns>
 		public static DataRect FromCenterSize(Point center, Size size)
 		{
 			return FromCenterSize(center, size.Width, size.Height);
 		}
 
+		/// <summary>
+		/// Intersects with the specified rectangle.
+		/// </summary>
+		/// <param name="rect1">The rect1.</param>
+		/// <param name="rect2">The rect2.</param>
+		/// <returns></returns>
 		public static DataRect Intersect(DataRect rect1, DataRect rect2)
 		{
 			rect1.Intersect(rect2);
@@ -157,11 +193,19 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		#endregion
 
+		/// <summary>
+		/// Converts to WPF rect.
+		/// </summary>
+		/// <returns></returns>
 		public Rect ToRect()
 		{
 			return new Rect(xMin, yMin, width, height);
 		}
 
+		/// <summary>
+		/// Intersects with the specified rect.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
 		public void Intersect(DataRect rect)
 		{
 			if (!IntersectsWith(rect))
@@ -182,6 +226,11 @@ namespace Microsoft.Research.DynamicDataDisplay
 			this = res;
 		}
 
+		/// <summary>
+		/// Intersects with the specified rect.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <returns></returns>
 		public bool IntersectsWith(DataRect rect)
 		{
 			if (IsEmpty || rect.IsEmpty)
@@ -189,11 +238,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 			return ((((rect.XMin <= this.XMax) && (rect.XMax >= this.XMin)) && (rect.YMax >= this.YMin)) && (rect.YMin <= this.YMax));
 		}
-
-		private double xMin;
-		private double yMin;
-		private double width;
-		private double height;
 
 		/// <summary>
 		/// Gets a value indicating whether this instance is empty.
@@ -205,7 +249,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		}
 
 		/// <summary>
-		/// Gets the bottom.
+		/// Gets the minimal y coordinate.
 		/// </summary>
 		/// <value>The bottom.</value>
 		public double YMin
@@ -283,11 +327,19 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
+		/// <summary>
+		/// Gets the point with coordinates X max Y max.
+		/// </summary>
+		/// <value>The X max Y max.</value>
 		public Point XMaxYMax
 		{
 			get { return new Point(XMax, YMax); }
 		}
 
+		/// <summary>
+		/// Gets the point with coordinates X min Y min.
+		/// </summary>
+		/// <value>The X min Y min.</value>
 		public Point XMinYMin
 		{
 			get { return new Point(xMin, yMin); }
@@ -323,6 +375,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the width.
+		/// </summary>
+		/// <value>The width.</value>
 		public double Width
 		{
 			get { return width; }
@@ -337,6 +393,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the height.
+		/// </summary>
+		/// <value>The height.</value>
 		public double Height
 		{
 			get { return height; }
@@ -351,11 +411,19 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
+		/// <summary>
+		/// Gets the horizontal range.
+		/// </summary>
+		/// <value>The horizontal range.</value>
 		public Range<double> HorizontalRange
 		{
 			get { return new Range<double>(xMin, XMax); }
 		}
 
+		/// <summary>
+		/// Gets the vertical range.
+		/// </summary>
+		/// <value>The vertical range.</value>
 		public Range<double> VerticalRange
 		{
 			get { return new Range<double>(yMin, YMax); }
@@ -363,6 +431,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		private static readonly DataRect emptyRect = CreateEmptyRect();
 
+		/// <summary>
+		/// Gets the empty rectangle.
+		/// </summary>
+		/// <value>The empty.</value>
 		public static DataRect Empty
 		{
 			get { return DataRect.emptyRect; }
@@ -379,6 +451,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 		}
 
 		private static readonly DataRect infinite = new DataRect(Double.MinValue / 2, Double.MinValue / 2, Double.MaxValue, Double.MaxValue);
+		/// <summary>
+		/// Gets the infinite dataRect.
+		/// </summary>
+		/// <value>The infinite.</value>
 		public static DataRect Infinite
 		{
 			get { return infinite; }
@@ -512,11 +588,25 @@ namespace Microsoft.Research.DynamicDataDisplay
 				y <= YMax;
 		}
 
+		/// <summary>
+		/// Determines whether rectangle contains the specified point.
+		/// </summary>
+		/// <param name="point">The point.</param>
+		/// <returns>
+		/// 	<c>true</c> if [contains] [the specified point]; otherwise, <c>false</c>.
+		/// </returns>
 		public bool Contains(Point point)
 		{
 			return Contains(point.X, point.Y);
 		}
 
+		/// <summary>
+		/// Determines whether rectangle contains the specified rect.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <returns>
+		/// 	<c>true</c> if [contains] [the specified rect]; otherwise, <c>false</c>.
+		/// </returns>
 		public bool Contains(DataRect rect)
 		{
 			if (this.IsEmpty || rect.IsEmpty)
@@ -529,6 +619,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 				this.YMax >= rect.YMax;
 		}
 
+		/// <summary>
+		/// Offsets at the specified vector.
+		/// </summary>
+		/// <param name="offsetVector">The offset vector.</param>
 		public void Offset(Vector offsetVector)
 		{
 			if (this.IsEmpty)
@@ -538,6 +632,11 @@ namespace Microsoft.Research.DynamicDataDisplay
 			this.yMin += offsetVector.Y;
 		}
 
+		/// <summary>
+		/// Offsets at the specified offset.
+		/// </summary>
+		/// <param name="offsetX">The offset X.</param>
+		/// <param name="offsetY">The offset Y.</param>
 		public void Offset(double offsetX, double offsetY)
 		{
 			if (this.IsEmpty)
@@ -547,6 +646,13 @@ namespace Microsoft.Research.DynamicDataDisplay
 			this.yMin += offsetY;
 		}
 
+		/// <summary>
+		/// Offsets the specified rect at values.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <param name="offsetX">The offset X.</param>
+		/// <param name="offsetY">The offset Y.</param>
+		/// <returns></returns>
 		public static DataRect Offset(DataRect rect, double offsetX, double offsetY)
 		{
 			rect.Offset(offsetX, offsetY);
@@ -570,6 +676,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 			Union(rect);
 		}
 
+		/// <summary>
+		/// Unions with the specified rect.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
 		public void Union(DataRect rect)
 		{
 			if (IsEmpty)
@@ -607,11 +717,63 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
+		/// <summary>
+		/// Unions rect with the specified point.
+		/// </summary>
+		/// <param name="point">The point.</param>
 		public void Union(Point point)
 		{
 			this.Union(new DataRect(point, point));
 		}
 
+		/// <summary>
+		/// Unions rect with specified x-coordinate.
+		/// </summary>
+		/// <param name="x">The x.</param>
+		public void UnionX(double x)
+		{
+			if (Double.IsInfinity(xMin)) // empty
+			{
+				xMin = x;
+			}
+			else if (xMin < x)
+			{
+				width = Math.Max(width, x - xMin);
+			}
+			else // xMin > x
+			{
+				width += xMin - x;
+				xMin = x;
+			}
+		}
+
+		/// <summary>
+		/// Unions rect with specified y-coordinate.
+		/// </summary>
+		/// <param name="y">The y.</param>
+		public void UnionY(double y)
+		{
+			if (Double.IsInfinity(yMin)) // empty
+			{
+				yMin = y;
+			}
+			else if (yMin < y)
+			{
+				height = Math.Max(height, y - yMin);
+			}
+			else // yMin > y
+			{
+				height += yMin - y;
+				yMin = y;
+			}
+		}
+
+		/// <summary>
+		/// Unions with the specified rect.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <param name="point">The point.</param>
+		/// <returns></returns>
 		public static DataRect Union(DataRect rect, Point point)
 		{
 			rect.Union(point);
@@ -619,6 +781,12 @@ namespace Microsoft.Research.DynamicDataDisplay
 			return rect;
 		}
 
+		/// <summary>
+		/// Unions with the specified rect.
+		/// </summary>
+		/// <param name="rect1">The rect1.</param>
+		/// <param name="rect2">The rect2.</param>
+		/// <returns></returns>
 		public static DataRect Union(DataRect rect1, DataRect rect2)
 		{
 			rect1.Union(rect2);
@@ -688,6 +856,14 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		#region IFormattable Members
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// </summary>
+		/// <param name="format">The format.</param>
+		/// <param name="formatProvider">The format provider.</param>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents this instance.
+		/// </returns>
 		string IFormattable.ToString(string format, IFormatProvider formatProvider)
 		{
 			return ConvertToString(format, formatProvider);

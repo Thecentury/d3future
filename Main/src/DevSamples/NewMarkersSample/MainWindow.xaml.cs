@@ -40,11 +40,11 @@ namespace NewMarkersSample
 		{
 			//AddPage(new BigPointArrayPage());
 			//AddPage(new BarChartPage());
-			AddPage(new BarChartDataTriggerPage());
+			//AddPage(new BarChartDataTriggerPage());
 			//AddPage(new LiveTooltipPage());
 			//AddPage(new ColumnChartSample());
 			//AddPage(new AcceptableValuePage());
-			//AddPage(new PieChartPage());
+			AddPage(new PieChartPage());
 			//AddPage(new StockMarkersPage());
 			//AddPage(new CompositeDSPage());
 			//AddPage(new DifferentBuildInMarkersPage());

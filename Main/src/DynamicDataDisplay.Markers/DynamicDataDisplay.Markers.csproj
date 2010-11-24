@@ -145,6 +145,7 @@
     <Compile Include="DataSources\DataSourceFactories\XmlElementFactory.cs" />
     <Compile Include="DataSources\EnumerableDataSource.cs" />
     <Compile Include="DataSources\EnumerablePointDataSource.cs" />
+    <Compile Include="DataSources\DoubleFuncDataSource.cs" />
     <Compile Include="DataSources\GenericIEnumerableDataSource.cs" />
     <Compile Include="DataSources\GenericIListDataSource.cs" />
     <Compile Include="DataSources\GenericPointSource2D.cs" />

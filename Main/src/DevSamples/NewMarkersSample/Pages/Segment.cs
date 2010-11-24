@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using Microsoft.Research.DynamicDataDisplay;
+using System.Diagnostics;
 
 namespace NewMarkersSample
 {
+	[DebuggerDisplay("{X}, {YMin} - {YMax}")]
 	public class Segment : INotifyPropertyChanged
 	{
 		private double yMin;

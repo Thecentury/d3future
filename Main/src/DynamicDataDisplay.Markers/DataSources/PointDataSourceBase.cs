@@ -74,7 +74,7 @@ namespace DynamicDataDisplay.Markers.DataSources
 			}
 			else
 			{
-#if !RELEASEXBAP
+#if  !RELEASEXBAP
 				ThreadPool.QueueUserWorkItem((unused) =>
 				{
 					// todo probably get rid of those tries and catches

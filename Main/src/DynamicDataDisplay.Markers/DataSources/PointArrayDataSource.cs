@@ -6,6 +6,7 @@ using Microsoft.Research.DynamicDataDisplay.Charts.NewLine;
 using System.Collections;
 using System.Windows;
 using Microsoft.Research.DynamicDataDisplay.Filters;
+using System.Diagnostics.Contracts;
 
 namespace DynamicDataDisplay.Markers.DataSources
 {
@@ -13,8 +14,7 @@ namespace DynamicDataDisplay.Markers.DataSources
 	{
 		public PointArrayDataSource(Point[] collection)
 		{
-			if (collection == null)
-				throw new ArgumentNullException("data");
+			Contract.Assert(collection != null);
 
 			this.collection = collection;
 		}

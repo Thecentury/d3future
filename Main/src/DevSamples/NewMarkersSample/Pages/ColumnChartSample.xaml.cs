@@ -60,12 +60,14 @@ namespace NewMarkersSample.Pages
 
 		private void insertBtn_Click(object sender, RoutedEventArgs e)
 		{
-			values.Insert(values.Count - 3, rnd.NextDouble() + 0.2);
+			if (values.Count > 3)
+				values.Insert(values.Count - 3, rnd.NextDouble() + 0.2);
 		}
 
 		private void deleteBtn_Click(object sender, RoutedEventArgs e)
 		{
-			values.RemoveAt(0);
+			if (values.Count > 0)
+				values.RemoveAt(0);
 		}
 	}
 }

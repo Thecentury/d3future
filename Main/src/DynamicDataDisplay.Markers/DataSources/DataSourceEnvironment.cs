@@ -9,9 +9,9 @@ namespace DynamicDataDisplay.Markers.DataSources
 {
 	public class DataSourceEnvironment
 	{
-		public Rect Output { get; internal set; }
-		public DataRect Visible { get; internal set; }
-		public CoordinateTransform Transform { get; internal set; }
+		public Rect Output { get; set; }
+		public DataRect Visible { get; set; }
+		public CoordinateTransform Transform { get; set; }
 
 		public DataRect? ContentBounds { get; set; }
 	}

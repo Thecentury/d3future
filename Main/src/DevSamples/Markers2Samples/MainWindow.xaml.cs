@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Research.DynamicDataDisplay.Markers2;
 
 namespace Markers2Samples
 {
@@ -22,6 +23,13 @@ namespace Markers2Samples
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			Loaded += new RoutedEventHandler(MainWindow_Loaded);
+		}
+
+		void MainWindow_Loaded(object sender, RoutedEventArgs e)
+		{
+			lineChart.ItemsSource = new Func<double, double>(i => Math.Sin(i * 10));
 		}
 	}
 }

@@ -134,6 +134,7 @@
     <Compile Include="DataSources\DataSourceFactories\DataSourceDataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\DataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\DataSourceFactoryStore.cs" />
+    <Compile Include="DataSources\DataSourceFactories\DoubleFuncDataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\EnumerableDataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\GenericIEnumerableFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\GenericIListFactory.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="DataSources\ValueConverters\GenericLambdaConverter.cs" />
     <Compile Include="DataSources\ValueConverters\LambdaMultiConverter.cs" />
     <Compile Include="DataSources\XmlElementDataSource.cs" />
+    <Compile Include="Extensions\PointDataSourceBaseExtensions.cs" />
     <Compile Include="Filters\GroupFilter.cs" />
     <Compile Include="Filters\IndexWrapper.cs" />
     <Compile Include="Filters\IndexWrapperGeneric.cs" />

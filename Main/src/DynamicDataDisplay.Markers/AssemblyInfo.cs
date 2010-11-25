@@ -1,6 +1,7 @@
 ﻿using System.Windows.Markup;
 using Microsoft.Research.DynamicDataDisplay;
 using System.Security;
+using System.Runtime.CompilerServices;
 
 [assembly: XmlnsDefinition(D3AssemblyConstants.DefaultXmlNamespace, "Microsoft.Research.DynamicDataDisplay.Charts")]
 [assembly: XmlnsDefinition(D3AssemblyConstants.DefaultXmlNamespace, "DynamicDataDisplay.Markers")]

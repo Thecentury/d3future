@@ -11,6 +11,7 @@ syntax: glob
 *.suo
 *.log
 *.scc
+*.vs10x
 [Bb]in
 [Dd]ebug*/
 obj/

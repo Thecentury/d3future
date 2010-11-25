@@ -9,12 +9,24 @@ using DynamicDataDisplay.Markers.DataSources;
 using System.Collections;
 using Microsoft.Research.DynamicDataDisplay.DataSources.MultiDimensional;
 using System.Xml;
+using Microsoft.Research.DynamicDataDisplay.Markers.DataSources;
 
 namespace DynamicDataDisplay.Tests.D3.Markers
 {
 	[TestClass]
 	public class DataSourceFactoriesTest
 	{
+		[TestMethod]
+		public void CreateDataSourceFromFuncDoubleDouble()
+		{
+			var func = new Func<double, double>(i => i);
+			var store = DataSourceFactoryStore.Current;
+
+			var ds = store.BuildDataSource(func);
+
+			Assert.IsInstanceOfType(ds, typeof(DoubleFuncDataSource));
+		}
+
 		[TestMethod]
 		public void CreateDataSourceFromDataSource()
 		{

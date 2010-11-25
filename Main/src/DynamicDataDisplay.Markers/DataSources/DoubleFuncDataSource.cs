@@ -9,8 +9,13 @@ using System.Windows;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 {
-	class DoubleFuncDataSource : PointDataSourceBase
+	/// <summary>
+	/// Represents a data source whcih creates points using delegate Func&lt;double, double&gt; as a generator.
+	/// </summary>
+	public sealed class DoubleFuncDataSource : PointDataSourceBase
 	{
+		private readonly Func<double, double> func = null;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DoubleFuncDataSource"/> class.
 		/// </summary>
@@ -20,9 +25,21 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 			this.PointToData = p => p;
 		}
 
-		private readonly Func<double, double> func = null;
+		/// <summary>
+		/// Gets the func.
+		/// </summary>
+		/// <value>The func.</value>
+		public Func<double, double> Func
+		{
+			get { return func; }
+		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DoubleFuncDataSource"/> class.
+		/// </summary>
+		/// <param name="func">The func.</param>
 		public DoubleFuncDataSource(Func<double, double> func)
+			: this()
 		{
 			Contract.Assert(func != null);
 
@@ -37,7 +54,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 			double yMin = Double.PositiveInfinity;
 			double yMax = Double.NegativeInfinity;
 
-			for (double x = output.Left; x <= output.Right; x++)
+			for (double x = output.Left; x <= output.Right; x += 1)
 			{
 				// todo should here go ScreenToData?
 				double dataX = transform.ScreenToViewport(new Point(x, 0)).X;

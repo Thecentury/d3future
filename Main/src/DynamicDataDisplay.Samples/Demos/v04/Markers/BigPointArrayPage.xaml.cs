@@ -58,7 +58,10 @@ namespace NewMarkersSample.Pages
 
 			//markerChart.Filters.Add(new BoundsFilter());
 			//markerChart.Filters.Add(new ParallelUnitingPointGroupFilter());
-			markerChart.Filters.Add(new ParallelClusteringFilter { MarkerSize = 8 });
+
+			// todo was uncommented
+			//markerChart.Filters.Add(new ParallelClusteringFilter { MarkerSize = 8 });
+			
 			//markerChart.Filters.Add(new UnitingPointGroupFilter { MarkerSize = 6 });
 			markerChart.GetDataAsyncronously = true;
 			//markerChart.ShowMarkersConsequently = false;

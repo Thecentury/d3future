@@ -5,12 +5,33 @@ using System.Text;
 using System.Windows;
 using DynamicDataDisplay.Markers.DataSources;
 using DynamicDataDisplay.Markers.DataSources.DataSourceFactories;
+using System.Diagnostics.Contracts;
+using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
 	public abstract class MarkerChartBase : DependencyObject, IPlotterElement
 	{
 		private Plotter2D plotter = null;
+
+		#region Helpers
+
+		protected DataSourceEnvironment CreateEnvironment()
+		{
+			Contract.Assert(plotter != null);
+
+			Viewport2D viewport = plotter.Viewport;
+
+			DataSourceEnvironment result = new DataSourceEnvironment
+			{
+				Output = viewport.Output,
+				Visible = viewport.Visible,
+				Transform = viewport.Transform
+			};
+			return result;
+		}
+
+		#endregion
 
 		#region ItemsSource
 
@@ -45,7 +66,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 				var store = DataSourceFactoryStore.Current;
 				var dataSource = store.BuildDataSource(itemsSource);
 
-				if (dataSource != null) {
+				if (dataSource != null)
+				{
 					DataSource = dataSource;
 				}
 				else
@@ -102,6 +124,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		}
 
 		Plotter IPlotterElement.Plotter
+		{
+			get { return plotter; }
+		}
+
+		protected Plotter2D Plotter
 		{
 			get { return plotter; }
 		}

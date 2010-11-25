@@ -6,7 +6,7 @@
 		Title="MainWindow" Height="350" Width="525">
 	<Grid>
 		<d3:ChartPlotter>
-			<df:LineChart/>
+			<df:LineChart x:Name="lineChart"/>
 		</d3:ChartPlotter>
 	</Grid>
 </Window>

@@ -81,12 +81,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 
 			canvas.Children.Add(path);
 
-			canvas.Background = Brushes.Aqua;
-			panel.Background = Brushes.CornflowerBlue.MakeTransparent(0.3);
-
-			Rectangle r = new Rectangle { Stroke = Brushes.Chartreuse, StrokeThickness = 2 };
-			ViewportPanel.SetViewportBounds(r, new DataRect(0.3, 0.3, 0.6, 0.6));
-			panel.Children.Add(r);
+			//canvas.Background = Brushes.Aqua.MakeTransparent(0.2);
+			//panel.Background = Brushes.CornflowerBlue.MakeTransparent(0.3);
 
 			ViewportPanel.SetViewportBounds(canvas, environment.Visible);
 
@@ -104,21 +100,18 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		{
 			Viewport2D viewport = Plotter.Viewport;
 
-			bool visibleChangedSignificantly = !DataRect.EqualsEpsSizes(viewport.Visible, VisibleWhileCreation, rectanglesEps);
-			bool outputChangedSignificantly = !DataRect.EqualsEpsSizes(new DataRect(viewport.Output), new DataRect(OutputWhileCreation), rectanglesEps);
+			DataSourceEnvironment environment = EnvironmentPlugin.CreateEnvironment(viewport);
 
-			if (visibleChangedSignificantly || outputChangedSignificantly)
+			bool visibleChangedSignificantly = !DataRect.EqualsEpsSizes(environment.Visible, VisibleWhileCreation, rectanglesEps);
+			bool outputChangedSignificantly = !DataRect.EqualsEpsSizes(new DataRect(environment.Output), new DataRect(OutputWhileCreation), rectanglesEps);
+			bool visibleIsOutOfVisibleWhileCreation = !VisibleWhileCreation.Contains(viewport.Visible);
+
+			if (visibleChangedSignificantly || outputChangedSignificantly || visibleIsOutOfVisibleWhileCreation)
 			{
 				DestroyUIRepresentation();
 				CreateUIRepresentation();
 				return;
 			}
-
-			Vector shift = viewport.Output.Location - OutputWhileCreation.Location;
-			TranslateTransform translate = new TranslateTransform(shift.X, shift.Y);
-
-			TransformGroup group = new TransformGroup();
-			group.Children.Add(translate);
 		}
 
 		private void DestroyUIRepresentation()

@@ -9,16 +9,16 @@ using System.Diagnostics.Contracts;
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
 	/// <summary>
-	/// Represents EnvironmentPlugin which enlarges Visible and Output rectangles in specified amount of times, default is 3.
+	/// Represents EnvironmentPlugin which enlarges Visible and Output rectangles in specified amount of times, default is 2.
 	/// </summary>
 	public sealed class DefaultLineChartEnvironmentPlugin : EnvironmentPlugin
 	{
-		private readonly double enlargeFactor = 3.0;
+		private readonly double enlargeFactor = 2.0;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultLineChartEnvironmentPlugin"/> class with default enlargeFactor = 3.
+		/// Initializes a new instance of the <see cref="DefaultLineChartEnvironmentPlugin"/> class with default enlargeFactor = 2.
 		/// </summary>
-		public DefaultLineChartEnvironmentPlugin(){}
+		public DefaultLineChartEnvironmentPlugin() { }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DefaultLineChartEnvironmentPlugin"/> class with the specified enlargeFactor.

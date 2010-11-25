@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="EnvironmentPlugins\DefaultLineEnvironmentPlugin.cs" />
+    <Compile Include="EnvironmentPlugins\DefaultLineChartEnvironmentPlugin.cs" />
     <Compile Include="EnvironmentPlugins\EnvironmentPlugin.cs" />
     <Compile Include="LineChart.cs" />
     <Compile Include="LineChartBase.cs" />

@@ -13,7 +13,7 @@ syntax: glob
 *.scc
 *.vs10x
 [Bb]in
-[Dd]ebug*/
+[Dd]ebug/
 obj/
-[Rr]elease*/
+[Rr]elease/
 [Tt]est[Rr]esults

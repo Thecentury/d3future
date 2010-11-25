@@ -61,7 +61,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		#region IPlotterElement Members
 
 		private Plotter2D plotter;
-		protected Plotter2D Plotter
+		public Plotter2D Plotter
 		{
 			get { return plotter; }
 		}

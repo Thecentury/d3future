@@ -11,20 +11,20 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 	/// <summary>
 	/// Represents EnvironmentPlugin which enlarges Visible and Output rectangles in specified amount of times, default is 3.
 	/// </summary>
-	public sealed class DefaultLineEnvironmentPlugin : EnvironmentPlugin
+	public sealed class DefaultLineChartEnvironmentPlugin : EnvironmentPlugin
 	{
 		private readonly double enlargeFactor = 3.0;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultLineEnvironmentPlugin"/> class with default enlargeFactor = 3.
+		/// Initializes a new instance of the <see cref="DefaultLineChartEnvironmentPlugin"/> class with default enlargeFactor = 3.
 		/// </summary>
-		public DefaultLineEnvironmentPlugin(){}
+		public DefaultLineChartEnvironmentPlugin(){}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultLineEnvironmentPlugin"/> class with the specified enlargeFactor.
+		/// Initializes a new instance of the <see cref="DefaultLineChartEnvironmentPlugin"/> class with the specified enlargeFactor.
 		/// </summary>
 		/// <param name="enlargeFactor">The enlarge factor.</param>
-		public DefaultLineEnvironmentPlugin(double enlargeFactor)
+		public DefaultLineChartEnvironmentPlugin(double enlargeFactor)
 		{
 			Contract.Assert(!Double.IsNaN(enlargeFactor));
 			Contract.Assert(enlargeFactor > 0);

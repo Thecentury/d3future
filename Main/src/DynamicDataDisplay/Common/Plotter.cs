@@ -503,8 +503,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
-		private readonly Stack<IPlotterElement> addingElements = new Stack<IPlotterElement>();
-
 		bool performChildChecks = true;
 		internal bool PerformChildChecks
 		{
@@ -522,7 +520,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 		{
 			if (child != null)
 			{
-				addingElements.Push(child);
 				currentChild = child;
 				//try
 				//{

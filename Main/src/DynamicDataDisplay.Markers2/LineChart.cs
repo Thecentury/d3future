@@ -8,12 +8,16 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 using System.Windows;
+using Microsoft.Research.DynamicDataDisplay.Charts;
+using System.Windows.Controls;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
 	public class LineChart : LineChartBase
 	{
 		private readonly List<Path> shapes = new List<Path>();
+		private readonly ViewportHostPanel panel = new ViewportHostPanel();
+		private readonly Canvas canvas = new Canvas();
 
 		#region Overrides
 
@@ -75,7 +79,25 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			shapes.Add(path);
 			path.Data = geometry;
 
-			Plotter.CentralGrid.Children.Add(path);
+			canvas.Children.Add(path);
+
+			canvas.Background = Brushes.Aqua;
+			panel.Background = Brushes.CornflowerBlue.MakeTransparent(0.3);
+
+			Rectangle r = new Rectangle { Stroke = Brushes.Chartreuse, StrokeThickness = 2 };
+			ViewportPanel.SetViewportBounds(r, new DataRect(0.3, 0.3, 0.6, 0.6));
+			panel.Children.Add(r);
+
+			ViewportPanel.SetViewportBounds(canvas, environment.Visible);
+
+			if (canvas.Parent == null)
+				panel.Children.Add(canvas);
+
+			Plotter.Dispatcher.BeginInvoke(() =>
+			{
+				if (panel.Plotter == null)
+					Plotter.Children.Add(panel);
+			});
 		}
 
 		private void UpdateUIRepresentation()
@@ -93,20 +115,19 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			}
 
 			Vector shift = viewport.Output.Location - OutputWhileCreation.Location;
-
 			TranslateTransform translate = new TranslateTransform(shift.X, shift.Y);
-			
+
 			TransformGroup group = new TransformGroup();
 			group.Children.Add(translate);
-
-			foreach (var path in shapes)
-			{
-				path.Data.Transform = group;
-			}
 		}
 
 		private void DestroyUIRepresentation()
 		{
+			panel.Children.Clear();
+			canvas.Children.Clear();
+
+			if (Plotter != null)
+				Plotter.CentralGrid.Children.Remove(panel);
 		}
 	}
 }

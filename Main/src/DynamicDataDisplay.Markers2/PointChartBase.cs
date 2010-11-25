@@ -16,7 +16,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 	public abstract class PointChartBase : DependencyObject, IPlotterElement
 	{
 		private Plotter2D plotter = null;
-		private EnvironmentPlugin environmentPlugin = new DefaultLineEnvironmentPlugin();
+		private EnvironmentPlugin environmentPlugin = new DefaultLineChartEnvironmentPlugin();
 		private DataRect visibleWhileCreation;
 		private Rect outputWhileCreation;
 		protected const double rectanglesEps = 0.05;

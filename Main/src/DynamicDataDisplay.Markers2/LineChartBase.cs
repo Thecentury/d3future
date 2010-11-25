@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
-	public abstract class LineChartBase : MarkerChartBase
+	public abstract class LineChartBase : PointChartBase
 	{
 
 	}

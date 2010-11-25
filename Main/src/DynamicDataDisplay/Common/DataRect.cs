@@ -535,13 +535,39 @@ namespace Microsoft.Research.DynamicDataDisplay
 			return !rect1.Equals(rect2);
 		}
 
+		/// <summary>
+		/// Checks if sizes of specified rectangles are equal with eps ratio.
+		/// </summary>
+		/// <param name="rect1">The rect1.</param>
+		/// <param name="rect2">The rect2.</param>
+		/// <param name="eps">The eps.</param>
+		/// <returns></returns>
+		public static bool EqualsEpsSizes(DataRect rect1, DataRect rect2, double eps)
+		{
+			double least = 1 / (1 + eps);
+			double greatest = 1 + eps;
+
+			double widthRatio = rect1.width / rect2.width;
+			double heightRatio = rect1.height / rect2.height;
+
+			return least < widthRatio && widthRatio < greatest &&
+				least < heightRatio && heightRatio < greatest;
+		}
+
+		/// <summary>
+		/// Checks if rect1 is similar to rect2 with coefficient eps.
+		/// </summary>
+		/// <param name="rect1">The rect1.</param>
+		/// <param name="rect2">The rect2.</param>
+		/// <param name="eps">The eps.</param>
+		/// <returns></returns>
 		public static bool EqualEps(DataRect rect1, DataRect rect2, double eps)
 		{
-			double width = Math.Min(rect1.Width, rect2.Width);
-			double height = Math.Min(rect1.Height, rect2.Height);
-			return Math.Abs(rect1.XMin - rect2.XMin) < width * eps &&
+			double width = Math.Min(rect1.width, rect2.width);
+			double height = Math.Min(rect1.height, rect2.height);
+			return Math.Abs(rect1.xMin - rect2.xMin) < width * eps &&
 				   Math.Abs(rect1.XMax - rect2.XMax) < width * eps &&
-				   Math.Abs(rect1.YMin - rect2.YMin) < height * eps &&
+				   Math.Abs(rect1.yMin - rect2.yMin) < height * eps &&
 				   Math.Abs(rect1.YMax - rect2.YMax) < height * eps;
 		}
 

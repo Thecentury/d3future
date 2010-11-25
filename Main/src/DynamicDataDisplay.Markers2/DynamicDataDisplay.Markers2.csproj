@@ -50,11 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="DefaultLineEnvironmentPlugin.cs" />
-    <Compile Include="EnvironmentPlugin.cs" />
+    <Compile Include="EnvironmentPlugins\DefaultLineEnvironmentPlugin.cs" />
+    <Compile Include="EnvironmentPlugins\EnvironmentPlugin.cs" />
     <Compile Include="LineChart.cs" />
     <Compile Include="LineChartBase.cs" />
-    <Compile Include="MarkerChartBase.cs" />
+    <Compile Include="PointChartBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -68,7 +68,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SimplestEnvironmentPlugin.cs" />
+    <Compile Include="EnvironmentPlugins\SimplestEnvironmentPlugin.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

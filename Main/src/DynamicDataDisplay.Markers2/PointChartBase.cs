@@ -10,10 +10,39 @@ using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
-	public abstract class MarkerChartBase : DependencyObject, IPlotterElement
+	/// <summary>
+	/// Represents a base class for creating marker or line charts.
+	/// </summary>
+	public abstract class PointChartBase : DependencyObject, IPlotterElement
 	{
 		private Plotter2D plotter = null;
 		private EnvironmentPlugin environmentPlugin = new DefaultLineEnvironmentPlugin();
+		private DataRect visibleWhileCreation;
+		private Rect outputWhileCreation;
+		protected const double rectanglesEps = 0.05;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PointChartBase"/> class.
+		/// </summary>
+		public PointChartBase() { }
+
+		/// <summary>
+		/// Gets the visible rectangle while creation of points to draw.
+		/// </summary>
+		/// <value>The visible while creation.</value>
+		protected DataRect VisibleWhileCreation
+		{
+			get { return visibleWhileCreation; }
+		}
+
+		/// <summary>
+		/// Gets the output rectangle while creation of points to draw.
+		/// </summary>
+		/// <value>The output while creation.</value>
+		protected Rect OutputWhileCreation
+		{
+			get { return outputWhileCreation; }
+		}
 
 		#region Helpers
 
@@ -41,8 +70,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			Contract.Assert(plotter != null);
 
 			Viewport2D viewport = plotter.Viewport;
-
 			DataSourceEnvironment result = environmentPlugin.CreateEnvironment(viewport);
+
+			visibleWhileCreation = result.Visible;
+			outputWhileCreation = result.Output;
+
 			return result;
 		}
 
@@ -63,12 +95,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
 		  "ItemsSource",
 		  typeof(object),
-		  typeof(MarkerChartBase),
+		  typeof(PointChartBase),
 		  new FrameworkPropertyMetadata(null, OnItemsSourceReplaced));
 
 		private static void OnItemsSourceReplaced(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			MarkerChartBase owner = (MarkerChartBase)d;
+			PointChartBase owner = (PointChartBase)d;
 			owner.OnItemsSourceReplacedCore(e.OldValue, e.NewValue);
 		}
 
@@ -113,12 +145,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		public static readonly DependencyProperty DataSourceProperty = DependencyProperty.Register(
 		  "DataSource",
 		  typeof(PointDataSourceBase),
-		  typeof(MarkerChartBase),
+		  typeof(PointChartBase),
 		  new FrameworkPropertyMetadata(null, OnDataSourceReplaced));
 
 		private static void OnDataSourceReplaced(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			MarkerChartBase owner = (MarkerChartBase)d;
+			PointChartBase owner = (PointChartBase)d;
 			owner.OnDataSourceReplaced((PointDataSourceBase)e.OldValue, (PointDataSourceBase)e.NewValue);
 		}
 
@@ -131,10 +163,19 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		public virtual void OnPlotterAttached(Plotter plotter)
 		{
 			this.plotter = (Plotter2D)plotter;
+			this.plotter.Viewport.PropertyChanged += new EventHandler<ExtendedPropertyChangedEventArgs>(Viewport_PropertyChanged);
 		}
+
+		private void Viewport_PropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
+		{
+			OnViewportPropertyChanged(e);
+		}
+
+		protected virtual void OnViewportPropertyChanged(ExtendedPropertyChangedEventArgs e) { }
 
 		public virtual void OnPlotterDetaching(Plotter plotter)
 		{
+			this.plotter.Viewport.PropertyChanged -= Viewport_PropertyChanged;
 			this.plotter = null;
 		}
 

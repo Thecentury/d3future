@@ -7,12 +7,15 @@ using Microsoft.Research.DynamicDataDisplay.Markers.Extensions;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
+using System.Windows;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
 	public class LineChart : LineChartBase
 	{
-		private readonly List<Shape> shapes = new List<Shape>();
+		private readonly List<Path> shapes = new List<Path>();
+
+		#region Overrides
 
 		protected override void OnDataSourceReplaced(PointDataSourceBase oldDataSource, PointDataSourceBase newDataSource)
 		{
@@ -27,6 +30,22 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 
 			CreateUIRepresentation();
 		}
+
+		public override void OnPlotterDetaching(Plotter plotter)
+		{
+			DestroyUIRepresentation();
+
+			base.OnPlotterDetaching(plotter);
+		}
+
+		protected override void OnViewportPropertyChanged(ExtendedPropertyChangedEventArgs e)
+		{
+			base.OnViewportPropertyChanged(e);
+
+			UpdateUIRepresentation();
+		}
+
+		#endregion
 
 		private void CreateUIRepresentation()
 		{
@@ -53,9 +72,41 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			}
 
 			Path path = new Path { Stroke = ColorHelper.RandomBrush, StrokeThickness = 3 };
+			shapes.Add(path);
 			path.Data = geometry;
 
 			Plotter.CentralGrid.Children.Add(path);
+		}
+
+		private void UpdateUIRepresentation()
+		{
+			Viewport2D viewport = Plotter.Viewport;
+
+			bool visibleChangedSignificantly = !DataRect.EqualsEpsSizes(viewport.Visible, VisibleWhileCreation, rectanglesEps);
+			bool outputChangedSignificantly = !DataRect.EqualsEpsSizes(new DataRect(viewport.Output), new DataRect(OutputWhileCreation), rectanglesEps);
+
+			if (visibleChangedSignificantly || outputChangedSignificantly)
+			{
+				DestroyUIRepresentation();
+				CreateUIRepresentation();
+				return;
+			}
+
+			Vector shift = viewport.Output.Location - OutputWhileCreation.Location;
+
+			TranslateTransform translate = new TranslateTransform(shift.X, shift.Y);
+			
+			TransformGroup group = new TransformGroup();
+			group.Children.Add(translate);
+
+			foreach (var path in shapes)
+			{
+				path.Data.Transform = group;
+			}
+		}
+
+		private void DestroyUIRepresentation()
+		{
 		}
 	}
 }

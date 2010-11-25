@@ -15,7 +15,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
 	public class LineChart : LineChartBase
 	{
-		private readonly List<Path> shapes = new List<Path>();
 		private readonly ViewportHostPanel panel = new ViewportHostPanel();
 		private readonly Canvas canvas = new Canvas();
 
@@ -76,13 +75,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			}
 
 			Path path = new Path { Stroke = ColorHelper.RandomBrush, StrokeThickness = 3 };
-			shapes.Add(path);
 			path.Data = geometry;
 
 			canvas.Children.Add(path);
-
-			//canvas.Background = Brushes.Aqua.MakeTransparent(0.2);
-			//panel.Background = Brushes.CornflowerBlue.MakeTransparent(0.3);
 
 			ViewportPanel.SetViewportBounds(canvas, environment.Visible);
 

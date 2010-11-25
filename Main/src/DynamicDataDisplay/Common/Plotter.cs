@@ -148,6 +148,8 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		protected internal void ExecuteWaitingChildrenAdditions()
 		{
+			executedWaitingChildrenAdding = true;
+
 			foreach (var action in waitingForExecute)
 			{
 				action();

@@ -144,7 +144,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 			MainGrid = plotter.MainGrid;
 			ParallelCanvas = plotter.ParallelCanvas;
 
-			Dispatcher.BeginInvoke((Action)(() => ExecuteWaitingChildrenAdditions()), DispatcherPriority.Background);
+			Dispatcher.BeginInvoke(new Action(() =>
+			{
+				ExecuteWaitingChildrenAdditions();
+			}), DispatcherPriority.Background);
 
 			OnLoaded();
 		}

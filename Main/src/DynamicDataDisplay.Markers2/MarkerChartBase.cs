@@ -13,21 +13,36 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 	public abstract class MarkerChartBase : DependencyObject, IPlotterElement
 	{
 		private Plotter2D plotter = null;
+		private EnvironmentPlugin environmentPlugin = new DefaultLineEnvironmentPlugin();
 
 		#region Helpers
 
+		/// <summary>
+		/// Gets or sets the environment plugin.
+		/// </summary>
+		/// <value>The environment plugin.</value>
+		public EnvironmentPlugin EnvironmentPlugin
+		{
+			get { return environmentPlugin; }
+			set
+			{
+				Contract.Assert(value != null);
+
+				environmentPlugin = value;
+			}
+		}
+
+		/// <summary>
+		/// Creates the environment.
+		/// </summary>
+		/// <returns></returns>
 		protected DataSourceEnvironment CreateEnvironment()
 		{
 			Contract.Assert(plotter != null);
 
 			Viewport2D viewport = plotter.Viewport;
 
-			DataSourceEnvironment result = new DataSourceEnvironment
-			{
-				Output = viewport.Output,
-				Visible = viewport.Visible,
-				Transform = viewport.Transform
-			};
+			DataSourceEnvironment result = environmentPlugin.CreateEnvironment(viewport);
 			return result;
 		}
 

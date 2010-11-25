@@ -37,9 +37,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 				return;
 
 			DataSourceEnvironment environment = CreateEnvironment();
-			var points = DataSource.GetPoints(environment).ToList();
+			var points = DataSource.GetPoints(environment);
 
-			if (points.Count == 0)
+			// do nothing if there is nothing to draw
+			if (!points.Any())
 				return;
 
 			var screenPoints = points.DataToScreen(Plotter.Viewport.Transform).ToList();
@@ -51,7 +52,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 				context.PolyLineTo(screenPoints, isStroked: true, isSmoothJoin: false);
 			}
 
-			Path path = new Path { Stroke = ColorHelper.RandomBrush, StrokeThickness = 1 };
+			Path path = new Path { Stroke = ColorHelper.RandomBrush, StrokeThickness = 3 };
 			path.Data = geometry;
 
 			Plotter.CentralGrid.Children.Add(path);

@@ -11,14 +11,29 @@ using System.Windows;
 using Microsoft.Research.DynamicDataDisplay.Charts;
 using System.Windows.Controls;
 using Microsoft.Research.DynamicDataDisplay.Common;
+using System.Windows.Data;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
+	/// <summary>
+	/// Represents a WPF path-based line chart.
+	/// </summary>
 	public class LineChart : LineChartBase
 	{
 		private readonly ViewportHostPanel panel = new ViewportHostPanel();
 		private readonly Canvas canvas = new Canvas();
 		private readonly ResourcePool<Path> pathsPool = new ResourcePool<Path>();
+		private readonly Binding strokeBinding;
+		private readonly Binding strokeThicknessBinding;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="LineChart"/> class.
+		/// </summary>
+		public LineChart()
+		{
+			strokeBinding = new Binding(StrokeProperty.Name) { Source = this };
+			strokeThicknessBinding = new Binding(StrokeThicknessProperty.Name) { Source = this };
+		}
 
 		#region Overrides
 
@@ -38,7 +53,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 
 		public override void OnPlotterDetaching(Plotter plotter)
 		{
-			DestroyUIRepresentation();
+			DestroyUIRepresentation(detaching: true);
 
 			base.OnPlotterDetaching(plotter);
 		}
@@ -76,7 +91,14 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 				context.PolyLineTo(screenPoints, isStroked: true, isSmoothJoin: false);
 			}
 
-			Path path = new Path { Stroke = ColorHelper.RandomBrush, StrokeThickness = 3 };
+			Path path = pathsPool.GetOrCreate();
+
+			if (path.CacheMode == null)
+				path.CacheMode = new BitmapCache();
+
+			path.SetBinding(Path.StrokeProperty, strokeBinding);
+			path.SetBinding(Path.StrokeThicknessProperty, strokeThicknessBinding);
+
 			path.Data = geometry;
 
 			canvas.Children.Add(path);
@@ -86,6 +108,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			if (canvas.Parent == null)
 				panel.Children.Add(canvas);
 
+			// switching off content bounds calculation on children of ViewportHostPanel.
 			panel.BeginBatchAdd();
 
 			Plotter.Dispatcher.BeginInvoke(() =>
@@ -117,12 +140,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			}
 		}
 
-		private void DestroyUIRepresentation()
+		private void DestroyUIRepresentation(bool detaching = false)
 		{
-			panel.Children.Clear();
+			pathsPool.ReleaseAll(canvas.Children.Cast<Path>());
 			canvas.Children.Clear();
 
-			if (Plotter != null)
+			if (Plotter != null && detaching)
 				Plotter.CentralGrid.Children.Remove(panel);
 		}
 	}

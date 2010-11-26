@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace Microsoft.Research.DynamicDataDisplay.Common.Auxiliary
 {
-	internal static class ResourcePoolExtensions
+	public static class ResourcePoolExtensions
 	{
 		/// <summary>
 		/// Gets item from the pool, or creates new item if pool doesn't have more items.

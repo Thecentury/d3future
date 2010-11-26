@@ -22,5 +22,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Common.Auxiliary
 		{
 			dispatcher.Invoke(action, priority);
 		}
+
+		public static void Wait(this DispatcherObject obj, DispatcherPriority priority)
+		{
+			obj.Dispatcher.BeginInvoke(() => { }, priority);
+		}
 	}
 }

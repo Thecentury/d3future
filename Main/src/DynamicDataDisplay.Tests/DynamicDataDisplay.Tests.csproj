@@ -77,6 +77,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -116,6 +117,8 @@
     <Compile Include="D3\GenericPlotterTest.cs" />
     <Compile Include="D3\Markers\DataSourceFactoriesTest.cs" />
     <Compile Include="D3\Markers\DevMarkerChartTest.cs" />
+    <Compile Include="D3\Markers\LineChartTest.cs" />
+    <Compile Include="D3\Markers\TestDataSource.cs" />
     <Compile Include="D3\PointSelectorTest.cs" />
     <Compile Include="D3\RangeTest.cs" />
     <Compile Include="D3\RectExtensionsTest.cs" />
@@ -143,6 +146,10 @@
       <Project>{EB04A4CD-DDE6-49EB-8FB6-39B35482D792}</Project>
       <Name>DynamicDataDisplay.Maps</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DynamicDataDisplay.Markers2\DynamicDataDisplay.Markers2.csproj">
+      <Project>{683A67B5-9C1A-4B8C-9514-EDC0B9FCF31F}</Project>
+      <Name>DynamicDataDisplay.Markers2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DynamicDataDisplay.Markers\DynamicDataDisplay.Markers.csproj">
       <Project>{A5EB794C-7C62-4A0C-A441-ACF7D4074C5D}</Project>
       <Name>DynamicDataDisplay.Markers</Name>
@@ -154,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DynamicDataDisplay.snk" />
+    <Shadow Include="Test References\DynamicDataDisplay.Markers2.accessor" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

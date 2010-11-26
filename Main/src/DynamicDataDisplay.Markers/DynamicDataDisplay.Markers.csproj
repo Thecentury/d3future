@@ -143,6 +143,7 @@
     <Compile Include="DataSources\DataSourceFactories\PointArrayFactory.cs" />
     <Compile Include="DataSources\Composite\DataSourcePart.cs" />
     <Compile Include="DataSources\DataSourceFactories\XmlElementFactory.cs" />
+    <Compile Include="DataSources\EmptyDataSource.cs" />
     <Compile Include="DataSources\EnumerableDataSource.cs" />
     <Compile Include="DataSources\EnumerablePointDataSource.cs" />
     <Compile Include="DataSources\DoubleLambdaDataSource.cs" />

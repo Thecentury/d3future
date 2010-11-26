@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Research.DynamicDataDisplay.Markers2;
+using Microsoft.Research.DynamicDataDisplay.Charts.Axes.Numeric;
+using Microsoft.Research.DynamicDataDisplay.Charts;
 
 namespace Markers2Samples
 {
@@ -30,6 +32,15 @@ namespace Markers2Samples
 		void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 			lineChart.ItemsSource = new Func<double, double>(i => Math.Sin(i * 10));
+
+			var axis = new HorizontalAxis();
+
+			plotter.Children.Add(axis);
+
+			CustomBaseNumericTicksProvider ticksProvider = new CustomBaseNumericTicksProvider(Math.PI);
+			CustomBaseNumericLabelProvider labelProvider = new CustomBaseNumericLabelProvider(Math.PI, "π");
+			axis.LabelProvider = labelProvider;
+			axis.TicksProvider = ticksProvider;
 		}
 	}
 }

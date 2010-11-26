@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Microsoft.Research.DynamicDataDisplay.Common.Auxiliary
 {
-	internal static class IEnumerableExtensions
+	public static class IEnumerableExtensions
 	{
 		public static bool CountGreaterOrEqual<T>(this IEnumerable<T> enumerable, int count)
 		{

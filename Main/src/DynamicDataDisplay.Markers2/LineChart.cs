@@ -12,6 +12,8 @@ using Microsoft.Research.DynamicDataDisplay.Charts;
 using System.Windows.Controls;
 using Microsoft.Research.DynamicDataDisplay.Common;
 using System.Windows.Data;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
@@ -25,6 +27,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		private readonly ResourcePool<Path> pathsPool = new ResourcePool<Path>();
 		private readonly Binding strokeBinding;
 		private readonly Binding strokeThicknessBinding;
+		private readonly Binding strokeDashArrayBinding;
+		private const int pathLength = 500;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LineChart"/> class.
@@ -33,6 +37,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		{
 			strokeBinding = new Binding(StrokeProperty.Name) { Source = this };
 			strokeThicknessBinding = new Binding(StrokeThicknessProperty.Name) { Source = this };
+			strokeDashArrayBinding = new Binding(StrokeDashArrayProperty.Name) { Source = this };
 		}
 
 		#region Overrides
@@ -78,37 +83,66 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			DataSourceEnvironment environment = CreateEnvironment();
 			var points = DataSource.GetPoints(environment).ToList();
 
+			// todo remove
+			Debug.WriteLine("{0} - Env.Vis = {1}", DateTime.Now.TimeOfDay, environment.Visible.ToString());
+			VisualDebug.DrawRectangle("EnvironmentVisible", environment.Visible, fill: Brushes.Orchid.MakeTransparent(0.2));
+			//VisualDebug.DrawRectangle("Reference 1.0", new DataRect(0, 0, 1, 1), Brushes.OliveDrab, strokeThickness: 2.0);
+
 			// do nothing if there is nothing to draw
 			if (!points.Any())
 				return;
 
-			var screenPoints = points.DataToScreen(Plotter.Viewport.Transform).ToList();
+			var screenPoints = points.DataToScreen(Plotter.Viewport.Transform);
+			//var screenPoints = points.DataToScreen(environment.Transform);
 
-			StreamGeometry geometry = new StreamGeometry();
-			using (var context = geometry.Open())
+			// todo remove
+			Debug.WriteLine(screenPoints.Count());
+
+			var parts = screenPoints.Split(pathLength);
+
+			Point? lastPoint = null;
+			foreach (var part in parts)
 			{
-				context.BeginFigure(screenPoints[0], isFilled: false, isClosed: false);
-				context.PolyLineTo(screenPoints, isStroked: true, isSmoothJoin: false);
+				List<Point> list = part.ToList();
+				if (list.Count == 0)
+					continue;
+
+				StreamGeometry geometry = new StreamGeometry();
+				using (var context = geometry.Open())
+				{
+					var start = lastPoint ?? list[0];
+
+					context.BeginFigure(start, isFilled: false, isClosed: false);
+					context.PolyLineTo(list, isStroked: true, isSmoothJoin: false);
+				}
+
+				lastPoint = list.Last();
+
+				Path path = pathsPool.GetOrCreate();
+
+				if (path.CacheMode == null)
+					path.CacheMode = new BitmapCache();
+
+				path.Stroke = ColorHelper.RandomBrush;
+
+				// todo uncomment
+				//path.SetBinding(Path.StrokeProperty, strokeBinding);
+				path.SetBinding(Path.StrokeThicknessProperty, strokeThicknessBinding);
+				path.SetBinding(Path.StrokeDashArrayProperty, strokeDashArrayBinding);
+
+				path.Data = geometry;
+
+				canvas.Children.Add(path);
 			}
 
-			Path path = pathsPool.GetOrCreate();
-
-			if (path.CacheMode == null)
-				path.CacheMode = new BitmapCache();
-
-			path.SetBinding(Path.StrokeProperty, strokeBinding);
-			path.SetBinding(Path.StrokeThicknessProperty, strokeThicknessBinding);
-
-			path.Data = geometry;
-
-			canvas.Children.Add(path);
-
 			ViewportPanel.SetViewportBounds(canvas, Plotter.Viewport.Visible);
+
+			canvas.Background = Brushes.Orange.MakeTransparent(0.3);
 
 			if (canvas.Parent == null)
 				panel.Children.Add(canvas);
 
-			// switching off content bounds calculation on children of ViewportHostPanel.
+			// switching off content bounds calculation for children of ViewportHostPanel.
 			panel.BeginBatchAdd();
 
 			Plotter.Dispatcher.BeginInvoke(() =>

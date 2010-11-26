@@ -250,6 +250,7 @@
     <Compile Include="Charts\ViewportPanel.cs" />
     <Compile Include="Charts\ViewportPanel.Properties.cs" />
     <Compile Include="Charts\ViewportUIContainer.cs" />
+    <Compile Include="Charts\VisualDebug.cs" />
     <Compile Include="Common\Auxiliary\BindingHelper.cs" />
     <Compile Include="Common\Auxiliary\ColorExtensions.cs" />
     <Compile Include="Common\Auxiliary\DataSearch\GenericSearcher1d.cs" />

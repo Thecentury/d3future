@@ -217,7 +217,7 @@ namespace DynamicDataDisplay.Tests.D3
 		}
 
 		[TestMethod]
-		public void AggregateTwoPointsUinioY()
+		public void AggregateTwoPointsUnionY()
 		{
 			Point[] pts = { new Point(0, 0), new Point(0, 1) };
 
@@ -226,6 +226,58 @@ namespace DynamicDataDisplay.Tests.D3
 			Assert.AreEqual(0, bounds.Location.Y);
 			Assert.AreEqual(1, bounds.Height);
 			Assert.IsFalse(bounds.IsEmpty);
+		}
+
+		[TestMethod]
+		public void GetCenter()
+		{
+			DataRect rect = new DataRect(new Point(-1.1, -2.1), new Point(1.1, 2.1));
+
+			Point center = rect.GetCenter();
+
+			Assert.AreEqual(new Point(0, 0), center);
+		}
+
+		[TestMethod]
+		public void GetCenter_2()
+		{
+			DataRect rect = new DataRect(0.1, 0.1, 0.4, 0.6);
+
+			Point center = rect.GetCenter();
+
+			Assert.AreEqual(new Point(0.30000000000000004, 0.4), center);
+		}
+
+		[TestMethod]
+		public void ZoomOutFromCenterSimple()
+		{
+			DataRect rect = DataRect.FromCenterSize(new Point(0, 0), new Size(0.5, 0.5));
+
+			DataRect zoomedOut = rect.ZoomOutFromCenter(2.0);
+
+			Assert.AreEqual(new Point(-0.5, -0.5), zoomedOut.Location);
+			Assert.AreEqual(1.0, zoomedOut.Width);
+			Assert.AreEqual(1.0, zoomedOut.Height);
+		}
+
+		[TestMethod]
+		public void ZoomOutFromCenter()
+		{
+			DataRect rect = DataRect.FromCenterSize(new Point(1, 1), new Size(1.6, 1.4));
+
+			DataRect zoomedOut = rect.ZoomOutFromCenter(2.0);
+
+			Assert.AreEqual(new Point(1 - 1.6, 1 - 1.4), zoomedOut.Location);
+		}
+
+		[TestMethod]
+		public void ZoomOutWithIdentityRatio()
+		{
+			DataRect rect = DataRect.FromCenterSize(new Point(0.1, 0.2), 0.3, 0.4);
+
+			DataRect zoomedOut = rect.ZoomOutFromCenter(1.0);
+
+			Assert.AreEqual(rect, zoomedOut);
 		}
 	}
 }

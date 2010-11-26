@@ -48,16 +48,20 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 
 		protected override IEnumerable GetDataCore(DataSourceEnvironment environment)
 		{
+			DataRect visible = environment.Visible;
 			Rect output = environment.Output;
 			CoordinateTransform transform = environment.Transform;
 
 			double yMin = Double.PositiveInfinity;
 			double yMax = Double.NegativeInfinity;
 
-			for (double x = output.Left; x <= output.Right; x += 1)
+			double step = visible.Width / output.Width;
+
+			for (double x = visible.XMin; x <= visible.XMax; x += step)
 			{
 				// todo should here go ScreenToData?
-				double dataX = transform.ScreenToViewport(new Point(x, 0)).X;
+				//double dataX = transform.ScreenToViewport(new Point(x, 0)).X;
+				double dataX = x;
 				double viewportY = func(dataX);
 
 				if (viewportY < yMin)
@@ -70,7 +74,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 
 			DataRect bounds = DataRect.Empty;
 			bounds.UnionY(yMin);
-			bounds.UnionX(yMax);
+			bounds.UnionY(yMax);
 
 			environment.ContentBounds = bounds;
 		}

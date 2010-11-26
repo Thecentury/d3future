@@ -48,5 +48,25 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		  new FrameworkPropertyMetadata(1.0));
 		
 		#endregion
+
+		#region StrokeDashArray property
+
+		/// <summary>
+		/// Gets or sets the stroke dash array. This is a DependencyProperty.
+		/// </summary>
+		/// <value>The stroke dash array.</value>
+		public DoubleCollection StrokeDashArray
+		{
+			get { return (DoubleCollection)GetValue(StrokeDashArrayProperty); }
+			set { SetValue(StrokeDashArrayProperty, value); }
+		}
+
+		public static readonly DependencyProperty StrokeDashArrayProperty = DependencyProperty.Register(
+		  "StrokeDashArray",
+		  typeof(DoubleCollection),
+		  typeof(LineChartBase),
+		  new FrameworkPropertyMetadata(null));
+
+		#endregion
 	}
 }

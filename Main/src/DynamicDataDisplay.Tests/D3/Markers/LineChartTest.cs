@@ -61,5 +61,17 @@ namespace DynamicDataDisplay.Tests.D3.Markers
 				Assert.AreEqual(chart.StrokeThickness, path.StrokeThickness);
 			}
 		}
+
+		[TestMethod]
+		public void SettingStrokeDashArray()
+		{
+			chart.StrokeDashArray = new DoubleCollection(new double[] { 1, 1 });
+			chart.Wait(DispatcherPriority.Background);
+
+			foreach (var path in paths)
+			{
+				Assert.AreEqual(chart.StrokeDashArray, path.StrokeDashArray);
+			}
+		}
 	}
 }

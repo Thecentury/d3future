@@ -1,24 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
-using System.Windows.Media;
+using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using Microsoft.Research.DynamicDataDisplay.Common;
 using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
-using System.Windows.Markup;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Windows.Input;
 using Microsoft.Research.DynamicDataDisplay.Common.UndoSystem;
 using Microsoft.Research.DynamicDataDisplay.Navigation;
-using System.Windows.Data;
-using Microsoft.Research.DynamicDataDisplay.Charts.Navigation;
-using System.Windows.Automation.Peers;
-using System.Diagnostics;
 
 namespace Microsoft.Research.DynamicDataDisplay
 {
@@ -44,6 +39,16 @@ namespace Microsoft.Research.DynamicDataDisplay
 			get { return loadMode; }
 		}
 
+		private static Plotter current;
+		/// <summary>
+		/// Gets the current plotter. Used in VisualDebug.
+		/// </summary>
+		/// <value>The current.</value>
+		internal static Plotter Current
+		{
+			get { return Plotter.current; }
+		}
+
 		protected Plotter() : this(PlotterLoadMode.Normal) { }
 
 		/// <summary>
@@ -51,6 +56,8 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// </summary>
 		protected Plotter(PlotterLoadMode loadMode)
 		{
+			current = this;
+
 			this.loadMode = loadMode;
 
 			SetPlotter(this, this);
@@ -150,9 +157,9 @@ namespace Microsoft.Research.DynamicDataDisplay
 		{
 			executedWaitingChildrenAdding = true;
 
-			foreach (var action in waitingForExecute)
+			foreach (var pair in waitingForExecute)
 			{
-				action();
+				pair.Value.Invoke();
 			}
 
 			waitingForExecute.Clear();
@@ -162,15 +169,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 		{
 			// this is done to enable keyboard shortcuts
 			Focus();
-
-			//foreach (var plotterElement in elementsWaitingForBeingAttached)
-			//{
-			//    if (Children.Contains(plotterElement))
-			//    {
-			//        plotterElement.OnPlotterAttached(this);
-			//    }
-			//}
-			//elementsWaitingForBeingAttached.Clear();
 		}
 
 		protected override void OnTemplateChanged(ControlTemplate oldTemplate, ControlTemplate newTemplate)
@@ -182,21 +180,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
-
-			//addedVisualElements.Clear();
-
-			//foreach (var item in GetAllPanels())
-			//{
-			//    INotifyingPanel panel = item as INotifyingPanel;
-			//    if (panel != null)
-			//    {
-			//        panel.ChildrenCreated -= notifyingItem_ChildrenCreated;
-			//        if (panel.NotifyingChildren != null)
-			//        {
-			//            panel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
-			//        }
-			//    }
-			//}
 
 			var headerPanel = GetPart<StackPanel>("PART_HeaderPanel");
 			MigrateChildren(this.headerPanel, headerPanel);
@@ -245,17 +228,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			Content = contentsGrid;
 			AddLogicalChild(contentsGrid);
 
-			//foreach (var notifyingItem in GetAllPanels())
-			//{
-			//    INotifyingPanel panel = notifyingItem as INotifyingPanel;
-			//    if (panel != null)
-			//    {
-			//        if (panel.NotifyingChildren == null)
-			//            panel.ChildrenCreated += notifyingItem_ChildrenCreated;
-			//        else
-			//            panel.NotifyingChildren.CollectionChanged += OnVisualCollectionChanged;
-			//    }
-			//}
+			ExecuteWaitingChildrenAdditions();
 		}
 
 		private void MigrateChildren(Panel previousParent, Panel currentParent)
@@ -279,153 +252,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 				previousParent.Children.Clear();
 			}
 		}
-
-		//private void notifyingItem_ChildrenCreated(object sender, EventArgs e)
-		//{
-		//    INotifyingPanel panel = (INotifyingPanel)sender;
-
-		//    SubscribePanelEvents(panel);
-		//}
-
-		//private void SubscribePanelEvents(INotifyingPanel panel)
-		//{
-		//    panel.ChildrenCreated -= notifyingItem_ChildrenCreated;
-
-		//    panel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
-		//    panel.NotifyingChildren.CollectionChanged += OnVisualCollectionChanged;
-		//}
-
-		//private void OnVisualCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		//{
-		//    if (e.NewItems != null)
-		//    {
-		//        foreach (var item in e.NewItems)
-		//        {
-		//            INotifyingPanel notifyingPanel = item as INotifyingPanel;
-		//            if (notifyingPanel != null)
-		//            {
-		//                if (notifyingPanel.NotifyingChildren != null)
-		//                {
-		//                    notifyingPanel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
-		//                    notifyingPanel.NotifyingChildren.CollectionChanged += OnVisualCollectionChanged;
-		//                }
-		//                else
-		//                {
-		//                    notifyingPanel.ChildrenCreated += notifyingItem_ChildrenCreated;
-		//                }
-		//            }
-
-		//            OnVisualChildAdded((UIElement)item, (UIElementCollection)sender);
-		//        }
-		//    }
-		//    if (e.OldItems != null)
-		//    {
-		//        foreach (var item in e.OldItems)
-		//        {
-		//            INotifyingPanel notifyingPanel = item as INotifyingPanel;
-		//            if (notifyingPanel != null)
-		//            {
-		//                notifyingPanel.ChildrenCreated -= notifyingItem_ChildrenCreated;
-		//                if (notifyingPanel.NotifyingChildren != null)
-		//                {
-		//                    notifyingPanel.NotifyingChildren.CollectionChanged -= OnVisualCollectionChanged;
-		//                }
-		//            }
-
-		//            OnVisualChildRemoved((UIElement)item, (UIElementCollection)sender);
-		//        }
-		//    }
-		//}
-
-		//private readonly VisualBindingCollection visualBindingCollection = new VisualBindingCollection();
-		//public VisualBindingCollection VisualBindings
-		//{
-		//    get { return visualBindingCollection; }
-		//}
-
-		//protected virtual void OnVisualChildAdded(UIElement target, UIElementCollection uIElementCollection)
-		//{
-		//IPlotterElement element = null;
-		//if (addingElements.Count > 0)
-		//{
-		//    element = addingElements.Peek();
-
-		//    var dict = visualBindingCollection.Cache;
-		//    var proxy = dict[element];
-
-		//    List<UIElement> visualElements;
-		//    if (!addedVisualElements.ContainsKey(element))
-		//    {
-		//        visualElements = new List<UIElement>();
-		//        addedVisualElements.Add(element, visualElements);
-		//    }
-		//    else
-		//    {
-		//        visualElements = addedVisualElements[element];
-		//    }
-
-		//    visualElements.Add(target);
-
-		//    SetBindings(proxy, target);
-		//}
-		//}
-
-		//private void SetBindings(UIElement proxy, UIElement target)
-		//{
-		//    if (proxy != target)
-		//    {
-		//        foreach (var property in GetPropertiesToSetBindingOn())
-		//        {
-		//            BindingOperations.SetBinding(target, property, new Binding { Path = new PropertyPath(property.Name), Source = proxy, Mode = BindingMode.TwoWay });
-		//        }
-		//    }
-		//}
-
-		//private void RemoveBindings(UIElement proxy, UIElement target)
-		//{
-		//    if (proxy != target)
-		//    {
-		//        foreach (var property in GetPropertiesToSetBindingOn())
-		//        {
-		//            BindingOperations.ClearBinding(target, property);
-		//        }
-		//    }
-		//}
-
-		//private IEnumerable<DependencyProperty> GetPropertiesToSetBindingOn()
-		//{
-		//    yield return UIElement.OpacityProperty;
-		//    yield return UIElement.VisibilityProperty;
-		//    yield return UIElement.IsHitTestVisibleProperty;
-		//    //yield return FrameworkElement.DataContextProperty;
-		//}
-
-		//protected virtual void OnVisualChildRemoved(UIElement target, UIElementCollection uiElementCollection)
-		//{
-		//    IPlotterElement element = null;
-		//    if (removingElements.Count > 0)
-		//    {
-		//        element = removingElements.Peek();
-
-		//        var dict = visualBindingCollection.Cache;
-		//        var proxy = dict[element];
-
-		//        if (addedVisualElements.ContainsKey(element))
-		//        {
-		//            var list = addedVisualElements[element];
-		//            list.Remove(target);
-
-		//            if (list.Count == 0)
-		//            {
-		//                dict.Remove(element);
-		//            }
-
-		//            addedVisualElements.Remove(element);
-		//        }
-
-		//        RemoveBindings(proxy, target);
-		//    }
-		//}
 
 		internal virtual IEnumerable<Panel> GetAllPanels()
 		{
@@ -464,15 +290,15 @@ namespace Microsoft.Research.DynamicDataDisplay
 			get { return children; }
 		}
 
-		private List<Action> waitingForExecute = new List<Action>();
+		private readonly Dictionary<IPlotterElement, Action> waitingForExecute = new Dictionary<IPlotterElement, Action>();
 
 		bool executedWaitingChildrenAdding = false;
 		private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			if (IsLoadedInternal && !executedWaitingChildrenAdding)
 			{
-				executedWaitingChildrenAdding = true;
 				ExecuteWaitingChildrenAdditions();
+				executedWaitingChildrenAdding = true;
 			}
 
 			if (e.NewItems != null)
@@ -485,7 +311,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 					}
 					else
 					{
-						waitingForExecute.Add(() => OnChildAdded(item));
+						waitingForExecute.Add(item, () => OnChildAdded(item));
 					}
 				}
 			}
@@ -499,7 +325,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 					}
 					else
 					{
-						waitingForExecute.Add(() => OnChildRemoving(item));
+						waitingForExecute.Add(item, () => OnChildRemoving(item));
 					}
 				}
 			}

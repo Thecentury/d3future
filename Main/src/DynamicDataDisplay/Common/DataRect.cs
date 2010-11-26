@@ -175,6 +175,19 @@ namespace Microsoft.Research.DynamicDataDisplay
 		}
 
 		/// <summary>
+		/// Creates DataRect from coordinates of center and size.
+		/// </summary>
+		/// <param name="centerX">The center X.</param>
+		/// <param name="centerY">The center Y.</param>
+		/// <param name="width">The width.</param>
+		/// <param name="height">The height.</param>
+		/// <returns></returns>
+		public static DataRect FromCenterSize(double centerX, double centerY, double width, double height)
+		{
+			return FromCenterSize(new Point(centerX, centerY), width, height);
+		}
+
+		/// <summary>
 		/// Intersects with the specified rectangle.
 		/// </summary>
 		/// <param name="rect1">The rect1.</param>

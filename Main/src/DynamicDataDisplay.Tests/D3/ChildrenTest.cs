@@ -53,6 +53,14 @@ namespace DynamicDataDisplay.Test
 
 			var types = GetAllCharts();
 
+			var withoutCtor = from type in types
+							  let ctors = type.GetConstructors()
+							  let noParameterlessCtor = (from c in ctors
+														 let p = c.GetParameters()
+														 select p).All(p => p.Length >= 1)
+							  where noParameterlessCtor
+							  select type;
+
 			var plotterElements = new List<IPlotterElement>();
 			plotter.Children.Clear();
 			foreach (var type in types)
@@ -107,6 +115,12 @@ namespace DynamicDataDisplay.Test
 						from type in assembly.GetExportedTypes()
 						where !type.IsDefined(typeof(SkipPropertyCheckAttribute), true)
 						where elementType.IsAssignableFrom(type) && !type.IsAbstract && type.IsPublic
+						let ctors = type.GetConstructors()
+						let hasParameterlessCtor = (from ctor in ctors
+													where ctor.GetParameters().Length == 0
+													select ctor).Any()
+						where hasParameterlessCtor
+						where type.Assembly != typeof(ChildrenTest).Assembly
 						select type;
 
 			var list = types.ToList();
@@ -123,6 +137,7 @@ namespace DynamicDataDisplay.Test
 						where !type.IsAbstract && type.IsPublic && !type.ContainsGenericParameters
 						let ctor = type.GetConstructor(new Type[] { })
 						where ctor != null
+						where type.Assembly != typeof(ChildrenTest).Assembly
 						select type;
 
 			var list = types.ToList();

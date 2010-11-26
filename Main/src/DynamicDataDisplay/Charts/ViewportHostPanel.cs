@@ -22,8 +22,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 		public ViewportHostPanel()
 		{
-			this.RenderTransform = translateTransform;
-
 #if false
 			// for debug purposes
 			Width = 100;
@@ -49,8 +47,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				owner.viewport.PropertyChanged += owner.Viewport_PropertyChanged;
 			}
 		}
-
-		TranslateTransform translateTransform = new TranslateTransform();
 
 		private Canvas hostingCanvas = new Canvas();
 		internal Canvas HostingCanvas
@@ -116,32 +112,38 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				DataRect visible = (DataRect)e.NewValue;
 				DataRect prevVisible = (DataRect)e.OldValue;
 
-				if (prevVisible.Size.EqualsApproximately(visible.Size) && !sizeChanged)
-				{
-					var transform = viewport.Transform;
+				InvalidateMeasure();
+				// todo previous way
+//                if (prevVisible.Size.EqualsApproximately(visible.Size) && !sizeChanged)
+//                {
+//                    var transform = viewport.Transform;
 
-					Point prevLocation = prevVisible.Location.ViewportToScreen(transform);
-					Point location = visible.Location.ViewportToScreen(transform);
+//                    Point prevLocation = prevVisible.Location.ViewportToScreen(transform);
+//                    Point location = visible.Location.ViewportToScreen(transform);
 
-					Vector offset = prevLocation - location;
-					translateTransform.X += offset.X;
-					translateTransform.Y += offset.Y;
-				}
-				else
-				{
-					visibleWhileCreation = visible;
-					translateTransform.X = 0;
-					translateTransform.Y = 0;
-					InvalidateMeasure();
-				}
+//                    Vector offset = prevLocation - location;
+//                    // todo was true
+//#if false
+//                    translateTransform.X += offset.X;
+//                    translateTransform.Y += offset.Y;
+//#else
+//                    InvalidateMeasure();
+//#endif
+
+//                }
+//                else
+//                {
+//                    visibleWhileCreation = visible;
+//                    translateTransform.X = 0;
+//                    translateTransform.Y = 0;
+//                    InvalidateMeasure();
+//                }
 
 				sizeChanged = false;
 			}
 			else if (e.PropertyName == "Output")
 			{
 				sizeChanged = true;
-				translateTransform.X = 0;
-				translateTransform.Y = 0;
 				InvalidateMeasure();
 			}
 
@@ -180,7 +182,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			if (child.Visibility != Visibility.Visible)
 				return;
 
-			var transform = viewport.Transform.WithScreenOffset(-translateTransform.X, -translateTransform.Y);
+			var transform = viewport.Transform;
 
 			Size elementSize = GetElementSize(child, AvailableSize, transform);
 			child.Measure(elementSize);
@@ -237,7 +239,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		{
 			if (recalculate)
 			{
-				var transform = plotter.Viewport.Transform.WithScreenOffset(-translateTransform.X, -translateTransform.Y);
+				var transform = plotter.Viewport.Transform;
 				overallViewportBounds = DataRect.Empty;
 				foreach (FrameworkElement child in Children)
 				{
@@ -261,7 +263,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			if (plotter == null)
 				return finalSize;
 
-			var transform = plotter.Viewport.Transform.WithScreenOffset(-translateTransform.X, -translateTransform.Y);
+			var transform = plotter.Viewport.Transform;
 
 			overallViewportBounds = DataRect.Empty;
 			foreach (UIElement child in InternalChildren)

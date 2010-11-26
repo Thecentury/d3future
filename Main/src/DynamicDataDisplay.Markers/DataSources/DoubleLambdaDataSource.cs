@@ -91,8 +91,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 
 			for (double x = visible.XMin; x <= visible.XMax; x += step)
 			{
-				// todo should here go ScreenToData?
-				//double dataX = transform.ScreenToViewport(new Point(x, 0)).X;
 				double dataX = x;
 				double viewportY = func(dataX);
 
@@ -108,6 +106,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 			bounds.UnionY(yMin);
 			bounds.UnionY(yMax);
 
+			// todo разобраться с этим ContentBounds и методом GetContentBounds - оставить в живых только одного.
 			environment.ContentBounds = bounds;
 		}
 

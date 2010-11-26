@@ -3,7 +3,7 @@
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	  xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
 	  Title="EditableShapesPage">
-    <Grid>
+	<Grid>
 		<d3:ChartPlotter Name="plotter" Visible="0,0,1,1">
 			<d3:PolylineEditor>
 				<d3:ViewportPolygon Points="0.3,0.6 0.3,0.7 0.35,0.6 0.2,0.8 0.4,0.65, 0.4,0.7">
@@ -54,14 +54,11 @@
 						</d3:LiveToolTip>
 					</d3:LiveToolTipService.ToolTip>
 				</Ellipse>
+
+				<TextBlock d3:ViewportPanel.X="0.5" d3:ViewportPanel.Y="0.5">Sample text in position (0.5, 0.5)</TextBlock>
 			</d3:ViewportHostPanel>
 
 			<d3:DraggablePoint Name="ellipsePoint" Position="0.6, 0.4"/>
-
-			<d3:ViewportHostPanel>
-				<TextBlock d3:ViewportPanel.X="0.5" d3:ViewportPanel.Y="0.5">Sample text in position (0.5, 0.5)</TextBlock>
-			</d3:ViewportHostPanel>
-			
 		</d3:ChartPlotter>
 	</Grid>
 </Page>

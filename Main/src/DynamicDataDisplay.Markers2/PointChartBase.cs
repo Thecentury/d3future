@@ -19,7 +19,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		private EnvironmentPlugin environmentPlugin = new DefaultLineChartEnvironmentPlugin();
 		private DataRect visibleWhileCreation;
 		private Rect outputWhileCreation;
-		protected const double rectanglesEps = 0.05;
+		protected const double rectanglesEps = 0.0005;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PointChartBase"/> class.

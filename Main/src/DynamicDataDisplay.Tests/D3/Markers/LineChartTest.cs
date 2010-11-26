@@ -17,7 +17,7 @@ namespace DynamicDataDisplay.Tests.D3.Markers
 	[TestClass]
 	public class LineChartTest
 	{
-		private Canvas canvas;
+		private Panel canvas;
 		private LineChart chart;
 		private IEnumerable<Path> paths;
 

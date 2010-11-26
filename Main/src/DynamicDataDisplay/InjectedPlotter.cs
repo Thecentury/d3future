@@ -21,6 +21,11 @@ namespace Microsoft.Research.DynamicDataDisplay
 			Grid.SetRow(ViewportPanel, 1);
 
 			Viewport = new Viewport2D(ViewportPanel, this);
+			Viewport.PropertyChanged += new EventHandler<ExtendedPropertyChangedEventArgs>(Viewport_PropertyChanged);
+		}
+
+		void Viewport_PropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
+		{
 		}
 
 		protected override void OnChildAdded(IPlotterElement child)

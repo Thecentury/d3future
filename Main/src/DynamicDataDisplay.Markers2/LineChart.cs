@@ -10,6 +10,7 @@ using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 using System.Windows;
 using Microsoft.Research.DynamicDataDisplay.Charts;
 using System.Windows.Controls;
+using Microsoft.Research.DynamicDataDisplay.Common;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
@@ -17,6 +18,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 	{
 		private readonly ViewportHostPanel panel = new ViewportHostPanel();
 		private readonly Canvas canvas = new Canvas();
+		private readonly ResourcePool<Path> pathsPool = new ResourcePool<Path>();
 
 		#region Overrides
 
@@ -59,7 +61,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 				return;
 
 			DataSourceEnvironment environment = CreateEnvironment();
-			var points = DataSource.GetPoints(environment);
+			var points = DataSource.GetPoints(environment).ToList();
 
 			// do nothing if there is nothing to draw
 			if (!points.Any())
@@ -79,16 +81,22 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 
 			canvas.Children.Add(path);
 
-			ViewportPanel.SetViewportBounds(canvas, environment.Visible);
+			ViewportPanel.SetViewportBounds(canvas, Plotter.Viewport.Visible);
 
 			if (canvas.Parent == null)
 				panel.Children.Add(canvas);
+
+			panel.BeginBatchAdd();
 
 			Plotter.Dispatcher.BeginInvoke(() =>
 			{
 				if (panel.Plotter == null)
 					Plotter.Children.Add(panel);
 			});
+
+			DataRect dataBounds = DataSource.GetContentBounds(points, Plotter.Viewport.Visible);
+
+			Viewport2D.SetContentBounds(this, dataBounds);
 		}
 
 		private void UpdateUIRepresentation()

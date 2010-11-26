@@ -213,13 +213,13 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		}
 
 		int invalidatePositionCalls = 0;
-		internal override void BeginBatchAdd()
+		public override void BeginBatchAdd()
 		{
 			base.BeginBatchAdd();
 			invalidatePositionCalls = 0;
 		}
 
-		internal override void EndBatchAdd()
+		public override void EndBatchAdd()
 		{
 			base.EndBatchAdd();
 

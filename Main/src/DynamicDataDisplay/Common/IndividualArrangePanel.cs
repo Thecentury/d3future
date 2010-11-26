@@ -38,17 +38,17 @@ namespace Microsoft.Research.DynamicDataDisplay.Common
 			return children;
 		}
 
-		internal bool InBatchAdd
+		public bool InBatchAdd
 		{
 			get { return children.IsAddingMany; }
 		}
 
-		internal virtual void BeginBatchAdd()
+		public virtual void BeginBatchAdd()
 		{
 			children.IsAddingMany = true;
 		}
 
-		internal virtual void EndBatchAdd()
+		public virtual void EndBatchAdd()
 		{
 			children.IsAddingMany = false;
 		}

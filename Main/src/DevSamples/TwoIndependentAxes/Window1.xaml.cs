@@ -30,6 +30,9 @@ namespace TwoIndependentAxes
 		{
 			InitializeComponent();
 
+			var converter = new InjectedPlotterHorizontalSyncConverter(innerPlotter);
+			innerPlotter.ViewportBindingConverter = converter;
+
 			Loaded += new RoutedEventHandler(Window1_Loaded);
 		}
 

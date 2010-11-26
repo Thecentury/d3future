@@ -24,7 +24,7 @@ namespace DynamicDataDisplay.Tests.D3.Markers
 
 			var ds = store.BuildDataSource(func);
 
-			Assert.IsInstanceOfType(ds, typeof(DoubleFuncDataSource));
+			Assert.IsInstanceOfType(ds, typeof(DoubleLambdaDataSource));
 		}
 
 		[TestMethod]

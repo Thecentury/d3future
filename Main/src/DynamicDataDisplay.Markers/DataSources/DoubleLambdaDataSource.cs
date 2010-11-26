@@ -12,14 +12,14 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 	/// <summary>
 	/// Represents a data source whcih creates points using delegate Func&lt;double, double&gt; as a generator.
 	/// </summary>
-	public sealed class DoubleFuncDataSource : PointDataSourceBase
+	public sealed class DoubleLambdaDataSource : PointDataSourceBase
 	{
 		private readonly Func<double, double> func = null;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DoubleFuncDataSource"/> class.
+		/// Initializes a new instance of the <see cref="DoubleLambdaDataSource"/> class.
 		/// </summary>
-		public DoubleFuncDataSource()
+		public DoubleLambdaDataSource()
 		{
 			this.DataToPoint = o => (Point)o;
 			this.PointToData = p => p;
@@ -35,10 +35,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DoubleFuncDataSource"/> class.
+		/// Initializes a new instance of the <see cref="DoubleLambdaDataSource"/> class.
 		/// </summary>
 		/// <param name="func">The func.</param>
-		public DoubleFuncDataSource(Func<double, double> func)
+		public DoubleLambdaDataSource(Func<double, double> func)
 			: this()
 		{
 			Contract.Assert(func != null);
@@ -78,6 +78,13 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 		public override object GetDataType()
 		{
 			return typeof(Point);
+		}
+
+		public override DataRect GetContentBounds(IEnumerable<Point> data, DataRect visible)
+		{
+			DataRect bounds = data.Aggregate(DataRect.Empty, (rect, point) => DataRect.UnionY(rect, point.Y));
+
+			return bounds;
 		}
 	}
 }

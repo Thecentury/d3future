@@ -12,10 +12,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 	/// Represents a converter of Viewport.Visible for InjectedPlotter.
 	/// Keeps horizontal part of visible from injectedPlotter and takes vertical part of visible rectangle from hosting Plotter.
 	/// </summary>
-	public sealed class InjectedPlotterVerticalSyncConverter : GenericValueConverter<DataRect>
+	public sealed class InjectedPlotterHorizontalSyncConverter : GenericValueConverter<DataRect>
 	{
 		private readonly InjectedPlotter injectedPlotter;
-		public InjectedPlotterVerticalSyncConverter(InjectedPlotter plotter)
+		public InjectedPlotterHorizontalSyncConverter(InjectedPlotter plotter)
 		{
 			if (plotter == null)
 				throw new ArgumentNullException("plotter");
@@ -30,7 +30,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 			var outerVisible = value;
 			var innerVisible = injectedPlotter.Visible;
-			return new DataRect(innerVisible.XMin, outerVisible.YMin, innerVisible.Width, outerVisible.Height);
+			DataRect result = new DataRect(innerVisible.XMin, outerVisible.YMin, innerVisible.Width, outerVisible.Height);
+			//DataRect result = new DataRect(outerVisible.XMin, innerVisible.YMin, outerVisible.Width, innerVisible.Height);
+
+			return result;
 		}
 
 		public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -39,6 +42,8 @@ namespace Microsoft.Research.DynamicDataDisplay
 			{
 				DataRect innerVisible = (DataRect)value;
 				var outerVisible = injectedPlotter.Plotter.Visible;
+				DataRect result = new DataRect(outerVisible.XMin, innerVisible.YMin, outerVisible.Width, innerVisible.Height);
+
 				return outerVisible;
 			}
 			else

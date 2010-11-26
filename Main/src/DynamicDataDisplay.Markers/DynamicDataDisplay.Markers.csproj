@@ -134,7 +134,7 @@
     <Compile Include="DataSources\DataSourceFactories\DataSourceDataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\DataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\DataSourceFactoryStore.cs" />
-    <Compile Include="DataSources\DataSourceFactories\DoubleFuncDataSourceFactory.cs" />
+    <Compile Include="DataSources\DataSourceFactories\DoubleLambdaDataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\EnumerableDataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\GenericIEnumerableFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\GenericIListFactory.cs" />
@@ -145,7 +145,7 @@
     <Compile Include="DataSources\DataSourceFactories\XmlElementFactory.cs" />
     <Compile Include="DataSources\EnumerableDataSource.cs" />
     <Compile Include="DataSources\EnumerablePointDataSource.cs" />
-    <Compile Include="DataSources\DoubleFuncDataSource.cs" />
+    <Compile Include="DataSources\DoubleLambdaDataSource.cs" />
     <Compile Include="DataSources\GenericIEnumerableDataSource.cs" />
     <Compile Include="DataSources\GenericIListDataSource.cs" />
     <Compile Include="DataSources\GenericPointSource2D.cs" />

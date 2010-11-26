@@ -7,6 +7,11 @@ using System.Globalization;
 
 namespace Microsoft.Research.DynamicDataDisplay.Converters
 {
+	/// <summary>
+	/// Represents a typed value converter. It simplifies life of its sub-class as there no need to
+	/// check what types arguments have.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public class GenericValueConverter<T> : IValueConverter
 	{
 		public GenericValueConverter() { }

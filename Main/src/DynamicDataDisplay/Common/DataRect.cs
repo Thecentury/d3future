@@ -245,7 +245,29 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// <value><c>true</c> if this instance is empty; otherwise, <c>false</c>.</value>
 		public bool IsEmpty
 		{
+			get { return width < 0 && height < 0; }
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is empty horizontally.
+		/// </summary>
+		/// <value>
+		/// 	<c>true</c> if this instance is empty horizontally; otherwise, <c>false</c>.
+		/// </value>
+		public bool IsEmptyX
+		{
 			get { return width < 0; }
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is empty vertically.
+		/// </summary>
+		/// <value>
+		/// 	<c>true</c> if this instance is empty vertically; otherwise, <c>false</c>.
+		/// </value>
+		public bool IsEmptyY
+		{
+			get { return height < 0; }
 		}
 
 		/// <summary>
@@ -510,7 +532,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			if (IsEmpty)
 				return "Empty";
 
-			return String.Format("({0};{1}) -> {2}*{3}", xMin, yMin, width, height);
+			return String.Format("({0:F};{1:F}) -> {2:F}*{3:F}", xMin, yMin, width, height);
 		}
 
 		/// <summary>
@@ -774,6 +796,18 @@ namespace Microsoft.Research.DynamicDataDisplay
 		}
 
 		/// <summary>
+		/// Unions rect with specified x-coordinate.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <param name="x">The x.</param>
+		/// <returns></returns>
+		public static DataRect UnionX(DataRect rect, double x)
+		{
+			rect.UnionX(x);
+			return rect;
+		}
+
+		/// <summary>
 		/// Unions rect with specified y-coordinate.
 		/// </summary>
 		/// <param name="y">The y.</param>
@@ -792,6 +826,18 @@ namespace Microsoft.Research.DynamicDataDisplay
 				height += yMin - y;
 				yMin = y;
 			}
+		}
+
+		/// <summary>
+		/// Unions rect with specified y-coordinate.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <param name="y">The y.</param>
+		/// <returns></returns>
+		public static DataRect UnionY(DataRect rect, double y)
+		{
+			rect.UnionY(y);
+			return rect;
 		}
 
 		/// <summary>

@@ -12,7 +12,7 @@ namespace DynamicDataDisplay.Markers.DataSources.DataSourceFactories
 	{
 		private DataSourceFactoryStore()
 		{
-			RegisterFactory(new DoubleFuncDataSourceFactory());
+			RegisterFactory(new DoubleLambdaDataSourceFactory());
 			RegisterFactory(new DataSourceDataSourceFactory());
 			RegisterFactory(new PointArrayFactory());
 			RegisterFactory(new IEnumerablePointFactory());

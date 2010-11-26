@@ -420,18 +420,18 @@ namespace Microsoft.Research.DynamicDataDisplay
 			{
 				newVisible = (DataRect)VisibleProperty.DefaultMetadata.DefaultValue;
 			}
-			else if (newVisible.Width == 0 || newVisible.Height == 0)
+			else if (newVisible.Width == 0 || newVisible.Height == 0 || newVisible.IsEmptyX || newVisible.IsEmptyY)
 			{
 				DataRect defRect = (DataRect)VisibleProperty.DefaultMetadata.DefaultValue;
 				Size size = newVisible.Size;
 				Point location = newVisible.Location;
 
-				if (newVisible.Width == 0)
+				if (newVisible.Width == 0 || newVisible.IsEmptyX)
 				{
 					size.Width = defRect.Width;
 					location.X -= size.Width / 2;
 				}
-				if (newVisible.Height == 0)
+				if (newVisible.Height == 0 || newVisible.IsEmptyY)
 				{
 					size.Height = defRect.Height;
 					location.Y -= size.Height / 2;

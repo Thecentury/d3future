@@ -317,7 +317,7 @@
     <Compile Include="DataSources\MultiDimensional\NonUniformDataSource2D.cs" />
     <Compile Include="GenericChartPlotter.cs" />
     <Compile Include="InjectedPlotter.cs" />
-    <Compile Include="InjectedPlotterVerticalSyncConverter.cs" />
+    <Compile Include="InjectedPlotterHorizontalSyncConverter.cs" />
     <Compile Include="PlotterLoadMode.cs" />
     <Compile Include="PointMarkers\RectElementPointMarker.cs" />
     <Compile Include="Resources\D3IconHelper.cs" />

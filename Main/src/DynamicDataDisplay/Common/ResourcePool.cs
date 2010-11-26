@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace Microsoft.Research.DynamicDataDisplay.Common
 {
 	[DebuggerDisplay("Count = {Count}")]
-	internal sealed class ResourcePool<T>
+	public sealed class ResourcePool<T>
 	{
 		private readonly List<T> pool = new List<T>();
 
@@ -32,8 +33,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Common
 
 		public void Put(T item)
 		{
-			if (item == null)
-				throw new ArgumentNullException("item");
+			Contract.Assert(item != null);
 
 #if DEBUG
 			if (pool.IndexOf(item) != -1)

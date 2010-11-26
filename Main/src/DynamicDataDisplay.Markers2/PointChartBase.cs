@@ -24,7 +24,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PointChartBase"/> class.
 		/// </summary>
-		public PointChartBase() { }
+		public PointChartBase()
+		{
+			Viewport2D.SetIsContentBoundsHost(this, true);
+		}
 
 		/// <summary>
 		/// Gets the visible rectangle while creation of points to draw.

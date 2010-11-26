@@ -20,6 +20,11 @@ namespace Microsoft.Research.DynamicDataDisplay
 				);
 		}
 
+		/// <summary>
+		/// Gets the center of specified rectangle.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <returns></returns>
 		public static Point GetCenter(this DataRect rect)
 		{
 			return new Point(rect.XMin + rect.Width * 0.5, rect.YMin + rect.Height * 0.5);
@@ -30,11 +35,23 @@ namespace Microsoft.Research.DynamicDataDisplay
 			return CoordinateUtilities.RectZoom(rect, to, ratio);
 		}
 
+		/// <summary>
+		/// Zooms out from center.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <param name="ratio">The ratio.</param>
+		/// <returns></returns>
 		public static DataRect ZoomOutFromCenter(this DataRect rect, double ratio)
 		{
 			return CoordinateUtilities.RectZoom(rect, rect.GetCenter(), ratio);
 		}
 
+		/// <summary>
+		/// Zooms in to center.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <param name="ratio">The ratio.</param>
+		/// <returns></returns>
 		public static DataRect ZoomInToCenter(this DataRect rect, double ratio)
 		{
 			return CoordinateUtilities.RectZoom(rect, rect.GetCenter(), 1 / ratio);
@@ -50,6 +67,11 @@ namespace Microsoft.Research.DynamicDataDisplay
 			return CoordinateUtilities.RectZoomY(rect, to, ratio);
 		}
 
+		/// <summary>
+		/// Gets the square of specified DataRect. 
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <returns></returns>
 		public static double GetSquare(this DataRect rect)
 		{
 			if (rect.IsEmpty)

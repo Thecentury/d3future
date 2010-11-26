@@ -193,5 +193,39 @@ namespace DynamicDataDisplay.Tests.D3
 			Assert.AreEqual(-1, rect.YMin);
 			Assert.AreEqual(3, rect.Height);
 		}
+
+		[TestMethod]
+		public void AggregateOnePointUnionXWithEmpty()
+		{
+			Point[] pts = { new Point(0, 0) };
+
+			var bounds = pts.Aggregate(DataRect.Empty, (rect, point) => DataRect.UnionX(rect, point.X));
+
+			Assert.AreEqual(0, bounds.Location.X);
+		}
+
+		[TestMethod]
+		public void AggregateTwoPointsUnionX()
+		{
+			Point[] pts = { new Point(0, 0), new Point(1, 0) };
+
+			var bounds = pts.Aggregate(DataRect.Empty, (rect, point) => DataRect.UnionX(rect, point.X));
+
+			Assert.AreEqual(0, bounds.Location.X);
+			Assert.AreEqual(1, bounds.Width);
+			Assert.IsFalse(bounds.IsEmpty);
+		}
+
+		[TestMethod]
+		public void AggregateTwoPointsUinioY()
+		{
+			Point[] pts = { new Point(0, 0), new Point(0, 1) };
+
+			var bounds = pts.Aggregate(DataRect.Empty, (rect, point) => DataRect.UnionY(rect, point.Y));
+
+			Assert.AreEqual(0, bounds.Location.Y);
+			Assert.AreEqual(1, bounds.Height);
+			Assert.IsFalse(bounds.IsEmpty);
+		}
 	}
 }

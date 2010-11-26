@@ -100,6 +100,22 @@ namespace DynamicDataDisplay.Markers.DataSources
 			return data.Cast<object>().Select(o => DataToPoint(o));
 		}
 
+		public DataRect GetContentBounds(IEnumerable data, DataRect visible)
+		{
+			// todo probably throw an exception or swall this case when DataToPoint delegate is null.
+			var visibleData = data.Cast<object>().Select(o => DataToPoint(o));
+
+			DataRect bounds = GetContentBounds(visibleData, visible);
+
+			return bounds;
+		}
+
+		public virtual DataRect GetContentBounds(IEnumerable<Point> data, DataRect visible)
+		{
+			var bounds = data.Aggregate(DataRect.Empty, (rect, point) => DataRect.Union(rect, point));
+			return bounds;
+		}
+
 		/// <summary>
 		/// Gets the type of the data.
 		/// </summary>

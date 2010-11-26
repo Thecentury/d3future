@@ -7,14 +7,14 @@ using DynamicDataDisplay.Markers.DataSources;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources.DataSourceFactories
 {
-	public sealed class DoubleFuncDataSourceFactory : DataSourceFactory
+	public sealed class DoubleLambdaDataSourceFactory : DataSourceFactory
 	{
 		public override PointDataSourceBase TryBuild(object data)
 		{
 			Func<double, double> func = data as Func<double, double>;
 			if (func != null)
 			{
-				DoubleFuncDataSource ds = new DoubleFuncDataSource(func);
+				DoubleLambdaDataSource ds = new DoubleLambdaDataSource(func);
 				return ds;
 			}
 

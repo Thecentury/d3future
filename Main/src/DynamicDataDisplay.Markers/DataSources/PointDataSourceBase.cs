@@ -15,7 +15,7 @@ using System.Threading;
 
 namespace DynamicDataDisplay.Markers.DataSources
 {
-	public abstract class PointDataSourceBase : INotifyCollectionChanged
+	public abstract class PointDataSourceBase : DependencyObject, INotifyCollectionChanged
 	{
 		#region Protected
 

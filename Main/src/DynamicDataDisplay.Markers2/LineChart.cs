@@ -86,7 +86,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			// todo remove
 			Debug.WriteLine("{0} - Env.Vis = {1}", DateTime.Now.TimeOfDay, environment.Visible.ToString());
 			VisualDebug.DrawRectangle("EnvironmentVisible", environment.Visible, fill: Brushes.Orchid.MakeTransparent(0.2));
-			//VisualDebug.DrawRectangle("Reference 1.0", new DataRect(0, 0, 1, 1), Brushes.OliveDrab, strokeThickness: 2.0);
+			VisualDebug.DrawRectangle("Reference 1.0", new DataRect(0, 0, 1, 1), Brushes.OliveDrab, strokeThickness: 2.0);
 
 			// do nothing if there is nothing to draw
 			if (!points.Any())
@@ -135,7 +135,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 				canvas.Children.Add(path);
 			}
 
-			ViewportPanel.SetViewportBounds(canvas, Plotter.Viewport.Visible);
+			ViewportPanel.SetViewportBounds(canvas, new DataRect(0, 0, 4, 2));
 
 			canvas.Background = Brushes.Orange.MakeTransparent(0.3);
 

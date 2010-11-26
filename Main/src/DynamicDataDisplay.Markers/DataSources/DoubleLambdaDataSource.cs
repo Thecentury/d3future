@@ -34,6 +34,38 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 			get { return func; }
 		}
 
+		#region SamplingRate property
+
+		/// <summary>
+		/// Gets or sets the sampling rate - number of x-points per one pixel. This is a DependencyProperty.
+		/// </summary>
+		/// <value>The sampling rate.</value>
+		public double SamplingRate
+		{
+			get { return (double)GetValue(SamplingRateProperty); }
+			set { SetValue(SamplingRateProperty, value); }
+		}
+
+		public static readonly DependencyProperty SamplingRateProperty = DependencyProperty.Register(
+		  "SamplingRate",
+		  typeof(double),
+		  typeof(DoubleLambdaDataSource),
+		  new FrameworkPropertyMetadata(1.0, OnSamplingRateReplaced));
+
+		private static void OnSamplingRateReplaced(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			DoubleLambdaDataSource owner = (DoubleLambdaDataSource)d;
+			double newValue = (double)e.NewValue;
+			owner.OnSamplingRateChanged(newValue);
+		}
+
+		private void OnSamplingRateChanged(double value)
+		{
+			RaiseCollectionReset();
+		}
+
+		#endregion
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DoubleLambdaDataSource"/> class.
 		/// </summary>
@@ -55,7 +87,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 			double yMin = Double.PositiveInfinity;
 			double yMax = Double.NegativeInfinity;
 
-			double step = visible.Width / output.Width;
+			double step = visible.Width / output.Width / SamplingRate;
 
 			for (double x = visible.XMin; x <= visible.XMax; x += step)
 			{

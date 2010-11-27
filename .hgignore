@@ -12,8 +12,11 @@ syntax: glob
 *.log
 *.scc
 *.vs10x
+*.vsp
+UpgradeLog.XML
 [Bb]in
 [Dd]ebug/
 obj/
 [Rr]elease/
 [Tt]est[Rr]esults
+_UpgradeReport_Files/

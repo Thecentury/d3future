@@ -106,7 +106,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 			bounds.UnionY(yMin);
 			bounds.UnionY(yMax);
 
-			// todo разобраться с этим ContentBounds и методом GetContentBounds - оставить в живых только одного.
 			environment.ContentBounds = bounds;
 		}
 

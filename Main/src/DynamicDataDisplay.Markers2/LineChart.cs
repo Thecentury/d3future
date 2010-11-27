@@ -28,6 +28,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		private readonly Binding strokeBinding;
 		private readonly Binding strokeThicknessBinding;
 		private readonly Binding strokeDashArrayBinding;
+		private readonly Binding zIndexBinding;
 		private const int pathLength = 500;
 
 		/// <summary>
@@ -38,6 +39,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			strokeBinding = new Binding(StrokeProperty.Name) { Source = this };
 			strokeThicknessBinding = new Binding(StrokeThicknessProperty.Name) { Source = this };
 			strokeDashArrayBinding = new Binding(StrokeDashArrayProperty.Name) { Source = this };
+			zIndexBinding = new Binding("(Panel.ZIndex)") { Source = this };
 		}
 
 		#region Overrides
@@ -117,6 +119,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 				path.SetBinding(Path.StrokeProperty, strokeBinding);
 				path.SetBinding(Path.StrokeThicknessProperty, strokeThicknessBinding);
 				path.SetBinding(Path.StrokeDashArrayProperty, strokeDashArrayBinding);
+				path.SetBinding(Panel.ZIndexProperty, zIndexBinding);
 
 				path.Data = geometry;
 
@@ -142,8 +145,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 				bounds = environment.ContentBounds.Value;
 			
 			Viewport2D.SetContentBounds(this, bounds);
-			Debug.WriteLine(bounds.ToString());
-			//Viewport2D.SetContentBounds(this, DataRect.Empty);
 		}
 
 		private void UpdateUIRepresentation()

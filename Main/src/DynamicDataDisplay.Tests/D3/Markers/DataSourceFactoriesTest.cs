@@ -16,6 +16,27 @@ namespace DynamicDataDisplay.Tests.D3.Markers
 	[TestClass]
 	public class DataSourceFactoriesTest
 	{
+		DataSourceFactoryStore store = DataSourceFactoryStore.Current;
+
+		[TestMethod]
+		public void CreateDataSourceFromAnimatedString()
+		{
+			string str = "x+t";
+			var ds = store.BuildDataSource(str);
+
+			Assert.IsInstanceOfType(ds, typeof(AnimatedDoubleLambdaDataSource));
+		}
+
+		[TestMethod]
+		public void CreateDataSourceFromNonAnimatedString()
+		{
+			string str = "x+1";
+
+			var ds = store.BuildDataSource(str);
+
+			Assert.IsInstanceOfType(ds, typeof(DoubleLambdaDataSource));
+		}
+
 		[TestMethod]
 		public void CreateDataSourceFromFuncDoubleDouble()
 		{

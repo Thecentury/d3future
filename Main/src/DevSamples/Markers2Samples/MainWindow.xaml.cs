@@ -31,7 +31,7 @@ namespace Markers2Samples
 
 		void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
-			lineChart.ItemsSource = new Func<double, double>(i => Math.Sin(i * 10));
+			//lineChart.ItemsSource = new Func<double, double>(i => Math.Sin(i * 10));
 
 			var axis = new HorizontalAxis();
 

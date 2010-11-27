@@ -123,6 +123,7 @@
     <Compile Include="Charts\MarkerChartBase.cs" />
     <Compile Include="Charts\PointChartBase.cs" />
     <Compile Include="Charts\PointSetUpdateHandler.cs" />
+    <Compile Include="DataSources\AnimatedDoubleLambdaDataSource.cs" />
     <Compile Include="DataSources\Composite\CompositeDataSource.cs" />
     <Compile Include="DataSources\Composite\CompositeDataSourcePropertyDescriptor.cs" />
     <Compile Include="DataSources\Composite\CompositeEnumerable.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="DataSources\DataSourceFactories\IEnumerablePointFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\PointArrayFactory.cs" />
     <Compile Include="DataSources\Composite\DataSourcePart.cs" />
+    <Compile Include="DataSources\DataSourceFactories\StringFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\XmlElementFactory.cs" />
     <Compile Include="DataSources\EmptyDataSource.cs" />
     <Compile Include="DataSources\EnumerableDataSource.cs" />
@@ -229,7 +231,6 @@
     <Compile Include="Functional\FunctionalDataSourceBase.cs" />
     <Compile Include="DataSources\PointDataSourceBase.cs" />
     <Compile Include="LineChart.cs" />
-    <Compile Include="LineChartExtensions.cs" />
     <Compile Include="Experimental\LinePart.cs" />
     <Compile Include="Experimental\LineSplitter.cs" />
     <Compile Include="MarkerGenerators\CandleStickGenerator.xaml.cs">
@@ -383,6 +384,10 @@
     <ProjectReference Include="..\DynamicDataDisplay\DynamicDataDisplay.csproj">
       <Project>{ECD37682-DF7E-409F-912D-0965634556B5}</Project>
       <Name>DynamicDataDisplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Parser\Parser.csproj">
+      <Project>{B66BEACE-2567-4077-9DCB-4358AEE68C90}</Project>
+      <Name>Parser</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

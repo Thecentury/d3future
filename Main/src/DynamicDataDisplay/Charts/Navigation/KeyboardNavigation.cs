@@ -250,7 +250,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 			double reverseCoeff = isReversed ? -1 : 1;
 			visible.Offset(reverseCoeff * xShiftCoeff * width, reverseCoeff * yShiftCoeff * height);
 
+			Viewport.FromKeyboardNavigation = true;
 			Viewport.Visible = visible;
+			Viewport.FromKeyboardNavigation = false;
+
 			plotter2D.UndoProvider.AddAction(new DependencyPropertyChangedUndoAction(Viewport, Viewport2D.VisibleProperty, oldVisible, visible));
 		}
 

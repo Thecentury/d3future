@@ -298,6 +298,7 @@
     <Compile Include="Common\RandomExtensions.cs" />
     <Compile Include="Common\RangeConverter.cs" />
     <Compile Include="Common\ResourcePool.cs" />
+    <Compile Include="Common\RingDictionary.cs" />
     <Compile Include="Common\SkipPropertyCheckAttribute.cs" />
     <Compile Include="Common\TokenizerHelper.cs" />
     <Compile Include="Common\UIChildrenCollection.cs" />

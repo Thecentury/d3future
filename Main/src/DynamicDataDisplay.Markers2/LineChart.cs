@@ -137,9 +137,13 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 					Plotter.Children.Add(panel);
 			});
 
-			DataRect dataBounds = DataSource.GetContentBounds(points, Plotter.Viewport.Visible);
-
-			Viewport2D.SetContentBounds(this, dataBounds);
+			DataRect bounds = DataRect.Empty;
+			if (environment.ContentBounds != null)
+				bounds = environment.ContentBounds.Value;
+			
+			Viewport2D.SetContentBounds(this, bounds);
+			Debug.WriteLine(bounds.ToString());
+			//Viewport2D.SetContentBounds(this, DataRect.Empty);
 		}
 
 		private void UpdateUIRepresentation()

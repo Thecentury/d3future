@@ -123,6 +123,7 @@
     <Compile Include="D3\RangeTest.cs" />
     <Compile Include="D3\RectExtensionsTest.cs" />
     <Compile Include="D3\RingArrayTest.cs" />
+    <Compile Include="D3\RingDictionaryTest.cs" />
     <Compile Include="D3\SplitEnumeratorTest.cs" />
     <Compile Include="D3\ViewportShapeTest.cs" />
     <Compile Include="D3\PlotterXamlSerializationTest.cs" />

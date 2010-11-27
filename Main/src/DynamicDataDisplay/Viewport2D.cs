@@ -18,9 +18,17 @@ namespace Microsoft.Research.DynamicDataDisplay
 	/// </summary>
 	public partial class Viewport2D : DependencyObject
 	{
-		// This counter is a part of workaround for endless axis resize loop
-		// It is reset on Viewport property assignment and on entire plotter resize
-		internal int UpdateIterationCount { get; set; }
+		/// <summary>
+		/// Gets or sets a value indicating whether new visible setting comes from keyboard navigation.
+		/// </summary>
+		/// <value>
+		/// 	<c>true</c> if new visible setting came from keyboard navigation; otherwise, <c>false</c>.
+		/// </value>
+		public bool FromKeyboardNavigation
+		{
+			get;
+			set;
+		}
 
 		private readonly Plotter2D plotter;
 		internal Plotter2D Plotter2D
@@ -80,12 +88,13 @@ namespace Microsoft.Research.DynamicDataDisplay
 			Viewport2D viewport = (Viewport2D)d;
 			// This counter is a part of workaround for endless axis resize loop
 			// If internal update count exceeds threshold stop enoforcing restrictions
-			if (e.Property == VisibleProperty)
-				if (viewport.UpdateIterationCount++ > 8)
-				{
-					viewport.EnforceRestrictions = false;
-					Debug.WriteLine("Plotter: update cycle detected. Viewport constraints disabled.");
-				}
+			// todo was uncommented
+			//if (e.Property == VisibleProperty)
+			//    if (viewport.UpdateIterationCount++ > 8)
+			//    {
+			//        viewport.EnforceRestrictions = false;
+			//        Debug.WriteLine("Plotter: update cycle detected. Viewport constraints disabled.");
+			//    }
 			viewport.UpdateTransform();
 			viewport.RaisePropertyChangedEvent(e);
 		}
@@ -120,23 +129,20 @@ namespace Microsoft.Research.DynamicDataDisplay
 			get { return ReadLocalValue(VisibleProperty) == DependencyProperty.UnsetValue; }
 		}
 
+		private DispatcherOperation updateVisibleOperation = null;
 		internal void UpdateVisible()
 		{
-			//if (updateVisibleOperation == null)
-			//{
-			//    updateVisibleOperation = Dispatcher.BeginInvoke(() => UpdateVisible(), DispatcherPriority.Normal);
-			//    return;
-			//}
-
-			//updateVisibleOperation = Dispatcher.BeginInvoke(() =>
-			//{
-			//    updateVisibleOperation = null;
+			if (updateVisibleOperation == null)
+			{
+				updateVisibleOperation = Dispatcher.BeginInvoke(() => UpdateVisible(), DispatcherPriority.Normal);
+				return;
+			}
 
 			if (IsFittedToView)
 			{
 				CoerceValue(VisibleProperty);
 			}
-			//}, DispatcherPriority.Normal);
+			updateVisibleOperation = null;
 		}
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -249,17 +255,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		public DataRect Visible
 		{
 			get { return (DataRect)GetValue(VisibleProperty); }
-			set
-			{
-				// This code is a part of workaround for endless axis resize loop
-				UpdateIterationCount = 0;
-				if (!EnforceRestrictions)
-				{
-					Debug.WriteLine("Plotter: enabling viewport constraints");
-					EnforceRestrictions = true;
-				}
-				SetValue(VisibleProperty, value);
-			}
+			set { SetValue(VisibleProperty, value); }
 		}
 
 		/// <summary>
@@ -458,14 +454,22 @@ namespace Microsoft.Research.DynamicDataDisplay
 			if (newVisible.IsEmpty)
 				newVisible = new Rect(0, 0, 1, 1);
 
+			prevVisibles.AddValue(newVisible);
+
 			return newVisible;
 		}
+
+		private readonly RingDictionary<DataRect> prevVisibles = new RingDictionary<DataRect>(2);
 
 		private static object OnCoerceVisible(DependencyObject d, object newValue)
 		{
 			Viewport2D viewport = (Viewport2D)d;
+			DataRect newVisible = (DataRect)newValue;
 
-			DataRect newRect = viewport.CoerceVisible((DataRect)newValue);
+			if (!viewport.FromKeyboardNavigation && viewport.prevVisibles.ContainsValue(newVisible))
+				return DependencyProperty.UnsetValue;
+
+			DataRect newRect = viewport.CoerceVisible(newVisible);
 
 			if (newRect.Width == 0 || newRect.Height == 0)
 			{

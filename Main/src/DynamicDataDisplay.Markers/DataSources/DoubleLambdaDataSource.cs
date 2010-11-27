@@ -115,7 +115,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 			return typeof(Point);
 		}
 
-		public override DataRect GetContentBounds(IEnumerable<Point> data, DataRect visible)
+		protected override DataRect GetContentBounds(IEnumerable<Point> data, DataRect visible)
 		{
 			DataRect bounds = data.Aggregate(DataRect.Empty, (rect, point) => DataRect.UnionY(rect, point.Y));
 

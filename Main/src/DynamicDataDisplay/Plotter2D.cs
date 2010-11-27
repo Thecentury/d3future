@@ -23,7 +23,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 		public Plotter2D()
 			: base(PlotterLoadMode.Normal)
 		{
-			Children.CollectionChanged += (s, e) => viewport.UpdateIterationCount = 0;
 			InitViewport();
 		}
 
@@ -66,15 +65,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
 		{
-			// This is part of endless axis resize loop workaround
-			if(viewport != null) {
-				viewport.UpdateIterationCount = 0;
-				if (!viewport.EnforceRestrictions)
-				{
-					Debug.WriteLine("Plotter: enabling viewport constraints");
-					viewport.EnforceRestrictions = true;
-				}
-			}
 			base.OnRenderSizeChanged(sizeInfo);
 		}
 

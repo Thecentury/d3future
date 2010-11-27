@@ -28,7 +28,7 @@ namespace NewMarkersSample.Pages
 		Segment[] segments = Segment.LoadSegments(40);
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			var newLegend = plotter.Children.OfType<NewLegend>().FirstOrDefault();
+			var newLegend = plotter.Children.OfType<Legend>().FirstOrDefault();
 			plotter.Children.Remove(newLegend);
 			DataContext = segments;
 		}

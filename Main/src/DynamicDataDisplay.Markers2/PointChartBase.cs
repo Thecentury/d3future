@@ -7,6 +7,7 @@ using DynamicDataDisplay.Markers.DataSources;
 using DynamicDataDisplay.Markers.DataSources.DataSourceFactories;
 using System.Diagnostics.Contracts;
 using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
+using Microsoft.Research.DynamicDataDisplay.Charts;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
@@ -193,5 +194,25 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		}
 
 		#endregion
+
+		/// <summary>
+		/// Gets or sets the description of this chart in the legend.
+		/// </summary>
+		/// <value>The description.</value>
+		public string Description
+		{
+			get { return (string)GetValue(Legend.DescriptionProperty); }
+			set { SetValue(Legend.DescriptionProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the detailed description of this chart in the legend.
+		/// </summary>
+		/// <value>The detailed description.</value>
+		public string DetailedDescription
+		{
+			get { return (string)GetValue(Legend.DetailedDescriptionProperty); }
+			set { SetValue(Legend.DetailedDescriptionProperty, value); }
+		}
 	}
 }

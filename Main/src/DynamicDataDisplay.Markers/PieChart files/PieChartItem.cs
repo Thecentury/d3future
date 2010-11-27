@@ -94,8 +94,8 @@ namespace DynamicDataDisplay.Markers
 
 		public object Caption
 		{
-			get { return NewLegend.GetDescription(this); }
-			set { NewLegend.SetDescription(this, value); }
+			get { return Legend.GetDescription(this); }
+			set { Legend.SetDescription(this, value); }
 		}
 
 		#endregion // end of Caption

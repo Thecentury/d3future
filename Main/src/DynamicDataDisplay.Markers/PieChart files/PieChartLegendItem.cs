@@ -11,7 +11,7 @@ using DynamicDataDisplay.Markers.DataSources.ValueConverters;
 
 namespace DynamicDataDisplay.Markers
 {
-	public class PieChartLegendItem : NewLegendItem
+	public class PieChartLegendItem : LegendItem
 	{
 		static PieChartLegendItem()
 		{
@@ -34,7 +34,7 @@ namespace DynamicDataDisplay.Markers
 
 			if (chart.DependentValueBinding != null)
 			{
-				SetBinding(NewLegend.DescriptionProperty, chart.DependentValueBinding);
+				SetBinding(Legend.DescriptionProperty, chart.DependentValueBinding);
 			}
 
 			bool setTooltipBinding = !String.IsNullOrEmpty(chart.IndependentValuePath) && !String.IsNullOrEmpty(chart.DependentValuePath);

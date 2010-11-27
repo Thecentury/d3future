@@ -16,7 +16,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				if (defaultStyle == null)
 				{
 					var legendStyles = GetLegendStyles();
-					defaultStyle = (Style)legendStyles[typeof(NewLegend)];
+					defaultStyle = (Style)legendStyles[typeof(Legend)];
 				}
 
 				return defaultStyle;

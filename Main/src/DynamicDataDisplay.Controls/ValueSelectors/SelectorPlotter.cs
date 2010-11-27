@@ -68,7 +68,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Controls
 			Children.Remove(DefaultContextMenu);
 			Children.Remove(MouseNavigation);
 			Children.Remove(Legend);
-			Children.Remove(NewLegend);
+			Children.Remove(Legend);
 
 			leftHighlight = new RectangleHighlight { Fill = highlightFill, Stroke = Brushes.DarkGray, Name = "Left_Highlight" };
 			Children.Add(leftHighlight);

@@ -4,11 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using Microsoft.Research.DynamicDataDisplay.Charts;
+using System.Windows.Shapes;
+using Microsoft.Research.DynamicDataDisplay.Charts.Legend_items;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
 	public abstract class LineChartBase : PointChartBase
 	{
+		static LineChartBase()
+		{
+			Type thisType = typeof(LineChartBase);
+
+			Legend.DescriptionProperty.OverrideMetadata(thisType, new FrameworkPropertyMetadata("LineChart"));
+			Legend.LegendItemsBuilderProperty.OverrideMetadata(thisType, new FrameworkPropertyMetadata(new LegendItemsBuilder(DefaultLegendItemsBuilder)));
+		}
+
+		private static IEnumerable<FrameworkElement> DefaultLegendItemsBuilder(IPlotterElement element)
+		{
+			LineChartBase lineChart = (LineChart)element;
+
+			Line line = new Line
+			{
+				X1 = 0,
+				Y1 = 10,
+				X2 = 20,
+				Y2 = 0,
+				Stretch = Stretch.Fill,
+				DataContext = lineChart
+			};
+			line.SetBinding(Line.StrokeProperty, "Stroke");
+			line.SetBinding(Line.StrokeThicknessProperty, "StrokeThickness");
+			line.SetBinding(Line.StrokeDashArrayProperty, "StrokeDashArray");
+			Legend.SetVisualContent(lineChart, line);
+
+			var legendItem = LegendItemsHelper.BuildDefaultLegendItem(lineChart);
+			yield return legendItem;
+		}
+
 		#region Stroke property
 
 		/// <summary>
@@ -46,7 +79,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		  typeof(double),
 		  typeof(LineChartBase),
 		  new FrameworkPropertyMetadata(1.0));
-		
+
 		#endregion
 
 		#region StrokeDashArray property

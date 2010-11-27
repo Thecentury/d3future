@@ -86,55 +86,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		#endregion
 
-		#region Description
-
-		/// <summary>
-		/// Creates the default description.
-		/// </summary>
-		/// <returns></returns>
-		protected virtual Description CreateDefaultDescription()
-		{
-			return new StandardDescription();
-		}
-
-		private Description description;
-		/// <summary>
-		/// Gets or sets the description.
-		/// </summary>
-		/// <value>The description.</value>
-		public Description Description
-		{
-			get
-			{
-				if (description == null)
-				{
-					description = CreateDefaultDescription();
-					description.Attach(this);
-				}
-				return description;
-			}
-			set
-			{
-				if (description != null)
-				{
-					description.Detach();
-				}
-				description = value;
-				if (description != null)
-				{
-					description.Attach(this);
-				}
-				RaisePropertyChanged("Description");
-			}
-		}
-
-		public override string ToString()
-		{
-			return GetType().Name + ": " + Description.Brief;
-		}
-
-		#endregion
-
 		private Vector offset = new Vector();
 		protected internal Vector Offset
 		{
@@ -142,13 +93,13 @@ namespace Microsoft.Research.DynamicDataDisplay
 			set { offset = value; }
 		}
 
-        //bool SizeEqual(Size s1, Size s2, double eps)
-        //{
-        //    double width = Math.Min(s1.Width, s2.Width);
-        //    double height = Math.Min(s1.Height, s2.Height);
-        //    return Math.Abs(s1.Width - s2.Width) < width * eps &&
-        //           Math.Abs(s1.Height - s2.Height) < height * eps;
-        //}
+		//bool SizeEqual(Size s1, Size s2, double eps)
+		//{
+		//    double width = Math.Min(s1.Width, s2.Width);
+		//    double height = Math.Min(s1.Height, s2.Height);
+		//    return Math.Abs(s1.Width - s2.Width) < width * eps &&
+		//           Math.Abs(s1.Height - s2.Height) < height * eps;
+		//}
 
 		protected virtual void OnVisibleChanged(DataRect newRect, DataRect oldRect)
 		{

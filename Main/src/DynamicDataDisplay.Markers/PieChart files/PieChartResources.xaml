@@ -171,7 +171,7 @@
 								</Path.Data>
 							</Path>
 						</Grid>
-						<TextBlock Text="{TemplateBinding d3:NewLegend.Description}"/>
+						<TextBlock Text="{TemplateBinding d3:Legend.Description}"/>
 					</StackPanel>
 				</ControlTemplate>
 			</Setter.Value>

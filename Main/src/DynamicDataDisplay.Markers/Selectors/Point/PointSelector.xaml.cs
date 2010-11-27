@@ -209,7 +209,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Selectors
 					return new NoneModeHandler();
 				default:
 					throw new ArgumentException("Mode");
-					break;
 			}
 		}
 

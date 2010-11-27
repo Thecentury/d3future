@@ -18,11 +18,14 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 {
 	public delegate IEnumerable<FrameworkElement> LegendItemsBuilder(IPlotterElement element);
 
-	public class NewLegend : ItemsControl, IPlotterElement
+	/// <summary>
+	/// Represents a legend for a chart plotter.
+	/// </summary>
+	public class Legend : ItemsControl, IPlotterElement
 	{
-		static NewLegend()
+		static Legend()
 		{
-			Type thisType = typeof(NewLegend);
+			Type thisType = typeof(Legend);
 			DefaultStyleKeyProperty.OverrideMetadata(thisType, new FrameworkPropertyMetadata(thisType));
 
 			Plotter.PlotterProperty.OverrideMetadata(thisType, new FrameworkPropertyMetadata(OnPlotterChanged));
@@ -30,7 +33,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 		private readonly ObservableCollection<FrameworkElement> legendItems = new ObservableCollection<FrameworkElement>();
 
-		public NewLegend()
+		public Legend()
 		{
 			ItemsSource = legendItems;
 		}
@@ -39,7 +42,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 		private static void OnPlotterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			NewLegend legend = (NewLegend)d;
+			Legend legend = (Legend)d;
 			if (e.OldValue != null)
 			{
 				legend.DetachFromPlotter((Plotter)e.OldValue);
@@ -106,7 +109,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 			foreach (var chart in plotter.Children.OfType<DependencyObject>())
 			{
-				var legendItemsBuilder = NewLegend.GetLegendItemsBuilder(chart);
+				var legendItemsBuilder = Legend.GetLegendItemsBuilder(chart);
 				if (legendItemsBuilder != null)
 				{
 					foreach (var legendItem in legendItemsBuilder((IPlotterElement)chart))
@@ -114,12 +117,6 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 						legendItems.Add(legendItem);
 					}
 				}
-
-				//var controller = LegendItemControllersStore.Current.GetController(chart.GetType());
-				//if (controller != null)
-				//{
-				//    controller.ProcessChart(chart, this);
-				//}
 			}
 
 			UpdateVisibility();
@@ -161,7 +158,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		public static readonly DependencyProperty DescriptionProperty = DependencyProperty.RegisterAttached(
 		  "Description",
 		  typeof(object),
-		  typeof(NewLegend),
+		  typeof(Legend),
 		  new FrameworkPropertyMetadata(null));
 
 		#endregion // end of Description
@@ -181,7 +178,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		public static readonly DependencyProperty DetailedDescriptionProperty = DependencyProperty.RegisterAttached(
 		  "DetailedDescription",
 		  typeof(object),
-		  typeof(NewLegend),
+		  typeof(Legend),
 		  new FrameworkPropertyMetadata(null));
 
 		#endregion // end of Detailed description
@@ -201,7 +198,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		public static readonly DependencyProperty VisualContentProperty = DependencyProperty.RegisterAttached(
 		  "VisualContent",
 		  typeof(object),
-		  typeof(NewLegend),
+		  typeof(Legend),
 		  new FrameworkPropertyMetadata(null));
 
 		#endregion // end of VisualContent
@@ -221,7 +218,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		public static readonly DependencyProperty SampleDataProperty = DependencyProperty.RegisterAttached(
 		  "SampleData",
 		  typeof(object),
-		  typeof(NewLegend),
+		  typeof(Legend),
 		  new FrameworkPropertyMetadata(null));
 
 		#endregion // end of SampleData
@@ -241,12 +238,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		public static readonly DependencyProperty ShowInLegendProperty = DependencyProperty.RegisterAttached(
 		  "ShowInLegend",
 		  typeof(bool),
-		  typeof(NewLegend),
+		  typeof(Legend),
 		  new FrameworkPropertyMetadata(true, OnShowInLegendChanged));
 
 		private static void OnShowInLegendChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			NewLegend legend = (NewLegend)d;
+			Legend legend = (Legend)d;
 			legend.PopulateLegend();
 		}
 
@@ -267,7 +264,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		public static readonly DependencyProperty LegendItemsBuilderProperty = DependencyProperty.RegisterAttached(
 		  "LegendItemsBuilder",
 		  typeof(LegendItemsBuilder),
-		  typeof(NewLegend),
+		  typeof(Legend),
 		  new FrameworkPropertyMetadata(null, OnLegendItemsBuilderChanged));
 
 		private static void OnLegendItemsBuilderChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -278,7 +275,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				ChartPlotter plotter = plotterElement.Plotter as ChartPlotter;
 				if (plotter != null)
 				{
-					plotter.NewLegend.PopulateLegend();
+					plotter.Legend.PopulateLegend();
 				}
 			}
 		}
@@ -298,12 +295,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		public static readonly DependencyProperty LegendVisibleProperty = DependencyProperty.Register(
 		  "LegendVisible",
 		  typeof(bool),
-		  typeof(NewLegend),
+		  typeof(Legend),
 		  new FrameworkPropertyMetadata(true, OnLegendVisibleChanged));
 
 		private static void OnLegendVisibleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			NewLegend owner = (NewLegend)d;
+			Legend owner = (Legend)d;
 
 			var visible = (bool)e.NewValue;
 			owner.OnLegendVisibleChanged(visible);

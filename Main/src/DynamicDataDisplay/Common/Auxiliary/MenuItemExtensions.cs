@@ -10,7 +10,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Common.Auxiliary
 	{
 		public static MenuItem FindChildByHeader(this MenuItem parent, string header)
 		{
-			return parent.Items.OfType<MenuItem>().Where(subMenu => subMenu.Header == header).FirstOrDefault();
+			return parent.Items.OfType<MenuItem>().Where(subMenu => (string)subMenu.Header == header).FirstOrDefault();
 		}
 	}
 }

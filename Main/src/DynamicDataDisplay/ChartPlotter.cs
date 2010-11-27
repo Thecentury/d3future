@@ -20,32 +20,24 @@ namespace Microsoft.Research.DynamicDataDisplay
 		private GeneralAxis verticalAxis = new VerticalAxis();
 		private AxisGrid axisGrid = new AxisGrid();
 
-		private readonly Legend legend = new Legend();
-
-		private NewLegend newLegend = new NewLegend();
-		[NotNull]
-		public NewLegend NewLegend
-		{
-			get { return newLegend; }
-			set { newLegend = value; }
-		}
+		private Legend legend = new Legend();
 
 		public ItemsPanelTemplate LegendPanelTemplate
 		{
-			get { return newLegend.ItemsPanel; }
+			get { return legend.ItemsPanel; }
 			set
 			{
-				if (newLegend == null)
+				if (legend == null)
 					throw new ArgumentNullException("LegendPanelTemplate");
 
-				newLegend.ItemsPanel = value;
+				legend.ItemsPanel = value;
 			}
 		}
 
 		public Style LegendStyle
 		{
-			get { return newLegend.Style; }
-			set { newLegend.Style = value; }
+			get { return legend.Style; }
+			set { legend.Style = value; }
 		}
 
 		/// <summary>
@@ -93,10 +85,9 @@ namespace Microsoft.Research.DynamicDataDisplay
 				keyboardNavigation,
 				defaultContextMenu,
 				horizontalAxisNavigation,
-				//legend,
 				verticalAxisNavigation,
 				new LongOperationsIndicator(),
-				newLegend
+				legend
 				);
 
 #if DEBUG
@@ -519,10 +510,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 			set { legend.Visibility = value; }
 		}
 
-		public bool NewLegendVisible
+		public bool LegendVisible
 		{
-			get { return newLegend.LegendVisible; }
-			set { newLegend.LegendVisible = value; }
+			get { return legend.LegendVisible; }
+			set { legend.LegendVisible = value; }
 		}
 
 		private enum AxisType

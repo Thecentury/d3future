@@ -26,8 +26,8 @@ namespace Microsoft.Research.DynamicDataDisplay
 		{
 			Type thisType = typeof(LineGraph);
 
-			NewLegend.DescriptionProperty.OverrideMetadata(thisType, new FrameworkPropertyMetadata("LineGraph"));
-			NewLegend.LegendItemsBuilderProperty.OverrideMetadata(thisType, new FrameworkPropertyMetadata(new LegendItemsBuilder(DefaultLegendItemsBuilder)));
+			Legend.DescriptionProperty.OverrideMetadata(thisType, new FrameworkPropertyMetadata("LineGraph"));
+			Legend.LegendItemsBuilderProperty.OverrideMetadata(thisType, new FrameworkPropertyMetadata(new LegendItemsBuilder(DefaultLegendItemsBuilder)));
 		}
 
 		private static IEnumerable<FrameworkElement> DefaultLegendItemsBuilder(IPlotterElement plotterElement)
@@ -37,7 +37,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			Line line = new Line { X1 = 0, Y1 = 10, X2 = 20, Y2 = 0, Stretch = Stretch.Fill, DataContext = lineGraph };
 			line.SetBinding(Line.StrokeProperty, "Stroke");
 			line.SetBinding(Line.StrokeThicknessProperty, "StrokeThickness");
-			NewLegend.SetVisualContent(lineGraph, line);
+			Legend.SetVisualContent(lineGraph, line);
 
 			var legendItem = LegendItemsHelper.BuildDefaultLegendItem(lineGraph);
 			yield return legendItem;
@@ -50,7 +50,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// </summary>
 		public LineGraph()
 		{
-			Legend.SetVisibleInLegend(this, true);
 			ManualTranslate = true;
 
 			filters.CollectionChanged += filters_CollectionChanged;
@@ -70,11 +69,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 			: this()
 		{
 			DataSource = pointSource;
-		}
-
-		protected override Description CreateDefaultDescription()
-		{
-			return new PenDescription();
 		}
 
 		/// <summary>Provides access to filters collection</summary>

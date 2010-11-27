@@ -6,7 +6,7 @@
 		Title="MainWindow" Height="350" Width="525">
 	<Grid>
 		<d3:ChartPlotter Name="plotter">
-			<df:LineChart x:Name="lineChart" StrokeThickness="4"/>
+			<df:LineChart x:Name="lineChart" StrokeThickness="4" Description="Some chart" DetailedDescription="Some detailed description"/>
 			<d3:CursorCoordinateGraph/>
 		</d3:ChartPlotter>
 	</Grid>

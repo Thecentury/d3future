@@ -34,7 +34,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 		public MenuItem TryFindMenuItem(string itemName)
 		{
-			return menu.Items.OfType<MenuItem>().Where(item => item.Header == itemName).FirstOrDefault();
+			return menu.Items.OfType<MenuItem>().Where(item => (string)item.Header == itemName).FirstOrDefault();
 		}
 
 		#region IPlotterElement Members

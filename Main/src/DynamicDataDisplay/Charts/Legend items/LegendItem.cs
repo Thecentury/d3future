@@ -9,11 +9,11 @@ using System.ComponentModel;
 
 namespace Microsoft.Research.DynamicDataDisplay.Charts
 {
-	public class NewLegendItem : Control
+	public class LegendItem : Control
 	{
-		static NewLegendItem()
+		static LegendItem()
 		{
-			var thisType = typeof(NewLegendItem);
+			var thisType = typeof(LegendItem);
 			DefaultStyleKeyProperty.OverrideMetadata(thisType, new FrameworkPropertyMetadata(thisType));
 		}
 

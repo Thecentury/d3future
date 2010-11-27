@@ -143,7 +143,6 @@
     <Compile Include="Charts\Axes\TimeSpan\TimeSpanLabelProvider.cs" />
     <Compile Include="Charts\Axes\TimeSpan\TimeSpanTicksProvider.cs" />
     <Compile Include="Charts\BitmapBasedGraph.cs" />
-    <Compile Include="Charts\NewLineGraph.cs" />
     <Compile Include="Charts\DataFollowChart.cs" />
     <Compile Include="Charts\DataSource2dContext.cs" />
     <Compile Include="Charts\DebugMenu.cs" />
@@ -158,7 +157,7 @@
     <Compile Include="Charts\Isolines\IsolineRenderer.cs" />
     <Compile Include="Charts\Legend items\LegendItemsHelper.cs" />
     <Compile Include="Charts\Legend items\LegendStyles.cs" />
-    <Compile Include="Charts\Legend items\NewLegendItem.cs" />
+    <Compile Include="Charts\Legend items\LegendItem.cs" />
     <Compile Include="Charts\Legend items\LegendBottomButtonIsEnabledConverter.cs" />
     <Compile Include="Charts\Legend items\LegendTopButtonToIsEnabledConverter.cs" />
     <Compile Include="Charts\LiveToolTips\LiveToolTip.cs" />
@@ -208,7 +207,7 @@
       <DependentUpon>CursorCoordinateGraph.xaml</DependentUpon>
     </Compile>
     <Compile Include="Charts\Navigation\VerticalScrollBar.cs" />
-    <Compile Include="Charts\Legend items\NewLegend.cs" />
+    <Compile Include="Charts\Legend items\Legend.cs" />
     <Compile Include="Charts\PopupTip.cs" />
     <Compile Include="Charts\PopupTipElement.cs" />
     <Compile Include="Charts\Shapes\Arrow.cs" />
@@ -404,20 +403,8 @@
     <Compile Include="ExtendedPropertyChangedEventArgs.cs" />
     <Compile Include="Charts\LineAndMarker.cs" />
     <Compile Include="Charts\MarkerElementPointGraph.cs" />
-    <Compile Include="Descriptions\Description.cs" />
-    <Compile Include="Descriptions\PenDescription.cs" />
-    <Compile Include="Descriptions\StandardDescription.cs" />
     <Compile Include="Charts\FakePointList.cs" />
-    <Compile Include="Charts\Legend.xaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>Legend.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Charts\LegendItem.cs" />
     <Compile Include="Charts\LineGraph.cs" />
-    <Compile Include="Charts\LineLegendItem.xaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>LineLegendItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Charts\MarkerPointsGraph.cs" />
     <Compile Include="PointMarkers\CirclePointMarker.cs" />
     <Compile Include="PointMarkers\ShapePointMarker.cs" />
@@ -488,7 +475,6 @@
     <Compile Include="Common\Auxiliary\PointExtensions.cs" />
     <Compile Include="Charts\PointGraphBase.cs" />
     <Compile Include="Common\VerticalAxisTitle.cs" />
-    <Compile Include="Plotter2DExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -529,33 +515,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Charts\Legend items\LegendResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Charts\Legend.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Charts\LineLegendItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Charts\Axes\AxisControlStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charts\Legend items\LegendResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

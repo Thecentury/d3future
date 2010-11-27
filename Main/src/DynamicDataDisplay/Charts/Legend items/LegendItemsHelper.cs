@@ -9,20 +9,20 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Legend_items
 {
 	public static class LegendItemsHelper
 	{
-		public static NewLegendItem BuildDefaultLegendItem(IPlotterElement chart)
+		public static LegendItem BuildDefaultLegendItem(IPlotterElement chart)
 		{
 			DependencyObject dependencyChart = (DependencyObject)chart;
 
-			NewLegendItem result = new NewLegendItem();
+			LegendItem result = new LegendItem();
 			SetCommonBindings(result, chart);
 			return result;
 		}
 
-		public static void SetCommonBindings(NewLegendItem legendItem, object chart)
+		public static void SetCommonBindings(LegendItem legendItem, object chart)
 		{
 			legendItem.DataContext = chart;
-			legendItem.SetBinding(NewLegend.VisualContentProperty, new Binding { Path = new PropertyPath("(0)", NewLegend.VisualContentProperty) });
-			legendItem.SetBinding(NewLegend.DescriptionProperty, new Binding { Path = new PropertyPath("(0)", NewLegend.DescriptionProperty) });
+			legendItem.SetBinding(Legend.VisualContentProperty, new Binding { Path = new PropertyPath("(0)", Legend.VisualContentProperty) });
+			legendItem.SetBinding(Legend.DescriptionProperty, new Binding { Path = new PropertyPath("(0)", Legend.DescriptionProperty) });
 		}
 
 	}

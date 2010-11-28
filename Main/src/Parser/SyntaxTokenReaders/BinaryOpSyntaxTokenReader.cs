@@ -88,7 +88,7 @@ namespace MathParser.SyntaxTokenReaders {
 	public sealed class PowerSyntaxTokenReader : BinaryOpSyntaxTokenReader<PowerToken, PowerSyntaxToken> {
 		public PowerSyntaxTokenReader() {
 			Priority = Priorities.Power;
-			OpName = "**";
+			OpName = "^";
 		}
 	}
 }

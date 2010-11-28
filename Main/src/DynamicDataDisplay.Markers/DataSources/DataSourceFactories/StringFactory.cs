@@ -5,6 +5,7 @@ using System.Text;
 using DynamicDataDisplay.Markers.DataSources.DataSourceFactories;
 using DynamicDataDisplay.Markers.DataSources;
 using MathParser;
+using System.Linq.Expressions;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources.DataSourceFactories
 {
@@ -18,7 +19,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources.DataSourceFa
 				try
 				{
 					Parser parser = new Parser("x");
-					Func<double, double> func = parser.Parse(expression).ToExpression<Func<double, double>>().Compile();
+					var expr = parser.Parse(expression).ToExpression<Func<double, double>>();
+					Func<double, double> func = expr.Compile();
 
 					DoubleLambdaDataSource ds = new DoubleLambdaDataSource(func);
 					return ds;
@@ -28,7 +30,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources.DataSourceFa
 					try
 					{
 						Parser parser = new Parser("x", "t");
-						Func<double, double, double> func = parser.Parse(expression).ToExpression<Func<double, double, double>>().Compile();
+						var expr = parser.Parse(expression).ToExpression<Func<double, double, double>>();
+						Func<double, double, double> func = expr.Compile();
 
 						AnimatedDoubleLambdaDataSource ds = new AnimatedDoubleLambdaDataSource(func);
 						return ds;

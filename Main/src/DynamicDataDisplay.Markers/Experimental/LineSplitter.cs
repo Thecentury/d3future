@@ -7,24 +7,25 @@ using System.Collections;
 
 namespace Microsoft.Research.DynamicDataDisplay.Charts.NewLine
 {
+	/// <summary>
+	/// Represents a utility class capable to split sequence of points, using missing values as delimeters.
+	/// </summary>
 	public sealed class LineSplitter
 	{
-		private readonly double xMissingValue = Double.NegativeInfinity;
-		private readonly double yMissingValue = Double.NegativeInfinity;
-
-		public IEnumerable<LinePart> Split(IEnumerable<Point> points)
+		public IEnumerable<LinePart> Split(IEnumerable<Point> points, double xMissingValue = Double.NaN, double yMissingValue = Double.NaN)
 		{
 			List<Point> list = new List<Point>();
 			double parameter = 0;
 			bool split = false;
+
 			foreach (var point in points)
 			{
-				if (point.X == xMissingValue)
+				if (point.X.Equals(xMissingValue))
 				{
 					parameter = point.Y;
 					split = true;
 				}
-				else if (point.Y == yMissingValue)
+				else if (point.Y.Equals(yMissingValue))
 				{
 					parameter = point.X;
 					split = true;
@@ -41,6 +42,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.NewLine
 					list = new List<Point>();
 				}
 			}
+
+			if (!split)
+				yield return new LinePart { Points = list, Parameter = 0 };
 		}
 	}
 }

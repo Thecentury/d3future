@@ -14,6 +14,8 @@ using Microsoft.Research.DynamicDataDisplay.Common;
 using System.Windows.Data;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using System.Collections.Specialized;
+using Microsoft.Research.DynamicDataDisplay.Charts.NewLine;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
@@ -30,6 +32,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		private readonly Binding strokeDashArrayBinding;
 		private readonly Binding zIndexBinding;
 		private const int pathLength = 500;
+		private readonly LineSplitter lineSplitter = new LineSplitter();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LineChart"/> class.
@@ -48,6 +51,15 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		{
 			base.OnDataSourceReplaced(oldDataSource, newDataSource);
 
+			DestroyUIRepresentation();
+			CreateUIRepresentation();
+		}
+
+		protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+		{
+			base.OnCollectionChanged(e);
+
+			DestroyUIRepresentation();
 			CreateUIRepresentation();
 		}
 
@@ -55,6 +67,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		{
 			base.OnPlotterAttached(plotter);
 
+			DestroyUIRepresentation();
 			CreateUIRepresentation();
 		}
 
@@ -70,6 +83,29 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			base.OnViewportPropertyChanged(e);
 
 			UpdateUIRepresentation();
+		}
+
+		#endregion
+
+		#region Properties
+
+		public bool UseSmoothJoin
+		{
+			get { return (bool)GetValue(UseSmoothJoinProperty); }
+			set { SetValue(UseSmoothJoinProperty, value); }
+		}
+
+		public static readonly DependencyProperty UseSmoothJoinProperty = DependencyProperty.Register(
+		  "UseSmoothJoin",
+		  typeof(bool),
+		  typeof(LineChart),
+		  new FrameworkPropertyMetadata(false, OnUseSmoothJoinReplaced));
+
+		private static void OnUseSmoothJoinReplaced(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			LineChart owner = (LineChart)d;
+			owner.DestroyUIRepresentation();
+			owner.CreateUIRepresentation();
 		}
 
 		#endregion
@@ -93,37 +129,45 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 
 			var parts = screenPoints.Split(pathLength);
 
+			var splittedParts = from part in parts
+								select lineSplitter.Split(part);
+
+			bool isSmoothJoin = UseSmoothJoin;
+
 			Point? lastPoint = null;
-			foreach (var part in parts)
+			foreach (var shortSegment in splittedParts)
 			{
-				List<Point> list = part.ToList();
-				if (list.Count == 0)
-					continue;
-
-				StreamGeometry geometry = new StreamGeometry();
-				using (var context = geometry.Open())
+				foreach (var part in shortSegment)
 				{
-					var start = lastPoint ?? list[0];
+					List<Point> list = part.Points.ToList();
+					if (list.Count == 0)
+						continue;
 
-					context.BeginFigure(start, isFilled: false, isClosed: false);
-					context.PolyLineTo(list, isStroked: true, isSmoothJoin: false);
+					StreamGeometry geometry = new StreamGeometry();
+					using (var context = geometry.Open())
+					{
+						var start = lastPoint ?? list[0];
+
+						context.BeginFigure(start, isFilled: false, isClosed: false);
+						context.PolyLineTo(list, isStroked: true, isSmoothJoin: isSmoothJoin);
+					}
+
+					lastPoint = list.Last();
+
+					Path path = pathsPool.GetOrCreate();
+
+					if (path.CacheMode == null)
+						path.CacheMode = new BitmapCache();
+
+					path.SetBinding(Path.StrokeProperty, strokeBinding);
+					path.SetBinding(Path.StrokeThicknessProperty, strokeThicknessBinding);
+					path.SetBinding(Path.StrokeDashArrayProperty, strokeDashArrayBinding);
+					path.SetBinding(Panel.ZIndexProperty, zIndexBinding);
+
+					path.Data = geometry;
+
+					canvas.Children.Add(path);
 				}
-
-				lastPoint = list.Last();
-
-				Path path = pathsPool.GetOrCreate();
-
-				if (path.CacheMode == null)
-					path.CacheMode = new BitmapCache();
-
-				path.SetBinding(Path.StrokeProperty, strokeBinding);
-				path.SetBinding(Path.StrokeThicknessProperty, strokeThicknessBinding);
-				path.SetBinding(Path.StrokeDashArrayProperty, strokeDashArrayBinding);
-				path.SetBinding(Panel.ZIndexProperty, zIndexBinding);
-
-				path.Data = geometry;
-
-				canvas.Children.Add(path);
 			}
 
 			ViewportPanel.SetViewportBounds(canvas, Plotter.Viewport.Visible);
@@ -143,8 +187,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			DataRect bounds = DataRect.Empty;
 			if (environment.ContentBounds != null)
 				bounds = environment.ContentBounds.Value;
-			
+
 			Viewport2D.SetContentBounds(this, bounds);
+
 		}
 
 		private void UpdateUIRepresentation()

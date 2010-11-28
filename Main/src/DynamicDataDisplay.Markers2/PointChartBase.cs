@@ -8,6 +8,8 @@ using DynamicDataDisplay.Markers.DataSources.DataSourceFactories;
 using System.Diagnostics.Contracts;
 using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 using Microsoft.Research.DynamicDataDisplay.Charts;
+using System.Collections.Specialized;
+using System.Windows.Threading;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
@@ -158,7 +160,21 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			owner.OnDataSourceReplaced((PointDataSourceBase)e.OldValue, (PointDataSourceBase)e.NewValue);
 		}
 
-		protected virtual void OnDataSourceReplaced(PointDataSourceBase oldDataSource, PointDataSourceBase newDataSource) { }
+		protected virtual void OnDataSourceReplaced(PointDataSourceBase oldDataSource, PointDataSourceBase newDataSource)
+		{
+			if (oldDataSource != null)
+				oldDataSource.CollectionChanged -= OnDataSource_CollectionChanged;
+
+			if (newDataSource != null)
+				newDataSource.CollectionChanged += OnDataSource_CollectionChanged;
+		}
+
+		private void OnDataSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			OnCollectionChanged(e);
+		}
+
+		protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e) { }
 
 		#endregion
 

@@ -8,7 +8,7 @@ namespace MathParser
 	public static class Priorities
 	{
 		public static double Number = 0;
-		public static double FunctionCall = 1.5;
+		public static double FunctionCall = 1.4;
 		public static double Brackets = 1;
 		public static double Multiplication = 2;
 		public static double Addition = 3;

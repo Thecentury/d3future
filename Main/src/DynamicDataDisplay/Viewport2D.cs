@@ -86,15 +86,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 		private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			Viewport2D viewport = (Viewport2D)d;
-			// This counter is a part of workaround for endless axis resize loop
-			// If internal update count exceeds threshold stop enoforcing restrictions
-			// todo was uncommented
-			//if (e.Property == VisibleProperty)
-			//    if (viewport.UpdateIterationCount++ > 8)
-			//    {
-			//        viewport.EnforceRestrictions = false;
-			//        Debug.WriteLine("Plotter: update cycle detected. Viewport constraints disabled.");
-			//    }
 			viewport.UpdateTransform();
 			viewport.RaisePropertyChangedEvent(e);
 		}
@@ -134,15 +125,28 @@ namespace Microsoft.Research.DynamicDataDisplay
 		{
 			if (updateVisibleOperation == null)
 			{
-				updateVisibleOperation = Dispatcher.BeginInvoke(() => UpdateVisible(), DispatcherPriority.Normal);
+				updateVisibleOperation = Dispatcher.BeginInvoke(() => UpdateVisibleBody(), DispatcherPriority.Background);
 				return;
 			}
+			else if (updateVisibleOperation.Status == DispatcherOperationStatus.Pending)
+			{
+				updateVisibleOperation.Abort();
+				updateVisibleOperation = Dispatcher.BeginInvoke(() => UpdateVisibleBody(), DispatcherPriority.Background);
+			}
+		}
 
+		private int updateVisibleCounter = 0;
+		private void UpdateVisibleBody() {
+			if (updateVisibleCounter > 0)
+				return;
+
+			updateVisibleCounter++;
 			if (IsFittedToView)
 			{
 				CoerceValue(VisibleProperty);
 			}
 			updateVisibleOperation = null;
+			updateVisibleCounter--;
 		}
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -596,32 +600,43 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
+		int propertyChangedCounter = 0;
+		private DispatcherOperation notifyOperation = null;
 		private void RaisePropertyChangedEvent(DependencyPropertyChangedEventArgs e)
 		{
-			if (PropertyChanged != null)
+			if (notifyOperation == null)
 			{
-				RaisePropertyChanged(ExtendedPropertyChangedEventArgs.FromDependencyPropertyChanged(e));
+				notifyOperation = Dispatcher.BeginInvoke(() =>
+				{
+					RaisePropertyChangedEventBody(e);
+				}, DispatcherPriority.Background);
+				return;
+			}
+			else if (notifyOperation.Status == DispatcherOperationStatus.Pending)
+			{
+				notifyOperation.Abort();
+				notifyOperation = Dispatcher.BeginInvoke(() =>
+				{
+					RaisePropertyChangedEventBody(e);
+				}, DispatcherPriority.Background);
 			}
 		}
 
-		//private DispatcherOperation pendingRaisePropertyChangedOperation;
-		//private bool inRaisePropertyChanged = false;
+		private void RaisePropertyChangedEventBody(DependencyPropertyChangedEventArgs e)
+		{
+			if (propertyChangedCounter > 0)
+				return;
+
+			propertyChangedCounter++;
+			RaisePropertyChanged(ExtendedPropertyChangedEventArgs.FromDependencyPropertyChanged(e));
+			propertyChangedCounter--;
+
+			notifyOperation = null;
+		}
+
 		protected virtual void RaisePropertyChanged(ExtendedPropertyChangedEventArgs args)
 		{
-			//if (inRaisePropertyChanged)
-			//{
-			//    if (pendingRaisePropertyChangedOperation != null)
-			//        pendingRaisePropertyChangedOperation.Abort();
-			//    pendingRaisePropertyChangedOperation = Dispatcher.BeginInvoke(() => RaisePropertyChanged(args), DispatcherPriority.Normal);
-			//    return;
-			//}
-
-			//pendingRaisePropertyChangedOperation = null;
-			//inRaisePropertyChanged = true;
-
 			PropertyChanged.Raise(this, args);
-
-			//inRaisePropertyChanged = false;
 		}
 
 		private void OnPlotterChildrenChanged(object sender, NotifyCollectionChangedEventArgs e)

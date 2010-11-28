@@ -7,7 +7,7 @@
 	<Grid>
 		<d3:ChartPlotter Name="plotter">
 			<df:LineChart x:Name="lineChart"
-						  ItemsSource="sin(x*10 + t)"
+						  ItemsSource="sin(x)+sin(t)"
 						  StrokeThickness="4" 
 						  Description="Some chart" 
 						  DetailedDescription="Some detailed description"/>

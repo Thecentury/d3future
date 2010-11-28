@@ -13,7 +13,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 {
 	public sealed class AnimatedDoubleLambdaDataSource : PointDataSourceBase
 	{
-		private double interval = 50; // ms
+		private double interval = 30; // ms
 		private readonly DispatcherTimer timer;
 		private readonly Func<double, double, double> func = null;
 		private readonly Stopwatch watch = Stopwatch.StartNew();

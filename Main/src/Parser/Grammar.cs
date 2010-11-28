@@ -23,6 +23,7 @@ namespace MathParser {
 			lexicReaders.Add(new CharReader('+', new AddToken()));
 			lexicReaders.Add(new CharReader('-', new SubtractToken()));
 			lexicReaders.Add(new StringReader("**", new PowerToken()));
+			lexicReaders.Add(new StringReader("^", new PowerToken()));
 			lexicReaders.Add(new CharReader('*', new MultiplyToken()));
 			lexicReaders.Add(new CharReader('/', new DivideToken()));
 			lexicReaders.Add(new CharReader('(', new LeftBracketToken()));

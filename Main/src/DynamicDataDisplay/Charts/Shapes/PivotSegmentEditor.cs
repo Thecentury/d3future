@@ -156,6 +156,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Shapes
 
 		#region XMapping property
 
+		[NotNull]
 		public Func<double, string> XMapping
 		{
 			get { return xMapping; }

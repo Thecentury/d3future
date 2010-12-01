@@ -10,6 +10,8 @@ using Microsoft.Research.DynamicDataDisplay.Charts.Maps;
 using DynamicDataDisplay.Test.Common;
 using Microsoft.Research.DynamicDataDisplay.Common;
 using Microsoft.Research.DynamicDataDisplay.Charts;
+using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
+using System.Windows.Threading;
 
 namespace DynamicDataDisplay.Test
 {
@@ -22,7 +24,10 @@ namespace DynamicDataDisplay.Test
 		public ChildrenTest()
 		{
 			testedAssemblies = (from assemblyName in Assembly.GetExecutingAssembly().GetReferencedAssemblies()
-								where assemblyName.Version.Major == 0			// D3 assemblies currently has version 0.*
+								// D3 assemblies currently has version 0.*
+								where assemblyName.FullName != typeof(ChildrenTest).Assembly.FullName
+								where assemblyName.Name.StartsWith("DynamicDataDisplay")
+								where !assemblyName.Name.EndsWith("Accessor")
 								select Assembly.Load(assemblyName)).ToList();
 		}
 
@@ -76,6 +81,7 @@ namespace DynamicDataDisplay.Test
 			}
 
 			plotter.Children.Clear();
+			plotter.Wait(DispatcherPriority.Background);
 
 			foreach (var item in plotterElements)
 			{
@@ -102,7 +108,11 @@ namespace DynamicDataDisplay.Test
 			Segment segment = new Segment();
 
 			plotter.Children.Add(segment);
+			plotter.PerformLoad();
+			plotter.Wait(DispatcherPriority.Background);
+
 			plotter.Children.Remove(segment);
+			plotter.Wait(DispatcherPriority.Background);
 
 			Assert.IsNull(segment.Plotter);
 		}
@@ -112,9 +122,11 @@ namespace DynamicDataDisplay.Test
 			Type elementType = typeof(IPlotterElement);
 
 			var types = from assembly in testedAssemblies
+						where assembly != typeof(ChildrenTest).Assembly
 						from type in assembly.GetExportedTypes()
 						where !type.IsDefined(typeof(SkipPropertyCheckAttribute), true)
 						where elementType.IsAssignableFrom(type) && !type.IsAbstract && type.IsPublic
+						where !elementType.Name.EndsWith("Accessor")
 						let ctors = type.GetConstructors()
 						let hasParameterlessCtor = (from ctor in ctors
 													where ctor.GetParameters().Length == 0
@@ -258,7 +270,6 @@ namespace DynamicDataDisplay.Test
 				}
 			}
 		}
-
 
 		private Type GetExternalBaseType(Type type)
 		{

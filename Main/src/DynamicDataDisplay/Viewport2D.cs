@@ -18,16 +18,15 @@ namespace Microsoft.Research.DynamicDataDisplay
 	/// </summary>
 	public partial class Viewport2D : DependencyObject
 	{
-		/// <summary>
-		/// Gets or sets a value indicating whether new visible setting comes from keyboard navigation.
-		/// </summary>
-		/// <value>
-		/// 	<c>true</c> if new visible setting came from keyboard navigation; otherwise, <c>false</c>.
-		/// </value>
-		public bool FromKeyboardNavigation
+		private DispatcherOperation updateVisibleOperation = null;
+		private int updateVisibleCounter = 0;
+		private readonly RingDictionary<DataRect> prevVisibles = new RingDictionary<DataRect>(2);
+		private bool fromContentBounds = false;
+
+		public bool FromContentBounds
 		{
-			get;
-			set;
+			get { return fromContentBounds; }
+			set { fromContentBounds = value; }
 		}
 
 		private readonly Plotter2D plotter;
@@ -120,10 +119,13 @@ namespace Microsoft.Research.DynamicDataDisplay
 			get { return ReadLocalValue(VisibleProperty) == DependencyProperty.UnsetValue; }
 		}
 
-		private DispatcherOperation updateVisibleOperation = null;
 		internal void UpdateVisible()
 		{
-			if (updateVisibleOperation == null)
+			if (updateVisibleCounter == 0)
+			{
+				UpdateVisibleBody();
+			}
+			else if (updateVisibleOperation == null)
 			{
 				updateVisibleOperation = Dispatcher.BeginInvoke(() => UpdateVisibleBody(), DispatcherPriority.Background);
 				return;
@@ -135,8 +137,8 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
-		private int updateVisibleCounter = 0;
-		private void UpdateVisibleBody() {
+		private void UpdateVisibleBody()
+		{
 			if (updateVisibleCounter > 0)
 				return;
 
@@ -296,7 +298,9 @@ namespace Microsoft.Research.DynamicDataDisplay
 				}
 			}
 
+			FromContentBounds = false;
 			UpdateVisible();
+			FromContentBounds = true;
 		}
 
 		private readonly ObservableCollection<DependencyObject> contentBoundsHosts = new ObservableCollection<DependencyObject>();
@@ -335,7 +339,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		private DataRect prevContentBounds = DataRect.Empty;
 		protected virtual DataRect CoerceVisible(DataRect newVisible)
 		{
-			if (Plotter == null)
+			 if (Plotter == null)
 			{
 				return newVisible;
 			}
@@ -360,15 +364,11 @@ namespace Microsoft.Research.DynamicDataDisplay
 						continue;
 
 					var plotter = (Plotter2D)plotterElement.Plotter;
-					//var visual = plotter.VisualBindings[plotterElement];
-					//if (visual.Visibility == Visibility.Visible)
-					//{
 					DataRect contentBounds = Viewport2D.GetContentBounds(item);
 					if (contentBounds.Width.IsNaN() || contentBounds.Height.IsNaN())
 						continue;
 
 					bounds.UnionFinite(contentBounds);
-					//}
 				}
 
 				if (useApproximateContentBoundsComparison)
@@ -458,22 +458,20 @@ namespace Microsoft.Research.DynamicDataDisplay
 			if (newVisible.IsEmpty)
 				newVisible = new Rect(0, 0, 1, 1);
 
-			prevVisibles.AddValue(newVisible);
-
 			return newVisible;
 		}
-
-		private readonly RingDictionary<DataRect> prevVisibles = new RingDictionary<DataRect>(2);
 
 		private static object OnCoerceVisible(DependencyObject d, object newValue)
 		{
 			Viewport2D viewport = (Viewport2D)d;
 			DataRect newVisible = (DataRect)newValue;
 
-			if (!viewport.FromKeyboardNavigation && viewport.prevVisibles.ContainsValue(newVisible))
-				return DependencyProperty.UnsetValue;
-
 			DataRect newRect = viewport.CoerceVisible(newVisible);
+
+			if (viewport.FromContentBounds && viewport.prevVisibles.ContainsValue(newRect))
+				return DependencyProperty.UnsetValue;
+			else
+				viewport.prevVisibles.AddValue(newRect);
 
 			if (newRect.Width == 0 || newRect.Height == 0)
 			{
@@ -609,7 +607,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 				notifyOperation = Dispatcher.BeginInvoke(() =>
 				{
 					RaisePropertyChangedEventBody(e);
-				}, DispatcherPriority.Background);
+				}, DispatcherPriority.Normal);
 				return;
 			}
 			else if (notifyOperation.Status == DispatcherOperationStatus.Pending)
@@ -618,7 +616,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 				notifyOperation = Dispatcher.BeginInvoke(() =>
 				{
 					RaisePropertyChangedEventBody(e);
-				}, DispatcherPriority.Background);
+				}, DispatcherPriority.Normal);
 			}
 		}
 

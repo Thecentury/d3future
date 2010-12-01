@@ -12,7 +12,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 	/// </summary>
 	[Conditional("DEBUG")]
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple=false, Inherited=false)]
-	internal sealed class NotNullAttribute : Attribute
+	public sealed class NotNullAttribute : Attribute
 	{
 	}
 }

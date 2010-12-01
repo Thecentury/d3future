@@ -703,10 +703,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			}
 
 			Range<double> currentDoubleRange = new Range<double>(convertToDouble(range.Min), convertToDouble(range.Max));
-			bool sameLength = Math.Abs(cachedPartLength - currentDoubleRange.GetLength()) < 0.01 || cachedPartLength == 0;
+			bool sameLength = Math.Abs(cachedPartLength - currentDoubleRange.GetLength()) / cachedPartLength < 0.01 || cachedPartLength == 0;
 
 			if (UseSmoothPanning && sameLength)
 			{
+				Debug.WriteLine(Placement + " " + range + " " + axisLongRange);
 				// current range is included into axisLongRange
 				if (currentDoubleRange < axisLongRange)
 				{
@@ -715,7 +716,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 					if (placement.IsBottomOrTop())
 						leftScreen = ((axisLongRange.Min - currentDoubleRange.Min) / currentDoubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
 					else
-						leftScreen = (-1 - (axisLongRange.Min - currentDoubleRange.Min) / currentDoubleRange.GetLength()) * getSize(transform.ScreenRect.Size);
+						leftScreen = -((axisLongRange.Min - currentDoubleRange.Min) / currentDoubleRange.GetLength() + 1) * getSize(transform.ScreenRect.Size);
 
 					StackCanvas.SetCoordinate(axisContent, leftScreen);
 
@@ -736,6 +737,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 					// rebuild entire ticks
 					FillParts(widerRange);
+
+					Debug.WriteLine("не шире " + Placement + " " + widerRange);
+
 					originalScreenTicks = screenTicks.ToArray();
 				}
 

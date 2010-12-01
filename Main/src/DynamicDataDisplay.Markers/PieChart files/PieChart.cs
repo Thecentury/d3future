@@ -39,10 +39,12 @@ namespace DynamicDataDisplay.Markers
 
 		public override void OnPlotterAttached(Plotter plotter)
 		{
+			base.OnPlotterAttached(plotter);
 		}
 
 		protected override void OnPlotterDetaching(Plotter2D plotter)
 		{
+			base.OnPlotterDetaching(plotter);
 		}
 
 		public PieChart()

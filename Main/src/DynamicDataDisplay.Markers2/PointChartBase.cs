@@ -56,12 +56,14 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		/// Gets or sets the environment plugin.
 		/// </summary>
 		/// <value>The environment plugin.</value>
+		[NotNull]
 		public EnvironmentPlugin EnvironmentPlugin
 		{
 			get { return environmentPlugin; }
 			set
 			{
-				Contract.Assert(value != null);
+				if (value == null)
+					throw new ArgumentNullException("value");
 
 				environmentPlugin = value;
 			}

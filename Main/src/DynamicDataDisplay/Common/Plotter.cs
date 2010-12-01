@@ -323,9 +323,12 @@ namespace Microsoft.Research.DynamicDataDisplay
 					{
 						OnChildRemoving(item);
 					}
-					else
+					else if(!waitingForExecute.ContainsKey(item))
 					{
 						waitingForExecute.Add(item, () => OnChildRemoving(item));
+					}
+					else
+					{
 					}
 				}
 			}
@@ -349,26 +352,11 @@ namespace Microsoft.Research.DynamicDataDisplay
 			if (child != null)
 			{
 				currentChild = child;
-				//try
-				//{
-				//UIElement visualProxy = CreateVisualProxy(child);
-				////visualBindingCollection.Cache.Add(child, visualProxy);
 
 				if (performChildChecks && child.Plotter != null)
 				{
 					throw new InvalidOperationException(Strings.Exceptions.PlotterElementAddedToAnotherPlotter);
 				}
-
-				//FrameworkElement styleableElement = child as FrameworkElement;
-				//if (styleableElement != null)
-				//{
-				//    Type key = styleableElement.GetType();
-				//    if (genericResources.Contains(key))
-				//    {
-				//        Style elementStyle = (Style)genericResources[key];
-				//        styleableElement.Style = elementStyle;
-				//    }
-				//}
 
 				if (performChildChecks)
 				{
@@ -384,40 +372,13 @@ namespace Microsoft.Research.DynamicDataDisplay
 				{
 					SetPlotter(dependencyObject, this);
 				}
-				//}
-				//finally
-				//{
-				//    addingElements.Pop();
-				//    currentChild = null;
-				//}
 			}
 		}
 
-		//private UIElement CreateVisualProxy(IPlotterElement child)
-		//{
-		//    // todo investigate why in D3.Samples there is an exception.
-		//    if (visualBindingCollection.Cache.ContainsKey(child))
-		//        throw new InvalidOperationException(Strings.Exceptions.VisualBindingsWrongState);
-
-		//    UIElement result = child as UIElement;
-
-		//    if (result == null)
-		//    {
-		//        result = new UIElement();
-		//    }
-
-		//    return result;
-		//}
-
-		//private readonly Stack<IPlotterElement> removingElements = new Stack<IPlotterElement>();
 		protected virtual void OnChildRemoving(IPlotterElement child)
 		{
 			if (child != null)
 			{
-				//currentChild = child;
-				//removingElements.Push(child);
-				//try
-				//{
 				// todo probably here child.Plotter can be null.
 				if (performChildChecks && child.Plotter != this && child.Plotter != null)
 				{
@@ -440,23 +401,8 @@ namespace Microsoft.Research.DynamicDataDisplay
 				{
 					SetPlotter(dependencyObject, null);
 				}
-
-				//    visualBindingCollection.Cache.Remove(child);
-
-				//    if (addedVisualElements.ContainsKey(child) && addedVisualElements[child].Count > 0)
-				//    {
-				//        throw new InvalidOperationException(String.Format(Strings.Exceptions.PlotterElementDidnotCleanedAfterItself, child.ToString()));
-				//    }
-				//}
-				//finally
-				//{
-				//    currentChild = null;
-				//    removingElements.Pop();
-				//}
 			}
 		}
-
-		//private readonly Dictionary<IPlotterElement, List<UIElement>> addedVisualElements = new Dictionary<IPlotterElement, List<UIElement>>();
 
 		#endregion
 

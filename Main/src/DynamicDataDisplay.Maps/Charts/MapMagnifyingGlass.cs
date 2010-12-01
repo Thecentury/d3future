@@ -13,6 +13,7 @@ using System.Windows.Input;
 using Microsoft.Research.DynamicDataDisplay.Navigation;
 using System.Windows.Markup;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace Microsoft.Research.DynamicDataDisplay.Charts.Maps
 {
@@ -38,8 +39,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Maps
 		private Map map = new Map();
 		protected override void OnPlotterAttached()
 		{
+			littlePlotter.PerformLoad();
+
 			// leaving only viewport
 			littlePlotter.Children.Clear();
+			littlePlotter.Wait(DispatcherPriority.Background);
 
 			if (map.Plotter == null)
 			{

@@ -33,6 +33,9 @@ namespace Markers2Samples
 		{
 			//lineChart.ItemsSource = new Func<double, double>(i => Math.Sin(i * 10));
 
+			//plotter.MainHorizontalAxis = null;
+			//plotter.Children.Remove(plotter.MainHorizontalAxis);
+
 			var axis = new HorizontalAxis();
 
 			plotter.Children.Add(axis);

@@ -5,7 +5,7 @@
 		Title="MainWindow" Height="350" Width="525">
 	<Grid>
 		<Border BorderBrush="Black" BorderThickness="1" Margin="20">
-			<d3:ChartPlotter Name="plotter" MainVerticalAxis="{x:Null}">
+			<d3:ChartPlotter Name="plotter" MainVerticalAxis="{x:Null}" EnableSmoothPanningForNumericAxes="True">
 				<d3:CursorCoordinateGraph/>
 			</d3:ChartPlotter>
 		</Border>

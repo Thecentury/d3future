@@ -28,7 +28,8 @@ namespace DynamicDataDisplay.Markers.DataSources
 
 		protected override IEnumerable GetDataCore(DataSourceEnvironment environment)
 		{
-			throw new NotImplementedException();
+			// todo implement
+			return Enumerable.Empty<Point>();
 			//return Filters.Filter(IndexWrapper.Generate(collection), Environment);
 		}
 

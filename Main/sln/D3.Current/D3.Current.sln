@@ -1,25 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay", "..\Main\src\DynamicDataDisplay\DynamicDataDisplay.csproj", "{ECD37682-DF7E-409F-912D-0965634556B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay", "..\..\src\DynamicDataDisplay\DynamicDataDisplay.csproj", "{ECD37682-DF7E-409F-912D-0965634556B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Controls", "..\Main\src\DynamicDataDisplay.Controls\DynamicDataDisplay.Controls.csproj", "{8AEE9DA5-83F5-401F-8C58-9BAC660A0E6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Controls", "..\..\src\DynamicDataDisplay.Controls\DynamicDataDisplay.Controls.csproj", "{8AEE9DA5-83F5-401F-8C58-9BAC660A0E6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Maps", "..\Main\src\DynamicDataDisplay.Maps\DynamicDataDisplay.Maps.csproj", "{EB04A4CD-DDE6-49EB-8FB6-39B35482D792}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Maps", "..\..\src\DynamicDataDisplay.Maps\DynamicDataDisplay.Maps.csproj", "{EB04A4CD-DDE6-49EB-8FB6-39B35482D792}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Markers", "..\Main\src\DynamicDataDisplay.Markers\DynamicDataDisplay.Markers.csproj", "{A5EB794C-7C62-4A0C-A441-ACF7D4074C5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Markers", "..\..\src\DynamicDataDisplay.Markers\DynamicDataDisplay.Markers.csproj", "{A5EB794C-7C62-4A0C-A441-ACF7D4074C5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Markers2", "..\Main\src\DynamicDataDisplay.Markers2\DynamicDataDisplay.Markers2.csproj", "{683A67B5-9C1A-4B8C-9514-EDC0B9FCF31F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Markers2", "..\..\src\DynamicDataDisplay.Markers2\DynamicDataDisplay.Markers2.csproj", "{683A67B5-9C1A-4B8C-9514-EDC0B9FCF31F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Tests", "..\Main\src\DynamicDataDisplay.Tests\DynamicDataDisplay.Tests.csproj", "{EA2C1BAD-34E3-4EEB-80AF-CBE49BCBA48B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Tests", "..\..\src\DynamicDataDisplay.Tests\DynamicDataDisplay.Tests.csproj", "{EA2C1BAD-34E3-4EEB-80AF-CBE49BCBA48B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Samples", "..\Main\src\DynamicDataDisplay.Samples\DynamicDataDisplay.Samples.csproj", "{16CA59CE-4664-4739-A1B1-1FCD0447595E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Samples", "..\..\src\DynamicDataDisplay.Samples\DynamicDataDisplay.Samples.csproj", "{16CA59CE-4664-4739-A1B1-1FCD0447595E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{CB7803FE-9EC4-4288-8E66-84498EAAE3EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentEditor", "..\Main\src\DevSamples\SegmentEditor\SegmentEditor.csproj", "{0BF1DA6C-7136-4C3F-BE2C-83EF212CF8E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentEditor", "..\..\src\DevSamples\SegmentEditor\SegmentEditor.csproj", "{0BF1DA6C-7136-4C3F-BE2C-83EF212CF8E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Markers2Samples", "..\Main\src\DevSamples\Markers2Samples\Markers2Samples.csproj", "{C30E9DD2-C33B-4F22-8007-AC198FF3C2AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Markers2Samples", "..\..\src\DevSamples\Markers2Samples\Markers2Samples.csproj", "{C30E9DD2-C33B-4F22-8007-AC198FF3C2AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

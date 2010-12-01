@@ -10,7 +10,7 @@
 		
 		<d3:ChartPlotter Name="plotter">
 			<d3:MarkerChart Name="markerChart" IndependentValuePath="X" DependentValuePath="Y" 
-							   d3:NewLegend.Description="1.000.000 of filtered points">
+							   d3:Legend.Description="1.000.000 of filtered points">
 				<d3:Legend.VisualContent>
 					<Ellipse Width="20" Height="20" Stroke="DarkGray">
 						<Ellipse.Fill>

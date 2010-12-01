@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Data;
 using System.Globalization;
 using Microsoft.Research.DynamicDataDisplay.Charts;
+using System.Diagnostics.Contracts;
 
 namespace DynamicDataDisplay.Markers.DataSources.ValueConverters
 {
@@ -12,8 +13,7 @@ namespace DynamicDataDisplay.Markers.DataSources.ValueConverters
 	{
 		public DateTimeValueConverter(IValueConversion<DateTime> conversion)
 		{
-			if (conversion == null)
-				throw new ArgumentNullException("conversion");
+			Contract.Assert(conversion != null);
 
 			this.conversion = conversion;
 		}

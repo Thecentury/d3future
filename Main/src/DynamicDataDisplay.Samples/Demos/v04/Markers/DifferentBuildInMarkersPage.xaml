@@ -28,9 +28,9 @@
 				<d3:RectangleMarker MarkerFill="Chartreuse" MarkerStroke="{x:Null}"/>
 			</d3:MarkerChart>
 			<d3:MarkerChart Name="chart8" LegendDescription="Numbers">
-				<d3:NewLegend.SampleData>
+				<d3:Legend.SampleData>
 					<sys:Point X="0" Y="0.71"/>
-				</d3:NewLegend.SampleData>
+				</d3:Legend.SampleData>
 				
 				<d3:TemplateMarkerGenerator>
 					<DataTemplate>

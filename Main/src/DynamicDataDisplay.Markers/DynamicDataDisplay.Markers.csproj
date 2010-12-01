@@ -164,7 +164,6 @@
     <Compile Include="DataSources\ValueConverters\Converter.cs" />
     <Compile Include="DataSources\ValueConverters\DateTimeValueConverter.cs" />
     <Compile Include="DataSources\ValueConverters\LambdaConverter.cs" />
-    <Compile Include="DataSources\ValueConverters\GenericLambdaConverter.cs" />
     <Compile Include="DataSources\ValueConverters\LambdaMultiConverter.cs" />
     <Compile Include="DataSources\XmlElementDataSource.cs" />
     <Compile Include="Extensions\PointDataSourceBaseExtensions.cs" />

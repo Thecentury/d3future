@@ -14,6 +14,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Converters
 	/// <typeparam name="T"></typeparam>
 	public class GenericValueConverter<T> : IValueConverter
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GenericValueConverter&lt;T&gt;"/> class.
+		/// </summary>
 		public GenericValueConverter() { }
 
 		private Func<T, object> conversion;

@@ -93,9 +93,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Samples.Demos.v02
 			CompositeDataSource bDS = new CompositeDataSource(x, blue);
 
 			plotter.RemoveUserElements();
-			plotter.AddLineGraph(rDS, Colors.Red, 1, "Red").FilteringEnabled = false;
-			plotter.AddLineGraph(gDS, Colors.Green, 1, "Green").FilteringEnabled = false;
-			plotter.AddLineGraph(bDS, Colors.Blue, 1, "Blue").FilteringEnabled = false;
+			// todo
+			//plotter.AddLineGraph(rDS, Colors.Red, 1, "Red").FilteringEnabled = false;
+			//plotter.AddLineGraph(gDS, Colors.Green, 1, "Green").FilteringEnabled = false;
+			//plotter.AddLineGraph(bDS, Colors.Blue, 1, "Blue").FilteringEnabled = false;
 		}
 
 		private Func<int, double> logMapping = i => i > 0 ? Math.Log10(i) : 0;

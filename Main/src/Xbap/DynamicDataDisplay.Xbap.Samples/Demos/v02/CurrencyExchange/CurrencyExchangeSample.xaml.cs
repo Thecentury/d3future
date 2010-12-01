@@ -42,10 +42,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Samples.Demos.v02.CurrencyExchan
 			jpy = LoadCurrencyRates("jpy.txt");
 
 			Color[] colors = ColorHelper.CreateRandomColors(4);
-			plotter.AddLineGraph(CreateCurrencyDataSource(usd), colors[0], 1, "RUB / USD");
-			plotter.AddLineGraph(CreateCurrencyDataSource(eur), colors[1], 1, "RUB / EURO");
-			plotter.AddLineGraph(CreateCurrencyDataSource(gbp), colors[2], 1, "RUB / GBP");
-			plotter.AddLineGraph(CreateCurrencyDataSource(jpy), colors[3], 1, "RUB / JPY");
+
+			// todo
+			//plotter.AddLineGraph(CreateCurrencyDataSource(usd), colors[0], 1, "RUB / USD");
+			//plotter.AddLineGraph(CreateCurrencyDataSource(eur), colors[1], 1, "RUB / EURO");
+			//plotter.AddLineGraph(CreateCurrencyDataSource(gbp), colors[2], 1, "RUB / GBP");
+			//plotter.AddLineGraph(CreateCurrencyDataSource(jpy), colors[3], 1, "RUB / JPY");
 		}
 
 		private EnumerableDataSource<CurrencyInfo> CreateCurrencyDataSource(List<CurrencyInfo> rates)

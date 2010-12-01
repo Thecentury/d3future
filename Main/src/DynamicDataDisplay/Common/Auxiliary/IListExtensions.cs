@@ -23,7 +23,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
-		public static void RemoveAll<T>(this IList<T> collection, Type type)
+		public static void RemoveAllOfType<T>(this IList<T> collection, Type type)
 		{
 			var children = collection.Where(el => type.IsAssignableFrom(el.GetType())).ToArray();
 			foreach (var child in children)
@@ -38,6 +38,14 @@ namespace Microsoft.Research.DynamicDataDisplay
 			foreach (var child in children)
 			{
 				collection.Remove((T)(object)child);
+			}
+		}
+
+		public static void RemoveAll<T>(this IList<T> collection, params T[] elements)
+		{
+			foreach (var item in elements)
+			{
+				collection.Remove(item);
 			}
 		}
 	}

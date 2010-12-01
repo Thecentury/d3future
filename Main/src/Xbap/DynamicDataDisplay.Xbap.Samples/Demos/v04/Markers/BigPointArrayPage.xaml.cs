@@ -26,7 +26,8 @@ namespace NewMarkersSample.Pages
 		public BigPointArrayPage()
 		{
 			InitializeComponent();
-			plotter.Children.Add(plotter.NewLegend);
+			// todo
+			// plotter.Children.Add(plotter.NewLegend);
 		}
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)

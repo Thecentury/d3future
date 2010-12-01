@@ -27,7 +27,8 @@ namespace NewMarkersSample.Pages
 		{
 			InitializeComponent();
 
-			plotter.Children.Add(plotter.NewLegend);
+			// todo
+			//plotter.Children.Add(plotter.NewLegend);
 		}
 
 		private readonly ObservableCollection<SellInfo> sells = new ObservableCollection<SellInfo>();

@@ -18,7 +18,7 @@
 			<d3:PolylineEditor>
 				<d3:ViewportPolyline Stroke="Green" Points="0.1,0.6 0.1,0.7 0.15,0.6 0.05,0.8 0.2,0.65, 0.2,0.7"/>
 			</d3:PolylineEditor>
-			
+
 			<d3:PolylineEditor>
 				<d3:ViewportPolyBezierCurve Fill="Olive" StrokeThickness="3" BuildBezierPoints="False"
 										Points="0.8,0.7 0.85,0.7 0.85,0.6 0.8,0.6">
@@ -55,7 +55,10 @@
 					</d3:LiveToolTipService.ToolTip>
 				</Ellipse>
 
-				<TextBlock d3:ViewportPanel.X="0.5" d3:ViewportPanel.Y="0.5">Sample text in position (0.5, 0.5)</TextBlock>
+				<TextBlock d3:ViewportPanel.X="0.5" d3:ViewportPanel.Y="0.5"
+						   d3:ViewportPanel.ViewportVerticalAlignment="Top"
+						   d3:ViewportPanel.ViewportHorizontalAlignment="Left"
+						   >Sample text in position (0.5, 0.5)</TextBlock>
 			</d3:ViewportHostPanel>
 
 			<d3:DraggablePoint Name="ellipsePoint" Position="0.6, 0.4"/>

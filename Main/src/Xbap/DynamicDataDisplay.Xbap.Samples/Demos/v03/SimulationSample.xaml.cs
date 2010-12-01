@@ -94,9 +94,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Samples.Demos.v03
 			source3.SetXYMapping(p => p);
 
 			// Add all three graphs. Colors are not specified and chosen random
-			plotter.AddLineGraph(source1, 2, "Data row 1");
-			plotter.AddLineGraph(source2, 2, "Data row 2");
-			plotter.AddLineGraph(source3, 2, "Data row 3");
+			// todo
+			//plotter.AddLineGraph(source1, 2, "Data row 1");
+			//plotter.AddLineGraph(source2, 2, "Data row 2");
+			//plotter.AddLineGraph(source3, 2, "Data row 3");
 
 			unload = false;
 			// Start computation process in second thread

@@ -239,12 +239,15 @@
     <Compile Include="Charts\Axes\ITicksProvider.cs" />
     <Compile Include="Charts\Axes\Numeric\NumericLabelProviderBase.cs" />
     <Compile Include="Charts\Axes\AxisBase.cs" />
+    <Compile Include="Charts\Shapes\PivotSegmentEditor.cs" />
     <Compile Include="Charts\Shapes\PolylineEditor.cs" />
     <Compile Include="Charts\Shapes\TemplateableDraggablePoint.cs" />
+    <Compile Include="Charts\Shapes\ViewportLine.cs" />
     <Compile Include="Charts\Shapes\ViewportPolyBezierCurve.cs" />
     <Compile Include="Charts\Shapes\ViewportPolygon.cs" />
     <Compile Include="Charts\Shapes\ViewportPolyline.cs" />
     <Compile Include="Charts\Shapes\ViewportPolylineBase.cs" />
+    <Compile Include="Charts\Shapes\ViewportRay.cs" />
     <Compile Include="Charts\ViewportHostPanel.cs" />
     <Compile Include="Charts\ViewportPanel.cs" />
     <Compile Include="Charts\ViewportPanel.Properties.cs" />
@@ -256,6 +259,7 @@
     <Compile Include="Common\Auxiliary\DataSearch\SearchResult1d.cs" />
     <Compile Include="Common\Auxiliary\DataSearch\SortedXSearcher1d.cs" />
     <Compile Include="Common\Auxiliary\DependencyObjectExtensions.cs" />
+    <Compile Include="Converters\GenericLambdaConverter.cs" />
     <Compile Include="Common\Auxiliary\MarkupExtensions\XbapConditionalExpression.cs" />
     <Compile Include="Common\Auxiliary\MarkupExtensions\TemplateBinding.cs" />
     <Compile Include="Common\Auxiliary\MenuItemExtensions.cs" />

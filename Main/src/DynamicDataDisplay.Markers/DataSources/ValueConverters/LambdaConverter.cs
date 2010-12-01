@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 using System.Globalization;
+using System.Diagnostics.Contracts;
 
 namespace DynamicDataDisplay.Markers.DataSources.ValueConverters
 {
@@ -11,8 +12,7 @@ namespace DynamicDataDisplay.Markers.DataSources.ValueConverters
 	{
 		public LambdaConverter(Func<object, object> lambda)
 		{
-			if (lambda == null)
-				throw new ArgumentNullException("lambda");
+			Contract.Assert(lambda != null);
 
 			this.lambda = lambda;
 		}

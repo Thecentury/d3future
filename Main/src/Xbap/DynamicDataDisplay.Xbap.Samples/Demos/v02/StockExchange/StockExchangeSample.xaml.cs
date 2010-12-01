@@ -38,17 +38,19 @@ namespace Microsoft.Research.DynamicDataDisplay.Samples.Demos.v02.StockExchange
 			// setting custom position of legend:
 			// it will be placed not in the top right corner of plotter,
 			// but in the top left one
-			plotter.Legend.LegendLeft = 10;
-			plotter.Legend.LegendRight = Double.NaN;
+			// todo
+			//plotter.Legend.LegendLeft = 10;
+			//plotter.Legend.LegendRight = Double.NaN;
 
 			dj65 = LoadStockRates("DJ65.txt");
 			rts = LoadStockRates("RTS.txt");
 			micex = LoadStockRates("MICEX.txt");
 
 			Color[] colors = ColorHelper.CreateRandomColors(3);
-			plotter.AddLineGraph(CreateCurrencyDataSource(dj65), colors[0], 1, "Dow Jones 65 Composite");
-			plotter.AddLineGraph(CreateCurrencyDataSource(rts), colors[1], 1, "RTS");
-			plotter.AddLineGraph(CreateCurrencyDataSource(micex), colors[2], 1, "MICEX");
+			// todo
+			//plotter.AddLineGraph(CreateCurrencyDataSource(dj65), colors[0], 1, "Dow Jones 65 Composite");
+			//plotter.AddLineGraph(CreateCurrencyDataSource(rts), colors[1], 1, "RTS");
+			//plotter.AddLineGraph(CreateCurrencyDataSource(micex), colors[2], 1, "MICEX");
 		}
 
 		private EnumerableDataSource<StockInfo> CreateCurrencyDataSource(List<StockInfo> rates)

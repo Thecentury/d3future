@@ -34,7 +34,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			this.plotter = plotter;
 			if (type != null)
 			{
-				plotter.Children.RemoveAll(type);
+				plotter.Children.RemoveAllOfType(type);
 			}
 		}
 

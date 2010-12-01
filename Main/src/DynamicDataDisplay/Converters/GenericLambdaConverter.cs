@@ -4,17 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 using System.Globalization;
+using System.Diagnostics.Contracts;
 
-namespace DynamicDataDisplay.Markers.DataSources.ValueConverters
+namespace Microsoft.Research.DynamicDataDisplay.Common.Auxiliary
 {
 	public class GenericLambdaConverter<TIn, TOut> : IValueConverter
 	{
 		private readonly Func<TIn, TOut> lambda;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GenericLambdaConverter&lt;TIn, TOut&gt;"/> class.
+		/// </summary>
+		/// <param name="lambda">The lambda.</param>
 		public GenericLambdaConverter(Func<TIn, TOut> lambda)
 		{
-			if (lambda == null)
-				throw new ArgumentNullException("lambda");
+			Contract.Assert(lambda != null);
 
 			this.lambda = lambda;
 		}

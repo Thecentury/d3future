@@ -101,5 +101,49 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		  new FrameworkPropertyMetadata(null));
 
 		#endregion
+
+		#region XMissingValue property
+
+		public double XMissingValue
+		{
+			get { return (double)GetValue(XMissingValueProperty); }
+			set { SetValue(XMissingValueProperty, value); }
+		}
+
+		public static readonly DependencyProperty XMissingValueProperty = DependencyProperty.Register(
+		  "XMissingValue",
+		  typeof(double),
+		  typeof(LineChartBase),
+		  new FrameworkPropertyMetadata(Double.NaN, OnXMissingValueReplaced));
+
+		private static void OnXMissingValueReplaced(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			LineChartBase owner = (LineChartBase)d;
+			// todo some notification logic here
+		}
+
+		#endregion
+
+		#region YMissingValue property
+
+		public double YMissingValue
+		{
+			get { return (double)GetValue(YMissingValueProperty); }
+			set { SetValue(YMissingValueProperty, value); }
+		}
+
+		public static readonly DependencyProperty YMissingValueProperty = DependencyProperty.Register(
+		  "YMissingValue",
+		  typeof(double),
+		  typeof(LineChartBase),
+		  new FrameworkPropertyMetadata(Double.NaN, OnYMissingValueReplaced));
+
+		private static void OnYMissingValueReplaced(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			LineChartBase owner = (LineChartBase)d;
+			// todo some notification logic here
+		}
+
+		#endregion
 	}
 }

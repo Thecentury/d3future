@@ -54,15 +54,16 @@ namespace Microsoft.Research.DynamicDataDisplay.Samples.Demos.v02
 
 			ds = new CompositeDataSource(xDataSource, yDataSource);
 			// adding graph to plotter
-			chart = plotter.AddLineGraph(ds,
-				new Pen(Brushes.LimeGreen, 3),
-				new CircleElementPointMarker
-				{
-					Size = 10,
-					Brush = Brushes.Red,
-					Fill = Brushes.Orange
-				},
-				new PenDescription("Cosine"));
+			// todo
+			//chart = plotter.AddLineGraph(ds,
+			//    new Pen(Brushes.LimeGreen, 3),
+			//    new CircleElementPointMarker
+			//    {
+			//        Size = 10,
+			//        Brush = Brushes.Red,
+			//        Fill = Brushes.Orange
+			//    },
+			//    new PenDescription("Cosine"));
 
 			plotter.Children.Add(new CursorCoordinateGraph());
 

@@ -25,7 +25,8 @@ namespace NewMarkersSample.Pages
 		public DifferentBuildInMarkersPage()
 		{
 			InitializeComponent();
-			plotter.Children.Add(plotter.NewLegend);
+			// todo
+			//plotter.Children.Add(plotter.NewLegend);
 
 			Loaded += OnLoaded;
 			Unloaded += OnUnloaded;
@@ -40,14 +41,15 @@ namespace NewMarkersSample.Pages
 		{
 			startTime = Environment.TickCount;
 
-			chart1.ItemsSource = BuildData(1);
-			chart2.ItemsSource = BuildData(2);
-			chart3.ItemsSource = BuildData(3);
-			chart4.ItemsSource = BuildData(4);
-			chart5.ItemsSource = BuildData(5);
-			chart6.ItemsSource = BuildData(6);
-			chart7.ItemsSource = BuildData(7);
-			chart8.ItemsSource = BuildData(8);
+			// todo
+			//chart1.ItemsSource = BuildData(1);
+			//chart2.ItemsSource = BuildData(2);
+			//chart3.ItemsSource = BuildData(3);
+			//chart4.ItemsSource = BuildData(4);
+			//chart5.ItemsSource = BuildData(5);
+			//chart6.ItemsSource = BuildData(6);
+			//chart7.ItemsSource = BuildData(7);
+			//chart8.ItemsSource = BuildData(8);
 
 			timer.Tick += timer_Tick;
 			timer.Start();

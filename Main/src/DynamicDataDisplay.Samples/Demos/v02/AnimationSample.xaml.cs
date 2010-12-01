@@ -72,9 +72,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Samples.Demos.v02
 			animatedDataSource.SetYMapping(y => y);
 
 			// Adding graph to plotter
-			plotter.AddLineGraph(new CompositeDataSource(xSrc, animatedDataSource),
-				new Pen(Brushes.Magenta, 3),
-				new PenDescription("Sin(x + phase)"));
+			
+			//todo
+			//plotter.AddLineGraph(new CompositeDataSource(xSrc, animatedDataSource),
+			//    new Pen(Brushes.Magenta, 3),
+			//    new PenDescription("Sin(x + phase)"));
 
 			timer.Interval = TimeSpan.FromMilliseconds(10);
 			timer.Tick += AnimatedPlot_Timer;

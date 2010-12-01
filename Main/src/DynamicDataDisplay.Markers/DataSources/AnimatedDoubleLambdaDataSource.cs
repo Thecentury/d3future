@@ -24,9 +24,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 
 			this.func = func;
 
-			timer = new DispatcherTimer
+			timer = new DispatcherTimer(DispatcherPriority.ApplicationIdle)
 			{
-				Interval = TimeSpan.FromMilliseconds(interval)
+				Interval = TimeSpan.FromMilliseconds(interval),
 			};
 			timer.Tick += new EventHandler(OnTimer_Tick);
 			timer.Start();

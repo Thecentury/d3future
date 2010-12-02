@@ -242,14 +242,14 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		DataRect prevDataRect = DataRect.Empty;
 		private void OnViewportPropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
 		{
-			if (viewportPropertyChangedEnters > 4)
-			{
-				if (e.PropertyName == "Visible")
-				{
-					visibleChangedEventArgs = e;
-				}
-				return;
-			}
+			//if (viewportPropertyChangedEnters > 4)
+			//{
+			//    if (e.PropertyName == "Visible")
+			//    {
+			//        visibleChangedEventArgs = e;
+			//    }
+			//    return;
+			//}
 
 			viewportPropertyChangedEnters++;
 
@@ -269,15 +269,17 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				axisControl.Transform = viewport.Transform;
 			}
 
-			Dispatcher.BeginInvoke(() =>
-			{
-				viewportPropertyChangedEnters--;
-				if (visibleChangedEventArgs != null)
-				{
-					OnViewportPropertyChanged(Plotter.Viewport, visibleChangedEventArgs);
-				}
-				visibleChangedEventArgs = null;
-			}, DispatcherPriority.Render);
+			//OnViewportPropertyChanged(Plotter.Viewport, visibleChangedEventArgs);
+
+			//Dispatcher.BeginInvoke(() =>
+			//{
+			//    viewportPropertyChangedEnters--;
+			//    if (visibleChangedEventArgs != null)
+			//    {
+			//        OnViewportPropertyChanged(Plotter.Viewport, visibleChangedEventArgs);
+			//    }
+			//    visibleChangedEventArgs = null;
+			//}, DispatcherPriority.Render);
 		}
 
 		private Func<double, T> convertFromDouble;

@@ -23,6 +23,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			{
 				Output = viewport.Output,
 				Visible = viewport.Visible,
+				RealVisible = viewport.Visible,
 				Transform = viewport.Transform
 			};
 

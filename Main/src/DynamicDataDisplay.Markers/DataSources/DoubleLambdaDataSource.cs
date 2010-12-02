@@ -81,6 +81,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 		protected override IEnumerable GetDataCore(DataSourceEnvironment environment)
 		{
 			DataRect visible = environment.Visible;
+			DataRect realVisible = environment.RealVisible;
 			Rect output = environment.Output;
 			CoordinateTransform transform = environment.Transform;
 
@@ -94,10 +95,13 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 				double dataX = x;
 				double viewportY = func(dataX);
 
-				if (viewportY < yMin)
-					yMin = viewportY;
-				if (viewportY > yMax)
-					yMax = viewportY;
+				if (realVisible.HorizontalRange.Contains(dataX))
+				{
+					if (viewportY < yMin)
+						yMin = viewportY;
+					if (viewportY > yMax)
+						yMax = viewportY;
+				}
 
 				yield return new Point(dataX, viewportY);
 			}

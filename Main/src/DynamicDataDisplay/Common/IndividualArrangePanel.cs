@@ -19,6 +19,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Common
 	/// </summary>
 	public abstract class IndividualArrangePanel : Panel
 	{
+		private bool inBatchAdd = false;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="IndependentArrangePanel"/> class.
 		/// </summary>
@@ -35,6 +37,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Common
 		protected sealed override UIElementCollection CreateUIElementCollection(FrameworkElement logicalParent)
 		{
 			children = new UIChildrenCollection(this, logicalParent);
+			children.IsAddingMany = inBatchAdd;
 			return children;
 		}
 
@@ -45,6 +48,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Common
 
 		public virtual void BeginBatchAdd()
 		{
+			if (children == null)
+			{
+				inBatchAdd = true;
+				return;
+			}
+
 			children.IsAddingMany = true;
 		}
 

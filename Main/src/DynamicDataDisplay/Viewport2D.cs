@@ -22,6 +22,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		private int updateVisibleCounter = 0;
 		private readonly RingDictionary<DataRect> prevVisibles = new RingDictionary<DataRect>(2);
 		private bool fromContentBounds = false;
+		private readonly DispatcherPriority invocationPriority = DispatcherPriority.Background;
 
 		public bool FromContentBounds
 		{
@@ -127,13 +128,13 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 			else if (updateVisibleOperation == null)
 			{
-				updateVisibleOperation = Dispatcher.BeginInvoke(() => UpdateVisibleBody(), DispatcherPriority.Background);
+				updateVisibleOperation = Dispatcher.BeginInvoke(() => UpdateVisibleBody(), invocationPriority);
 				return;
 			}
 			else if (updateVisibleOperation.Status == DispatcherOperationStatus.Pending)
 			{
 				updateVisibleOperation.Abort();
-				updateVisibleOperation = Dispatcher.BeginInvoke(() => UpdateVisibleBody(), DispatcherPriority.Background);
+				updateVisibleOperation = Dispatcher.BeginInvoke(() => UpdateVisibleBody(), invocationPriority);
 			}
 		}
 
@@ -607,7 +608,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 				notifyOperation = Dispatcher.BeginInvoke(() =>
 				{
 					RaisePropertyChangedEventBody(e);
-				}, DispatcherPriority.Normal);
+				}, invocationPriority);
 				return;
 			}
 			else if (notifyOperation.Status == DispatcherOperationStatus.Pending)
@@ -616,7 +617,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 				notifyOperation = Dispatcher.BeginInvoke(() =>
 				{
 					RaisePropertyChangedEventBody(e);
-				}, DispatcherPriority.Normal);
+				}, invocationPriority);
 			}
 		}
 

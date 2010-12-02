@@ -11,6 +11,7 @@ namespace DynamicDataDisplay.Markers.DataSources
 	{
 		public Rect Output { get; set; }
 		public DataRect Visible { get; set; }
+		public DataRect RealVisible { get; set; }
 		public CoordinateTransform Transform { get; set; }
 
 		public DataRect? ContentBounds { get; set; }

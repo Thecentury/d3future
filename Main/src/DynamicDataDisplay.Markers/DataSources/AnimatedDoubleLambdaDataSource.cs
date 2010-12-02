@@ -45,6 +45,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 			double time = watch.Elapsed.TotalSeconds;
 
 			DataRect visible = environment.Visible;
+			DataRect realVisible = environment.RealVisible;
 			Rect output = environment.Output;
 			CoordinateTransform transform = environment.Transform;
 
@@ -58,10 +59,13 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers.DataSources
 				double dataX = x;
 				double viewportY = func(dataX, time);
 
-				if (viewportY < yMin)
-					yMin = viewportY;
-				if (viewportY > yMax)
-					yMax = viewportY;
+				if (realVisible.HorizontalRange.Contains(x))
+				{
+					if (viewportY < yMin)
+						yMin = viewportY;
+					if (viewportY > yMax)
+						yMax = viewportY;
+				}
 
 				yield return new Point(dataX, viewportY);
 			}

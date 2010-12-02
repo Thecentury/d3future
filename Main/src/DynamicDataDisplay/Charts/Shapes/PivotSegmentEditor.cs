@@ -91,6 +91,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Shapes
 			centerPointVerticalOffsetBinding.Bindings.Add(p2Binding);
 			mText.SetBinding(ViewportPanel.ScreenOffsetYProperty, centerPointVerticalOffsetBinding);
 
+			panel.BeginBatchAdd();
 			panel.Children.Add(mText);
 
 			GenericValueConverter<Point> pointTextConverter = new GenericValueConverter<Point>(p =>

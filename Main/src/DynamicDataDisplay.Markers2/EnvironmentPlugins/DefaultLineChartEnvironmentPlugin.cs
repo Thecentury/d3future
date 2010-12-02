@@ -46,6 +46,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			return new DataSourceEnvironment
 			{
 				Visible = bigVisible,
+				RealVisible = viewport.Visible,
 				Output = bigOutput,
 				Transform = transform
 			};

@@ -21,5 +21,18 @@ namespace Microsoft.Research.DynamicDataDisplay
 		{
 			return range.Max - range.Min;
 		}
+
+		/// <summary>
+		/// Determines whether specified range contains the specified value.
+		/// </summary>
+		/// <param name="range">The range.</param>
+		/// <param name="value">The value.</param>
+		/// <returns>
+		/// 	<c>true</c> if [contains] [the specified range]; otherwise, <c>false</c>.
+		/// </returns>
+		public static bool Contains(this Range<double> range, double value)
+		{
+			return range.Min < value && value < range.Max;
+		}
 	}
 }

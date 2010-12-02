@@ -33,12 +33,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Common
 
 		public void Put(T item)
 		{
-			Contract.Assert(item != null);
+			if (item == null)
+				throw new ArgumentNullException("item");
 
-#if DEBUG
-			if (pool.IndexOf(item) != -1)
-				Debugger.Break();
-#endif
+			int index = pool.IndexOf(item);
+			if (index != -1)
+				throw new InvalidOperationException("Cannot release item that is already contained in pool.");
 
 			pool.Add(item);
 		}

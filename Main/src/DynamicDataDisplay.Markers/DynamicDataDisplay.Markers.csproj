@@ -168,8 +168,6 @@
     <Compile Include="DataSources\XmlElementDataSource.cs" />
     <Compile Include="Extensions\PointDataSourceBaseExtensions.cs" />
     <Compile Include="Filters\GroupFilter.cs" />
-    <Compile Include="Filters\IndexWrapper.cs" />
-    <Compile Include="Filters\IndexWrapperGeneric.cs" />
     <Compile Include="Filters\ParallelClusteringFilter.cs" />
     <Compile Include="MarkerChartLegendItemFactory.cs" />
     <Compile Include="MarkerGenerators\BuiltinMarkers\CrossMarker.cs" />

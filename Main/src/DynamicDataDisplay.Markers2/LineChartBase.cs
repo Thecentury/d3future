@@ -145,5 +145,25 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		}
 
 		#endregion
+
+		#region PointsCount property
+
+		public static int GetPointsCount(DependencyObject obj)
+		{
+			return (int)obj.GetValue(PointsCountProperty);
+		}
+
+		public static void SetPointsCount(DependencyObject obj, int value)
+		{
+			obj.SetValue(PointsCountProperty, value);
+		}
+
+		public static readonly DependencyProperty PointsCountProperty = DependencyProperty.RegisterAttached(
+		  "PointsCount",
+		  typeof(int),
+		  typeof(LineChartBase),
+		  new FrameworkPropertyMetadata(0));
+
+		#endregion
 	}
 }

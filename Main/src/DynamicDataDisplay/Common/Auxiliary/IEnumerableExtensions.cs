@@ -6,8 +6,18 @@ using System.Collections;
 
 namespace Microsoft.Research.DynamicDataDisplay.Common.Auxiliary
 {
+	/// <summary>
+	/// Contains extension methods for IEnumerable.
+	/// </summary>
 	public static class IEnumerableExtensions
 	{
+		/// <summary>
+		/// Gets the value indicating wheter count of elements in a given sequence is greater or equal than specified value.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <param name="count">The count.</param>
+		/// <returns></returns>
 		public static bool CountGreaterOrEqual<T>(this IEnumerable<T> enumerable, int count)
 		{
 			int counter = 0;
@@ -22,6 +32,14 @@ namespace Microsoft.Research.DynamicDataDisplay.Common.Auxiliary
 			return counter == count;
 		}
 
+		/// <summary>
+		/// Splits the specified source sequnce into a sequence of sequences, with the length of inner sequence not longer than 
+		/// specified maximal count.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="source">The source.</param>
+		/// <param name="maxCount">The max count.</param>
+		/// <returns></returns>
 		public static IEnumerable<IEnumerable<T>> Split<T>(this IEnumerable<T> source, int maxCount)
 		{
 			using (var enumerator = new FixedEnumeratorWrapper<T>(source.GetEnumerator()))
@@ -66,7 +84,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Common.Auxiliary
 
 			object IEnumerator.Current
 			{
-				get { throw new NotImplementedException(); }
+				get { return enumerator.Current; }
 			}
 
 			private bool canMoveNext = false;
@@ -110,7 +128,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Common.Auxiliary
 
 			IEnumerator IEnumerable.GetEnumerator()
 			{
-				throw new NotSupportedException();
+				return enumerator;
 			}
 
 			#endregion

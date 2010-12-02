@@ -148,6 +148,8 @@
     <Compile Include="Charts\DebugMenu.cs" />
     <Compile Include="Charts\Filters\EmptyFilter.cs" />
     <Compile Include="Charts\Filters\FrequencyFilter2.cs" />
+    <Compile Include="Charts\Filters\IndexWrapper.cs" />
+    <Compile Include="Charts\Filters\IndexWrapperStruct.cs" />
     <Compile Include="Charts\Isolines\AdditionalLinesDisplay.cs" />
     <Compile Include="Charts\Isolines\AdditionalLinesRenderer.cs" />
     <Compile Include="Charts\Isolines\FastIsolineDisplay.xaml.cs">
@@ -208,6 +210,8 @@
     </Compile>
     <Compile Include="Charts\Navigation\VerticalScrollBar.cs" />
     <Compile Include="Charts\Legend items\Legend.cs" />
+    <Compile Include="Charts\Panels\Panels.cs" />
+    <Compile Include="Charts\Panels\PlotterPanelBase.cs" />
     <Compile Include="Charts\PopupTip.cs" />
     <Compile Include="Charts\PopupTipElement.cs" />
     <Compile Include="Charts\Shapes\Arrow.cs" />
@@ -259,6 +263,7 @@
     <Compile Include="Common\Auxiliary\DataSearch\SearchResult1d.cs" />
     <Compile Include="Common\Auxiliary\DataSearch\SortedXSearcher1d.cs" />
     <Compile Include="Common\Auxiliary\DependencyObjectExtensions.cs" />
+    <Compile Include="Common\Auxiliary\NotifyCollectionChangedEventArgsExtensions.cs" />
     <Compile Include="Converters\GenericLambdaConverter.cs" />
     <Compile Include="Common\Auxiliary\MarkupExtensions\XbapConditionalExpression.cs" />
     <Compile Include="Common\Auxiliary\MarkupExtensions\TemplateBinding.cs" />

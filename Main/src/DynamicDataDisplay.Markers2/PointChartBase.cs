@@ -10,13 +10,14 @@ using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 using Microsoft.Research.DynamicDataDisplay.Charts;
 using System.Collections.Specialized;
 using System.Windows.Threading;
+using Microsoft.Research.DynamicDataDisplay.Filters;
 
 namespace Microsoft.Research.DynamicDataDisplay.Markers2
 {
 	/// <summary>
 	/// Represents a base class for creating marker or line charts.
 	/// </summary>
-	public abstract class PointChartBase : DependencyObject, IPlotterElement
+	public abstract class PointChartBase : FrameworkElement, IPlotterElement
 	{
 		private Plotter2D plotter = null;
 		private EnvironmentPlugin environmentPlugin = new DefaultLineChartEnvironmentPlugin();
@@ -75,7 +76,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		/// <returns></returns>
 		protected DataSourceEnvironment CreateEnvironment()
 		{
-			Contract.Assert(plotter != null);
+			if (plotter == null)
+				throw new InvalidOperationException();
 
 			Viewport2D viewport = plotter.Viewport;
 			DataSourceEnvironment result = environmentPlugin.CreateEnvironment(viewport);
@@ -228,7 +230,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		#endregion
 
 		#region DetailedDescription property
-		
+
 		/// <summary>
 		/// Gets or sets the detailed description of this chart in the legend.
 		/// </summary>
@@ -238,6 +240,46 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			get { return (string)GetValue(Legend.DetailedDescriptionProperty); }
 			set { SetValue(Legend.DetailedDescriptionProperty, value); }
 		}
+
+		#endregion
+
+		#region IndexRange property
+
+		public static Range<int> GetIndexRange(DependencyObject obj)
+		{
+			return (Range<int>)obj.GetValue(IndexRangeProperty);
+		}
+
+		public static void SetIndexRange(DependencyObject obj, Range<int> value)
+		{
+			obj.SetValue(IndexRangeProperty, value);
+		}
+
+		public static readonly DependencyProperty IndexRangeProperty = DependencyProperty.RegisterAttached(
+		  "IndexRange",
+		  typeof(Range<int>),
+		  typeof(PointChartBase),
+		  new FrameworkPropertyMetadata(new Range<int>(IndexWrapper.Empty, IndexWrapper.Empty)));
+
+		#endregion
+
+		#region ContentBounds property
+
+		public static DataRect GetContentBounds(DependencyObject obj)
+		{
+			return (DataRect)obj.GetValue(ContentBoundsProperty);
+		}
+
+		public static void SetContentBounds(DependencyObject obj, DataRect value)
+		{
+			obj.SetValue(ContentBoundsProperty, value);
+		}
+
+		public static readonly DependencyProperty ContentBoundsProperty = DependencyProperty.RegisterAttached(
+		  "ContentBounds",
+		  typeof(DataRect),
+		  typeof(PointChartBase),
+		  new FrameworkPropertyMetadata(DataRect.Empty));
 
 		#endregion
 	}

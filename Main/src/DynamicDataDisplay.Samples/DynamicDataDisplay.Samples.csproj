@@ -244,6 +244,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Demos\v10\PlotterPanels.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Internals\Views\DemonstrationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -286,6 +290,9 @@
     </Compile>
     <Compile Include="Demos\v04\Markers\CompositeCollectionPage.xaml.cs">
       <DependentUpon>CompositeCollectionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Demos\v10\PlotterPanels.xaml.cs">
+      <DependentUpon>PlotterPanels.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

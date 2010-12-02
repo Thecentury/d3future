@@ -1,0 +1,71 @@
+﻿<Page x:Class="Microsoft.Research.DynamicDataDisplay.Samples.Demos.v10.PlotterPanels"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	  xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+	  mc:Ignorable="d" 
+	Title="PlotterPanels">
+
+	<Grid>
+		<Grid.Resources>
+			<Style TargetType="{x:Type TextBlock}">
+				<Setter Property="VerticalAlignment" Value="Center"/>
+				<Setter Property="HorizontalAlignment" Value="Center"/>
+				<Setter Property="Margin" Value="5"/>
+			</Style>
+		</Grid.Resources>
+		
+		<d3:ChartPlotter>
+			<d3:HeaderPanel>
+				<Grid>
+					<Rectangle Fill="{x:Static d3:ColorHelper.RandomBrush}"/>
+					<TextBlock Text="Header"/>
+				</Grid>
+			</d3:HeaderPanel>
+			
+			<d3:FooterPanel>
+				<Grid>
+					<Rectangle Fill="{x:Static d3:ColorHelper.RandomBrush}"/>
+					<TextBlock Text="Footer"/>
+				</Grid>
+			</d3:FooterPanel>
+			
+			<d3:LeftPanel>
+				<Grid>
+					<Rectangle Fill="{x:Static d3:ColorHelper.RandomBrush}"/>
+					<TextBlock Text="Left panel"/>
+				</Grid>
+			</d3:LeftPanel>
+
+			<d3:RightPanel>
+				<Grid>
+					<Rectangle Fill="{x:Static d3:ColorHelper.RandomBrush}"/>
+					<TextBlock Text="Right panel"/>
+				</Grid>
+			</d3:RightPanel>
+
+			<d3:TopPanel>
+				<Grid>
+					<Rectangle Fill="{x:Static d3:ColorHelper.RandomBrush}"/>
+					<TextBlock Text="Top panel"/>
+				</Grid>
+			</d3:TopPanel>
+
+			<d3:BottomPanel>
+				<Grid>
+					<Rectangle Fill="{x:Static d3:ColorHelper.RandomBrush}"/>
+					<TextBlock Text="Bottom panel"/>
+				</Grid>
+			</d3:BottomPanel>
+
+			<d3:CentralGridPanel>
+				<RadioButton Content="RadioButton" Margin="10"/>
+			</d3:CentralGridPanel>
+
+			<d3:MainCanvasPanel Canvas.Right="10" Canvas.Bottom="10">
+				<Button>Press me!</Button>
+			</d3:MainCanvasPanel>
+		</d3:ChartPlotter>
+	</Grid>
+</Page>

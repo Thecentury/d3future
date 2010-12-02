@@ -7,13 +7,25 @@ using System.Collections;
 
 namespace Microsoft.Research.DynamicDataDisplay.Filters
 {
+	/// <summary>
+	/// Represents a utility class which wraps each value in a sequence with a wrapper, which
+	/// contains an position of wrapped element in a sequence.
+	/// </summary>
 	public static class IndexWrapper
 	{
-		public static IEnumerable<IndexWrapper<T>> Generate<T>(IEnumerable<T> series)
+		public const int Empty = -1;
+
+		/// <summary>
+		/// Generates the index-wrapped series for specified series.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="series">The series.</param>
+		/// <returns></returns>
+		public static IEnumerable<IndexWrapper<T>> Generate<T>(IEnumerable<T> series, int startingWith = 0)
 		{
 			IndexWrapper<T> indexWrapper = new IndexWrapper<T>();
 
-			int index = 0;
+			int index = startingWith;
 			foreach (var item in series)
 			{
 				indexWrapper.Data = item;
@@ -25,6 +37,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Filters
 			}
 		}
 
+		/// <summary>
+		/// Generates the index-wrapped sequence for a given sequence of items.
+		/// </summary>
+		/// <param name="items">The items.</param>
+		/// <param name="startingIndex">Index of the starting.</param>
+		/// <returns></returns>
 		public static IEnumerable<IndexWrapper<object>> Generate(IList items, int startingIndex)
 		{
 			IndexWrapper<object> indexWrapper = new IndexWrapper<object>();

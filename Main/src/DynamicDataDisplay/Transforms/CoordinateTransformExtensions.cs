@@ -5,9 +5,13 @@ using System.Text;
 using System.Windows;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Research.DynamicDataDisplay.Common;
+using Microsoft.Research.DynamicDataDisplay.Filters;
 
 namespace Microsoft.Research.DynamicDataDisplay
 {
+	/// <summary>
+	/// Contains extension methods that perform coordinate space transformations.
+	/// </summary>
 	public static class CoordinateTransformExtensions
 	{
 		#region Points
@@ -209,6 +213,25 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		#region Collections
 
+		/// <summary>
+		/// Transforms index-wrapped points from viewport to screen coordinate systems.
+		/// </summary>
+		/// <param name="viewportPoints">The viewport points.</param>
+		/// <param name="transform">The transform.</param>
+		/// <returns></returns>
+		public static IEnumerable<IndexWrapper<Point>> ViewportToScreen(this IEnumerable<IndexWrapper<Point>> viewportPoints, CoordinateTransform transform)
+		{
+			foreach (var index in viewportPoints)
+			{
+				Point pt = index.Data.ViewportToScreen(transform);
+
+				var copy = index;
+				copy.Data = pt;
+
+				yield return copy;
+			}
+		}
+
 		public static IEnumerable<Point> ViewportToScreen(this IEnumerable<Point> viewportPoints, CoordinateTransform transform)
 		{
 			foreach (var point in viewportPoints)
@@ -222,6 +245,19 @@ namespace Microsoft.Research.DynamicDataDisplay
 			foreach (var point in dataPoints)
 			{
 				yield return point.DataToScreen(transform);
+			}
+		}
+
+		public static IEnumerable<IndexWrapper<Point>> DataToScreen(this IEnumerable<IndexWrapper<Point>> viewportPoints, CoordinateTransform transform)
+		{
+			foreach (var index in viewportPoints)
+			{
+				Point pt = index.Data.DataToScreen(transform);
+
+				var copy = index;
+				copy.Data = pt;
+
+				yield return copy;
 			}
 		}
 
@@ -279,6 +315,19 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
+		public static IEnumerable<IndexWrapper<Point>> DataToViewport(this IEnumerable<IndexWrapper<Point>> viewportPoints, CoordinateTransform transform)
+		{
+			foreach (var index in viewportPoints)
+			{
+				Point pt = index.Data.DataToViewport(transform);
+
+				var copy = index;
+				copy.Data = pt;
+
+				yield return copy;
+			}
+		}
+
 		public static IEnumerable<Point> DataToViewport(this IEnumerable<Point> dataPoints, CoordinateTransform transform)
 		{
 			return dataPoints.DataToViewport(transform.DataTransform);
@@ -292,11 +341,37 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
+		public static IEnumerable<IndexWrapper<Point>> ScreenToViewport(this IEnumerable<IndexWrapper<Point>> viewportPoints, CoordinateTransform transform)
+		{
+			foreach (var index in viewportPoints)
+			{
+				Point pt = index.Data.ScreenToViewport(transform);
+
+				var copy = index;
+				copy.Data = pt;
+
+				yield return copy;
+			}
+		}
+
 		public static IEnumerable<Point> ScreenToData(this IEnumerable<Point> screenPoints, CoordinateTransform transform)
 		{
 			foreach (Point pt in screenPoints)
 			{
 				yield return pt.ScreenToData(transform);
+			}
+		}
+
+		public static IEnumerable<IndexWrapper<Point>> ScreenToData(this IEnumerable<IndexWrapper<Point>> viewportPoints, CoordinateTransform transform)
+		{
+			foreach (var index in viewportPoints)
+			{
+				Point pt = index.Data.ScreenToData(transform);
+
+				var copy = index;
+				copy.Data = pt;
+
+				yield return copy;
 			}
 		}
 

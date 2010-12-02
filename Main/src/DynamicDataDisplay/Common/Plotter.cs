@@ -22,10 +22,12 @@ namespace Microsoft.Research.DynamicDataDisplay
 	[ContentProperty("Children")]
 	[TemplatePart(Name = "PART_HeaderPanel", Type = typeof(StackPanel))]
 	[TemplatePart(Name = "PART_FooterPanel", Type = typeof(StackPanel))]
+
 	[TemplatePart(Name = "PART_BottomPanel", Type = typeof(StackPanel))]
 	[TemplatePart(Name = "PART_LeftPanel", Type = typeof(StackPanel))]
 	[TemplatePart(Name = "PART_RightPanel", Type = typeof(StackPanel))]
 	[TemplatePart(Name = "PART_TopPanel", Type = typeof(StackPanel))]
+
 	[TemplatePart(Name = "PART_MainCanvas", Type = typeof(Canvas))]
 	[TemplatePart(Name = "PART_CentralGrid", Type = typeof(Grid))]
 	[TemplatePart(Name = "PART_MainGrid", Type = typeof(Grid))]

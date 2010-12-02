@@ -22,6 +22,34 @@ namespace Microsoft.Research.DynamicDataDisplay
 			return range.Max - range.Min;
 		}
 
+		public static int GetLength(this Range<int> range)
+		{
+			return range.Max - range.Min;
+		}
+
+		public static bool FromTheLeft(this Range<int> range, Range<int> other)
+		{
+			return other.Min < range.Min &&
+				other.Max < range.Min;
+		}
+
+		public static bool FromTheRight(this Range<int> range, Range<int> other)
+		{
+			return other.Min > range.Max &&
+				other.Max > range.Max;
+		}
+
+		public static bool IntersectsWith(this Range<int> range, Range<int> other)
+		{
+			return range.IsBetween(other.Min) ||
+				range.IsBetween(other.Max);
+		}
+
+		public static bool IsBetween(this Range<int> range, int value)
+		{
+			return range.Min <= value && value <= range.Max;
+		}
+
 		/// <summary>
 		/// Determines whether specified range contains the specified value.
 		/// </summary>

@@ -6,12 +6,19 @@
 		Title="MainWindow" Height="350" Width="525">
 	<Grid>
 		<d3:ChartPlotter Name="plotter">
-			<df:LineChart x:Name="lineChart"
-						  ItemsSource="sin(x)+sin(t)+cos(2*x)+sin(21*x)"
+			<!--<df:LineChart x:Name="lineChart"
 						  StrokeThickness="2" 
 						  Description="Some chart" 
-						  DetailedDescription="Some detailed description"/>
+						  DetailedDescription="Some detailed description"/>-->
 			<d3:CursorCoordinateGraph/>
+			
+			<RepeatButton Click="RepeatButton_Click" 
+						  Content="Click me!"
+						  Canvas.Bottom="10" Canvas.Right="10"/>
 		</d3:ChartPlotter>
 	</Grid>
 </Window>
+
+
+<!--ItemsSource="sin(x)+sin(t)+cos(2*x)+sin(21*x)"-->
+	

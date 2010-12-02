@@ -25,6 +25,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Samples.Internals
 				return Brushes.DarkMagenta;
 			else if (version == "0.4.0")
 				return Brushes.Blue;
+			else if (version == "1.0.0")
+				return Brushes.OrangeRed;
 
 			throw new NotImplementedException();
 		}

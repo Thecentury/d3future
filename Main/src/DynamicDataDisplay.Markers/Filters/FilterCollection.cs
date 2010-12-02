@@ -10,12 +10,12 @@ using Microsoft.Research.DynamicDataDisplay.Filters;
 
 namespace Microsoft.Research.DynamicDataDisplay.Charts.Filters
 {
-	public sealed class NewFilterCollection : D3Collection<PointsFilter2d>, IDisposable
+	public sealed class FilterCollection : D3Collection<PointsFilter2d>, IDisposable
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FilterCollection"/> class.
 		/// </summary>
-		public NewFilterCollection() { }
+		public FilterCollection() { }
 
 		protected override void OnItemAdding(PointsFilter2d item)
 		{

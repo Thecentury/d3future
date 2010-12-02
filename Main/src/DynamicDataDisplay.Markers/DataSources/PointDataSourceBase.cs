@@ -12,6 +12,7 @@ using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 using System.Windows.Threading;
 using Microsoft.Research.DynamicDataDisplay.Charts.Filters;
 using System.Threading;
+using Microsoft.Research.DynamicDataDisplay.Charts;
 
 namespace DynamicDataDisplay.Markers.DataSources
 {
@@ -98,6 +99,11 @@ namespace DynamicDataDisplay.Markers.DataSources
 			IEnumerable data = GetDataCore(environment);
 
 			return data.Cast<object>().Select(o => DataToPoint(o));
+		}
+
+		public virtual IEnumerable<Point> GetPointData(Range<int> range)
+		{
+			throw new NotImplementedException();
 		}
 
 		protected DataRect GetContentBounds(IEnumerable data, DataRect visible)

@@ -30,6 +30,9 @@
 				<m:Demonstration Description="Editable shapes" Uri="/Demos/v04/EditableShapesSample.xaml"/>
 				<m:Demonstration Description="Markers" Uri="/Demos/v04/Markers/NewMarkersSample.xaml"/>
 			</m:ReleaseInfo>
+			<m:ReleaseInfo Version="1.0.0">
+				<m:Demonstration Description="Plotter panels" Uri="/Demos/v10/PlotterPanels.xaml"/>
+			</m:ReleaseInfo>
 		</m:SamplesCollection>
 
 		<local:VersionToBrushConverter x:Key="versionConverter"/>

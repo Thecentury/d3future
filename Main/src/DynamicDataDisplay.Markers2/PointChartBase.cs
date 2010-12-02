@@ -213,6 +213,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 
 		#endregion
 
+		#region Description property
+
 		/// <summary>
 		/// Gets or sets the description of this chart in the legend.
 		/// </summary>
@@ -223,6 +225,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			set { SetValue(Legend.DescriptionProperty, value); }
 		}
 
+		#endregion
+
+		#region DetailedDescription property
+		
 		/// <summary>
 		/// Gets or sets the detailed description of this chart in the legend.
 		/// </summary>
@@ -232,5 +238,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			get { return (string)GetValue(Legend.DetailedDescriptionProperty); }
 			set { SetValue(Legend.DetailedDescriptionProperty, value); }
 		}
+
+		#endregion
 	}
 }

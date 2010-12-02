@@ -58,6 +58,9 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="EnvironmentPlugins\DefaultLineChartEnvironmentPlugin.cs" />
     <Compile Include="EnvironmentPlugins\EnvironmentPlugin.cs" />
+    <Compile Include="Extensions\LineChartExtensions.cs" />
+    <Compile Include="Extensions\PlotterExtensions.cs" />
+    <Compile Include="Extensions\PointChartBaseExtensions.cs" />
     <Compile Include="LineChart.cs" />
     <Compile Include="LineChartBase.cs" />
     <Compile Include="PointChartBase.cs" />

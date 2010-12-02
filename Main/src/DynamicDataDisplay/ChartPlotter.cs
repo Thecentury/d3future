@@ -49,7 +49,8 @@ namespace Microsoft.Research.DynamicDataDisplay
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool EnableSmoothPanningForNumericAxes
 		{
-			get { throw new NotImplementedException(); }
+			// todo improve returned value
+			get { return false; }// throw new NotImplementedException(); }
 			set
 			{
 				foreach (var axis in Children.OfType<NumericAxis>())

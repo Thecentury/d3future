@@ -151,7 +151,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 			Dispatcher.BeginInvoke(new Action(() =>
 			{
-				ExecuteWaitingChildrenAdditions();
+				//ExecuteWaitingChildrenAdditions();
 			}), DispatcherPriority.Background);
 
 			OnLoaded();

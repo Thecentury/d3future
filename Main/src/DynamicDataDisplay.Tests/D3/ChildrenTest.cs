@@ -280,5 +280,25 @@ namespace DynamicDataDisplay.Test
 			}
 			return baseType;
 		}
+
+		[TestMethod]
+		public void AddingAndRemovalOfChartWithoutLoadingPlotter()
+		{
+			ChartPlotter plotter = new ChartPlotter();
+			LineGraph chart = new LineGraph();
+
+			plotter.Children.Add(chart);
+
+			Assert.IsTrue(plotter.Children.Contains(chart));
+
+			plotter.Children.Remove(chart);
+
+			Assert.IsNull(chart.Plotter);
+			Assert.IsFalse(plotter.Children.Contains(chart));
+
+			plotter.Children.Add(chart);
+
+			Assert.IsTrue(plotter.Children.Contains(chart));
+		}
 	}
 }

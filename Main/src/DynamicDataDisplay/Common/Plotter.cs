@@ -75,9 +75,14 @@ namespace Microsoft.Research.DynamicDataDisplay
 			genericResources = (ResourceDictionary)Application.LoadComponent(new Uri("/DynamicDataDisplay;component/Themes/Generic.xaml", UriKind.Relative));
 
 			ContextMenu = null;
+
+			foreach (var panel in GetAllPanels())
+			{
+				Plotter.SetIsDefaultPanel(panel, true);
+			}
 		}
 
-		void Plotter_Unloaded(object sender, RoutedEventArgs e)
+		private void Plotter_Unloaded(object sender, RoutedEventArgs e)
 		{
 			OnUnloaded();
 		}
@@ -241,7 +246,8 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 				foreach (var child in children)
 				{
-					if (!currentParent.Children.Contains(child))
+					bool isDefaultPanel = GetIsDefaultPanel(child);
+					if (!currentParent.Children.Contains(child) && !isDefaultPanel)
 					{
 						currentParent.Children.Add(child);
 					}
@@ -311,6 +317,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 					}
 					else
 					{
+						waitingForExecute.Remove(item);
 						waitingForExecute.Add(item, () => OnChildAdded(item));
 					}
 				}
@@ -323,12 +330,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 					{
 						OnChildRemoving(item);
 					}
-					else if(!waitingForExecute.ContainsKey(item))
-					{
-						waitingForExecute.Add(item, () => OnChildRemoving(item));
-					}
 					else
 					{
+						waitingForExecute.Remove(item);
+						waitingForExecute.Add(item, () => OnChildRemoving(item));
 					}
 				}
 			}
@@ -408,7 +413,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		#region Layout zones
 
-		private Panel parallelCanvas;
+		private Panel parallelCanvas = new Canvas();
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Panel ParallelCanvas
 		{
@@ -416,7 +421,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			protected set { parallelCanvas = value; }
 		}
 
-		private Panel headerPanel;
+		private Panel headerPanel = new StackPanel();
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Panel HeaderPanel
 		{
@@ -424,7 +429,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			protected set { headerPanel = value; }
 		}
 
-		private Panel footerPanel;
+		private Panel footerPanel = new StackPanel();
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Panel FooterPanel
 		{
@@ -432,7 +437,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			protected set { footerPanel = value; }
 		}
 
-		private Panel leftPanel;
+		private Panel leftPanel = new StackPanel();
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Panel LeftPanel
 		{
@@ -440,7 +445,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			protected set { leftPanel = value; }
 		}
 
-		private Panel rightPanel;
+		private Panel rightPanel = new StackPanel();
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Panel RightPanel
 		{
@@ -448,7 +453,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			protected set { rightPanel = value; }
 		}
 
-		private Panel topPanel;
+		private Panel topPanel = new StackPanel();
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Panel TopPanel
 		{
@@ -456,7 +461,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			protected set { topPanel = value; }
 		}
 
-		private Panel bottomPanel;
+		private Panel bottomPanel = new StackPanel();
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Panel BottomPanel
 		{
@@ -464,7 +469,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			protected set { bottomPanel = value; }
 		}
 
-		private Panel mainCanvas;
+		private Panel mainCanvas = new Canvas();
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Panel MainCanvas
 		{
@@ -472,7 +477,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			protected set { mainCanvas = value; }
 		}
 
-		private Panel centralGrid;
+		private Panel centralGrid = new Grid();
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Panel CentralGrid
 		{
@@ -480,7 +485,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			protected set { centralGrid = value; }
 		}
 
-		private Panel mainGrid;
+		private Panel mainGrid = new Grid();
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Panel MainGrid
 		{
@@ -714,6 +719,32 @@ namespace Microsoft.Research.DynamicDataDisplay
 			RoutingStrategy.Direct,
 			typeof(PlotterChangedEventHandler),
 			typeof(Plotter));
+
+		#endregion
+
+		#region DefaultPanel property
+
+		/// <summary>
+		/// Gets the value indicating that this is a default panel.
+		/// Default panels are those that are contained in plotter by default, like MainGrid or CentralCanvas.
+		/// </summary>
+		/// <param name="obj">The obj.</param>
+		/// <returns></returns>
+		public static bool GetIsDefaultPanel(DependencyObject obj)
+		{
+			return (bool)obj.GetValue(IsDefaultPanelProperty);
+		}
+
+		public static void SetIsDefaultPanel(DependencyObject obj, bool value)
+		{
+			obj.SetValue(IsDefaultPanelProperty, value);
+		}
+
+		public static readonly DependencyProperty IsDefaultPanelProperty = DependencyProperty.RegisterAttached(
+		  "IsDefaultPanel",
+		  typeof(bool),
+		  typeof(Plotter),
+		  new FrameworkPropertyMetadata(false));
 
 		#endregion
 	}

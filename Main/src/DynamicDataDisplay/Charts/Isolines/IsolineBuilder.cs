@@ -605,9 +605,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Isolines
 
 			segments = new IsolineCollection();
 
-            // Cannot draw isolines for fields with one dimension lesser than 2
-            if (dataSource.Width < 2 || dataSource.Height < 2)
-                return segments;
+			// Cannot draw isolines for fields with one dimension lesser than 2
+			if (dataSource.Width < 2 || dataSource.Height < 2)
+				return segments;
 
 			Init();
 

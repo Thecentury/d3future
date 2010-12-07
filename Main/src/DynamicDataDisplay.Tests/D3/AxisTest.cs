@@ -5,6 +5,7 @@ using System.Windows;
 using System.Threading;
 using System.Security.Permissions;
 using System;
+using System.Linq;
 using Microsoft.Research.DynamicDataDisplay.Charts.Axes;
 
 namespace DynamicDataDisplay.Test
@@ -17,12 +18,13 @@ namespace DynamicDataDisplay.Test
 		[TestMethod]
 		public void HorizontalAxisTest()
 		{
-			ChartPlotter target = new ChartPlotter();
+			ChartPlotter plotter = new ChartPlotter();
 			var expected = new HorizontalAxis();
-			GeneralAxis actual;
-			target.MainHorizontalAxis = expected;
-			actual = target.MainHorizontalAxis;
+			plotter.MainHorizontalAxis = expected;
+			GeneralAxis actual = plotter.MainHorizontalAxis;
+
 			Assert.AreEqual(expected, actual);
+			Assert.IsTrue(plotter.Children.OfType<HorizontalAxis>().Count() == 1);
 		}
 
 		[TestMethod]
@@ -33,13 +35,16 @@ namespace DynamicDataDisplay.Test
 			GeneralAxis actual;
 			plotter.MainVerticalAxis = expected;
 			actual = plotter.MainVerticalAxis;
+
 			Assert.AreEqual(expected, actual);
+			Assert.IsTrue(plotter.Children.OfType<VerticalAxis>().Count() == 1);
 		}
 
 		[TestMethod]
 		public void HorizontalAxisIsDefaultTest()
 		{
 			ChartPlotter plotter = new ChartPlotter();
+			plotter.PerformLoad();
 
 			HorizontalAxis axis = (HorizontalAxis)plotter.MainHorizontalAxis;
 			HorizontalAxis axis2 = new HorizontalAxis();
@@ -47,9 +52,10 @@ namespace DynamicDataDisplay.Test
 
 			Assert.AreEqual(plotter.MainHorizontalAxis, axis);
 			Assert.IsTrue(axis.IsDefaultAxis);
+			Assert.AreEqual(2, plotter.Children.OfType<HorizontalAxis>().Count());
 
 			axis2.IsDefaultAxis = true;
-			Assert.AreEqual(plotter.MainHorizontalAxis, axis2);
+			Assert.AreEqual(axis2, plotter.MainHorizontalAxis);
 			Assert.IsFalse(axis.IsDefaultAxis);
 
 			axis.IsDefaultAxis = true;
@@ -61,6 +67,7 @@ namespace DynamicDataDisplay.Test
 		public void VerticalAxisIsDefaultTest()
 		{
 			ChartPlotter plotter = new ChartPlotter();
+			plotter.PerformLoad();
 
 			VerticalAxis axis = (VerticalAxis)plotter.MainVerticalAxis;
 			VerticalAxis axis2 = new VerticalAxis();

@@ -71,9 +71,9 @@ namespace Microsoft.Research.DynamicDataDisplay.DataSources
 			#region IChartPointEnumerator Members
 
 			public bool MoveNext() {
-				bool res = false;
+				bool res = true;
 				foreach (var enumerator in enumerators) {
-					res |= enumerator.MoveNext();
+					res &= enumerator.MoveNext();
 				}
 				return res;
 			}

@@ -214,7 +214,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Isolines
 		//    }
 		//}
 
-		#region MissineValue property
+		#region MissingValue property
 
 		public double MissingValue
 		{

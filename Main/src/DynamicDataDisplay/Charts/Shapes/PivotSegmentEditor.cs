@@ -14,143 +14,77 @@ using System.Diagnostics.Contracts;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace Microsoft.Research.DynamicDataDisplay.Charts.Shapes
 {
-	public class PivotSegmentEditor : FrameworkElement, IPlotterElement
+	public class PivotSegmentEditor : FrameworkElement, IPlotterElement, INotifyPropertyChanged
 	{
 		private Plotter2D plotter = null;
 		private ViewportHostPanel panel = new ViewportHostPanel();
-		private Segment segment = new Segment();
-		private DraggablePoint startThumb = new DraggablePoint();
-		private DraggablePoint endThumb = new DraggablePoint();
+		private Segment segment;
+		private DraggablePoint startThumb;
+		private DraggablePoint endThumb;
 		private Func<double, string> xMapping = d => d.ToString("F");
-		private readonly ViewportRay leftRay = new ViewportRay { StrokeDashArray = new DoubleCollection(new double[] { 1, 1 }), Direction = -1 };
-		private readonly ViewportRay rightRay = new ViewportRay { StrokeDashArray = new DoubleCollection(new double[] { 1, 1 }), Direction = +1 };
-		private readonly Border leftBorder = new Border();
-		private readonly Border rightBorder = new Border();
+		private readonly ViewportRay leftRay;
+		private readonly ViewportRay rightRay;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PivotSegmentEditor"/> class.
 		/// </summary>
 		public PivotSegmentEditor()
 		{
-			Binding p1Binding = new Binding("Point1") { Source = this };
-			Binding p2Binding = new Binding("Point2") { Source = this };
-
-			Binding strokeBinding = new Binding(LineStrokeProperty.Name) { Source = this };
-			Binding strokeThicknessBinding = new Binding(LineThicknessProperty.Name) { Source = this };
-
-			segment.SetBinding(Segment.StartPointProperty, p1Binding);
-			segment.SetBinding(Segment.EndPointProperty, p2Binding);
-			segment.SetBinding(Segment.StrokeProperty, strokeBinding);
-			segment.SetBinding(Segment.StrokeThicknessProperty, strokeThicknessBinding);
-
-			leftRay.SetBinding(ViewportRay.Point1Property, p1Binding);
-			leftRay.SetBinding(ViewportRay.Point2Property, p2Binding);
-			leftRay.SetBinding(ViewportRay.StrokeProperty, strokeBinding);
-			leftRay.SetBinding(ViewportRay.StrokeThicknessProperty, strokeThicknessBinding);
-
-			rightRay.SetBinding(ViewportRay.Point1Property, p1Binding);
-			rightRay.SetBinding(ViewportRay.Point2Property, p2Binding);
-			rightRay.SetBinding(ViewportRay.StrokeProperty, strokeBinding);
-			rightRay.SetBinding(ViewportRay.StrokeThicknessProperty, strokeThicknessBinding);
-
-			startThumb.SetBinding(DraggablePoint.PositionProperty, new Binding("Point1") { Source = this, Mode = BindingMode.TwoWay });
-			endThumb.SetBinding(DraggablePoint.PositionProperty, new Binding("Point2") { Source = this, Mode = BindingMode.TwoWay });
-
-			MultiBinding mBinding = new MultiBinding { Converter = new MValueConverter() };
-			mBinding.Bindings.Add(p1Binding);
-			mBinding.Bindings.Add(p2Binding);
-
-			TextBlock mText = new TextBlock();
-			mText.SetBinding(TextBlock.TextProperty, mBinding);
-
-			CenterPointXConverter centerXConverter = new CenterPointXConverter();
-			MultiBinding centerPointXBinding = new MultiBinding { Converter = centerXConverter };
-			centerPointXBinding.Bindings.Add(p1Binding);
-			centerPointXBinding.Bindings.Add(p2Binding);
-			mText.SetBinding(ViewportPanel.XProperty, centerPointXBinding);
-
-			CenterPointYConverter centerYConverter = new CenterPointYConverter();
-			MultiBinding centerPointYBinding = new MultiBinding { Converter = centerYConverter };
-			centerPointYBinding.Bindings.Add(p1Binding);
-			centerPointYBinding.Bindings.Add(p2Binding);
-			mText.SetBinding(ViewportPanel.YProperty, centerPointYBinding);
-
-			ViewportPanel.SetViewportHorizontalAlignment(mText, HorizontalAlignment.Left);
-			ViewportPanel.SetViewportVerticalAlignment(mText, VerticalAlignment.Top);
-
-			MultiBinding centerPointVerticalAlignmentBinding = new MultiBinding { Converter = new MToVerticalAlignment() };
-			centerPointVerticalAlignmentBinding.Bindings.Add(p1Binding);
-			centerPointVerticalAlignmentBinding.Bindings.Add(p2Binding);
-			mText.SetBinding(ViewportPanel.ViewportVerticalAlignmentProperty, centerPointVerticalAlignmentBinding);
-
-			MultiBinding centerPointVerticalOffsetBinding = new MultiBinding { Converter = new MToVerticalOffsetConverter() };
-			centerPointVerticalOffsetBinding.Bindings.Add(p1Binding);
-			centerPointVerticalOffsetBinding.Bindings.Add(p2Binding);
-			mText.SetBinding(ViewportPanel.ScreenOffsetYProperty, centerPointVerticalOffsetBinding);
+			ResourceDictionary resources = new ResourceDictionary
+			{
+				Source = new Uri("/DynamicDataDisplay;component/Charts/Shapes/PivotSegmentEditor.xaml", UriKind.Relative)
+			};
 
 			panel.BeginBatchAdd();
+
+			ControlTemplate segmentTemplate = (ControlTemplate)resources["segment"];
+			segment = (Segment)segmentTemplate.LoadContent();
+			segment.DataContext = this;
+
+			ControlTemplate startThumbTemplate = (ControlTemplate)resources["leftThumb"];
+			startThumb = (DraggablePoint)startThumbTemplate.LoadContent();
+			startThumb.DataContext = this;
+
+			ControlTemplate endThumbTemplate = (ControlTemplate)resources["rightThumb"];
+			endThumb = (DraggablePoint)endThumbTemplate.LoadContent();
+			endThumb.DataContext = this;
+
+			ControlTemplate leftRayTemplate = (ControlTemplate)resources["leftRay"];
+			leftRay = (ViewportRay)leftRayTemplate.LoadContent();
+			leftRay.DataContext = this;
+
+			ControlTemplate rightRayTemplate = (ControlTemplate)resources["rightRay"];
+			rightRay = (ViewportRay)rightRayTemplate.LoadContent();
+			rightRay.DataContext = this;
+
+			ControlTemplate mTextTemplate = (ControlTemplate)resources["mText"];
+			TextBlock mText = (TextBlock)mTextTemplate.LoadContent();
 			panel.Children.Add(mText);
+			mText.DataContext = this;
 
-			GenericValueConverter<Point> pointTextConverter = new GenericValueConverter<Point>(p =>
-			{
-				var result = String.Format("({0}, {1})", xMapping(p.X), p.Y);
-				return result;
-			});
-			Grid leftPointGrid = new Grid();
-			Rectangle leftPointRect = new Rectangle { Stroke = Brushes.Black, StrokeThickness = 1.0 };
-			TextBlock leftPointText = new TextBlock { Margin = new Thickness(3) };
-			leftPointGrid.Children.Add(leftPointRect);
-			leftPointGrid.Children.Add(leftPointText);
+			ControlTemplate leftPointGridTemplate = (ControlTemplate)resources["leftPointGrid"];
+			Panel leftPointGrid = (Panel)leftPointGridTemplate.LoadContent();
 			panel.Children.Add(leftPointGrid);
-			leftPointText.SetBinding(TextBlock.TextProperty, new Binding("Point1") { Source = this, Converter = pointTextConverter });
+			leftPointGrid.DataContext = this;
 
-			leftPointGrid.SetBinding(ViewportPanel.XProperty, new Binding("Point1.X") { Source = this });
-			leftPointGrid.SetBinding(ViewportPanel.YProperty, new Binding("Point1.Y") { Source = this });
-			ViewportPanel.SetViewportHorizontalAlignment(leftPointGrid, HorizontalAlignment.Left);
-			ViewportPanel.SetViewportVerticalAlignment(leftPointGrid, VerticalAlignment.Top);
-
-			Grid rightPointGrid = new Grid();
-			Rectangle rightPointRect = new Rectangle { Stroke = Brushes.Black, StrokeThickness = 1.0 };
-			TextBlock rightPointText = new TextBlock { Margin = new Thickness(3) };
-			rightPointGrid.Children.Add(rightPointRect);
-			rightPointGrid.Children.Add(rightPointText);
+			ControlTemplate rightPointGridTemplate = (ControlTemplate)resources["rightPointGrid"];
+			Panel rightPointGrid = (Panel)rightPointGridTemplate.LoadContent();
 			panel.Children.Add(rightPointGrid);
-			rightPointText.SetBinding(TextBlock.TextProperty, new Binding("Point2") { Source = this, Converter = pointTextConverter });
+			rightPointGrid.DataContext = this;
 
-			rightPointGrid.SetBinding(ViewportPanel.XProperty, new Binding("Point2.X") { Source = this });
-			rightPointGrid.SetBinding(ViewportPanel.YProperty, new Binding("Point2.Y") { Source = this });
-			ViewportPanel.SetViewportHorizontalAlignment(rightPointGrid, HorizontalAlignment.Left);
-			ViewportPanel.SetViewportVerticalAlignment(rightPointGrid, VerticalAlignment.Top);
-
-			TextBlock leftText = new TextBlock { Margin = new Thickness(3) };
-			ViewportPanel.SetViewportHorizontalAlignment(leftBorder, HorizontalAlignment.Left);
-			ViewportPanel.SetViewportVerticalAlignment(leftBorder, VerticalAlignment.Top);
-			Binding leftYBinding = new Binding("LeftY") { Source = this };
-			leftText.SetBinding(TextBlock.TextProperty, leftYBinding);
-			leftBorder.SetBinding(ViewportPanel.YProperty, leftYBinding);
-			leftBorder.Child = leftText;
-			leftBorder.SetBinding(ViewportPanel.ViewportVerticalAlignmentProperty, centerPointVerticalAlignmentBinding);
-
-			TextBlock rightText = new TextBlock { Margin = new Thickness(3) };
-			ViewportPanel.SetViewportHorizontalAlignment(rightBorder, HorizontalAlignment.Right);
-			ViewportPanel.SetViewportVerticalAlignment(rightBorder, VerticalAlignment.Top);
-			Binding rightYBinding = new Binding("RightY") { Source = this };
-			rightText.SetBinding(TextBlock.TextProperty, rightYBinding);
-			rightBorder.SetBinding(ViewportPanel.YProperty, rightYBinding);
-			rightBorder.Child = rightText;
-			rightBorder.SetBinding(ViewportPanel.ViewportVerticalAlignmentProperty, centerPointVerticalAlignmentBinding);
-
-			leftBorder.SetBinding(Border.BorderBrushProperty, strokeBinding);
-			leftBorder.SetBinding(Border.BorderThicknessProperty, strokeThicknessBinding);
-
-			rightBorder.SetBinding(Border.BorderBrushProperty, strokeBinding);
-			rightBorder.SetBinding(Border.BorderThicknessProperty, strokeThicknessBinding);
-
+			ControlTemplate leftTextTemplate = (ControlTemplate)resources["leftText"];
+			FrameworkElement leftBorder = (FrameworkElement)leftTextTemplate.LoadContent();
 			panel.Children.Add(leftBorder);
+			leftBorder.DataContext = this;
+
+			ControlTemplate rightTextTemplate = (ControlTemplate)resources["rightText"];
+			FrameworkElement rightBorder = (FrameworkElement)rightTextTemplate.LoadContent();
 			panel.Children.Add(rightBorder);
+			rightBorder.DataContext = this;
 		}
 
 		#region Properties
@@ -166,6 +100,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Shapes
 				Contract.Assert(value != null);
 
 				xMapping = value;
+				PropertyChanged.Raise(this, "");
 			}
 		}
 
@@ -193,7 +128,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Shapes
 			owner.OnPointChanged();
 		}
 
-		private void OnPointChanged() { }
+		private void OnPointChanged()
+		{
+			PropertyChanged.Raise(this, "");
+		}
 
 		#endregion
 
@@ -317,6 +255,35 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Shapes
 		}
 		#endregion
 
+		public double M
+		{
+			get { return (Point1.Y - Point2.Y) / (Point1.X - Point2.X); }
+		}
+
+		public string LeftName
+		{
+			get
+			{
+				return String.Format("({0}, {1:F})", xMapping(Point1.X), Point1.Y);
+			}
+		}
+
+		public string RightName
+		{
+			get
+			{
+				return String.Format("({0}, {1:F})", xMapping(Point2.X), Point2.Y);
+			}
+		}
+
+		public Point Center
+		{
+			get
+			{
+				return Point1 + (Point2 - Point1) / 2;
+			}
+		}
+
 		#endregion
 
 		#region IPlotterElement Members
@@ -337,11 +304,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Shapes
 					leftRay,
 					rightRay);
 
-				leftBorder.SetBinding(ViewportPanel.XProperty, new Binding("Visible.XMin") { Source = this.plotter.Viewport });
-				rightBorder.SetBinding(ViewportPanel.XProperty, new Binding("Visible.XMax") { Source = this.plotter.Viewport });
 				CoerceValue(LeftYProperty);
 				CoerceValue(RightYProperty);
 
+				PropertyChanged.Raise(this, "");
 			}, DispatcherPriority.Normal);
 		}
 
@@ -369,67 +335,56 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Shapes
 			this.plotter = null;
 		}
 
-		public Plotter Plotter
+		public Plotter2D Plotter
+		{
+			get { return plotter; }
+		}
+
+		Plotter IPlotterElement.Plotter
 		{
 			get { return plotter; }
 		}
 
 		#endregion
+
+		#region INotifyPropertyChanged Members
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		#endregion
 	}
 
-	internal sealed class CenterPointXConverter : TwoValuesMultiConverter<Point, Point>
+	public sealed class MToVerticalOffsetConverter : GenericValueConverter<double>
 	{
-		protected override object ConvertCore(Point value1, Point value2, Type targetType, object parameter, CultureInfo culture)
+		public override object ConvertCore(double value, Type targetType, object parameter, CultureInfo culture)
 		{
-			Point center = value1 + (value2 - value1) / 2;
-			double x = center.X;
-			return x;
-		}
-	}
-
-	internal sealed class CenterPointYConverter : TwoValuesMultiConverter<Point, Point>
-	{
-		protected override object ConvertCore(Point value1, Point value2, Type targetType, object parameter, CultureInfo culture)
-		{
-			Point center = value1 + (value2 - value1) / 2;
-			double y = center.Y;
-			return y;
-		}
-	}
-
-	internal sealed class MValueConverter : TwoValuesMultiConverter<Point, Point>
-	{
-		protected override object ConvertCore(Point value1, Point value2, Type targetType, object parameter, CultureInfo culture)
-		{
-			double m = (value1.Y - value2.Y) / (value1.X - value2.X);
-
-			return "m = " + m.ToString("F");
-		}
-	}
-
-	internal sealed class MToVerticalOffsetConverter : TwoValuesMultiConverter<Point, Point>
-	{
-		protected override object ConvertCore(Point value1, Point value2, Type targetType, object parameter, CultureInfo culture)
-		{
-			double m = (value1.Y - value2.Y) / (value1.X - value2.X);
-
-			if (m > 0)
+			if (value > 0)
 				return 2.0;
 			else
 				return -2.0;
 		}
 	}
 
-	internal sealed class MToVerticalAlignment : TwoValuesMultiConverter<Point, Point>
+	public sealed class MToVerticalAlignmentInvertedConverter : GenericValueConverter<double>
 	{
-		protected override object ConvertCore(Point value1, Point value2, Type targetType, object parameter, CultureInfo culture)
+		public override object ConvertCore(double value, Type targetType, object parameter, CultureInfo culture)
 		{
-			double m = (value1.Y - value2.Y) / (value1.X - value2.X);
+			if (value > 0)
+				return VerticalAlignment.Bottom;
+			else
+				return VerticalAlignment.Top;
+		}
+	}
 
-			if (m > 0)
+	public sealed class MToVerticalAlignmentConverter : GenericValueConverter<double>
+	{
+		public override object ConvertCore(double value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (value > 0)
 				return VerticalAlignment.Top;
 			else
 				return VerticalAlignment.Bottom;
 		}
 	}
 }
+

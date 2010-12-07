@@ -5,25 +5,7 @@
 		Title="MainWindow" Height="350" Width="525">
 	<Grid>
 		<d3:ChartPlotter Name="plotter">
-			<!--<d3:Segment StartPoint="{Binding ElementName=point1, Path=Position}" EndPoint="{Binding ElementName=point2, Path=Position}"/>
-			<d3:DraggablePoint Name="point1" Position="0.2,0.3"/>
-			<d3:DraggablePoint Name="point2" Position="0.4,0.5"/>-->
-			
 			<d3:PivotSegmentEditor Name="editor" Point1="0.1,0.1" Point2="0.9,0.9"/>
-			
-			<d3:DraggablePoint Name="pt" Position="0.4,0.6"/>
-			
-			<d3:ViewportHostPanel>
-				<Grid 
-					d3:ViewportPanel.X="{Binding Path=Position.X, ElementName=pt}"
-					d3:ViewportPanel.Y="{Binding Path=Position.Y, ElementName=pt}"
-					d3:ViewportPanel.ViewportHorizontalAlignment="Left"
-					d3:ViewportPanel.ViewportVerticalAlignment="Top">
-					
-					<Rectangle Stroke="Black" StrokeThickness="1" Fill="Aqua"/>
-					<TextBlock Text="{Binding ElementName=pt, Path=Position}" Margin="3"/>
-				</Grid>
-			</d3:ViewportHostPanel>
 		</d3:ChartPlotter>
 	</Grid>
 </Window>

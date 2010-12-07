@@ -97,7 +97,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 							drawnPaths.Remove(lastPath);
 							pathsPool.Put(lastPath);
 							Range<int> lastPathRange = PointChartBase.GetIndexRange(lastPath);
-							requestRange = new Range<int>(lastPathRange.Min, addedRange.Max);
+							int min = requestRange.Min;
+
+							if (min % pathLength == 0)
+								min -= 1;
+
+							requestRange = new Range<int>(min, addedRange.Max);
 						}
 
 						var points = DataSource.GetPointData(requestRange);
@@ -112,7 +117,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 						int maxIndex;
 						CreateAndAddPath(indexedPoints, out minIndex, out maxIndex, transformWhileCreateUI);
 
-						indexRange = new Range<int>(indexRange.Min, maxIndex);
+						this.indexRange = new Range<int>(indexRange.Min, maxIndex);
 					}
 					else
 					{

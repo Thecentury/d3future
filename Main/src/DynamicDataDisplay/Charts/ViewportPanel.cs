@@ -51,6 +51,13 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 		#region Panel methods override
 
+		protected override void OnChildDesiredSizeChanged(UIElement child)
+		{
+			base.OnChildDesiredSizeChanged(child);
+
+			InvalidateMeasure();
+		}
+
 		protected internal override void OnChildAdded(FrameworkElement child)
 		{
 			InvalidatePosition(child);
@@ -103,12 +110,12 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 		protected virtual Size GetElementSize(FrameworkElement child, Size availableSize, CoordinateTransform transform)
 		{
-			Size res = availableSize;
+			Size result = availableSize;
 
 			DataRect ownViewportBounds = GetViewportBounds(child);
 			if (!ownViewportBounds.IsEmpty)
 			{
-				res = ownViewportBounds.ViewportToScreen(transform).Size;
+				result = ownViewportBounds.ViewportToScreen(transform).Size;
 			}
 			else
 			{
@@ -133,19 +140,19 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 				DataRect bounds = new DataRect(new Size(width, height));
 				Rect screenBounds = bounds.ViewportToScreen(transform);
 
-				res = new Size(hasViewportWidth ? screenBounds.Width : selfWidth,
+				result = new Size(hasViewportWidth ? screenBounds.Width : selfWidth,
 					hasViewportHeight ? screenBounds.Height : selfHeight);
 
-				if (hasMinScreenWidth && res.Width < minScreenWidth)
+				if (hasMinScreenWidth && result.Width < minScreenWidth)
 				{
-					res.Width = minScreenWidth;
+					result.Width = minScreenWidth;
 				}
 			}
 
-			if (res.Width.IsNaN()) res.Width = 0;
-			if (res.Height.IsNaN()) res.Height = 0;
+			if (result.Width.IsNaN()) result.Width = 0;
+			if (result.Height.IsNaN()) result.Height = 0;
 
-			return res;
+			return result;
 		}
 
 		protected Rect GetElementScreenBounds(CoordinateTransform transform, UIElement child)

@@ -99,6 +99,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 		protected override void OnChildDesiredSizeChanged(UIElement child)
 		{
+			base.OnChildDesiredSizeChanged(child);
 			InvalidatePosition((FrameworkElement)child);
 		}
 

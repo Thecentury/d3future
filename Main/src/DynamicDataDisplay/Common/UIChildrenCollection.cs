@@ -44,7 +44,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Common
 
 			var index = visualChildren.Add(element);
 
-			if (isAddingMany)
+			if (!isAddingMany)
 			{
 				hostPanel.InvalidateMeasure();
 			}

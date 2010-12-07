@@ -110,11 +110,5 @@ namespace Microsoft.Research.DynamicDataDisplay.Common
 		}
 
 		#endregion
-
-		internal Vector InternalVisualOffset
-		{
-			get { return VisualOffset; }
-			set { VisualOffset = value; }
-		}
 	}
 }

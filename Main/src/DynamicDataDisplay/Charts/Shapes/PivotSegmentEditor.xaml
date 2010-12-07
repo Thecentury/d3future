@@ -1,0 +1,99 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:v="clr-namespace:Microsoft.Research.DynamicDataDisplay.Charts"
+					xmlns:s="clr-namespace:Microsoft.Research.DynamicDataDisplay.Charts.Shapes">
+	<ControlTemplate x:Key="segment">
+		<v:Segment StartPoint="{Binding Point1}"
+				   EndPoint="{Binding Point2}"
+				   Stroke="{Binding LineStroke}"
+				   StrokeThickness="{Binding LineThickness}"/>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="leftRay">
+		<s:ViewportRay Point1="{Binding Point1}"
+					   Point2="{Binding Point2}"
+					   Stroke="{Binding LineStroke}"
+					   StrokeThickness="{Binding LineThickness}"
+					   StrokeDashArray="1 1"
+					   Direction="-1"/>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="rightRay">
+		<s:ViewportRay Point1="{Binding Point1}"
+					   Point2="{Binding Point2}"
+					   Stroke="{Binding LineStroke}"
+					   StrokeThickness="{Binding LineThickness}"
+					   StrokeDashArray="1 1"
+					   Direction="1"/>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="leftThumb">
+		<s:DraggablePoint Position="{Binding Point1, Mode=TwoWay}"/>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="rightThumb">
+		<s:DraggablePoint Position="{Binding Point2, Mode=TwoWay}"/>
+	</ControlTemplate>
+
+	<s:MToVerticalAlignmentConverter x:Key="verticalAlignmentConverter"/>
+	<s:MToVerticalOffsetConverter x:Key="verticalScreenOffsetConverter"/>
+	<s:MToVerticalAlignmentInvertedConverter x:Key="verticalAlignmentInvertedConverter"/>
+
+	<ControlTemplate x:Key="mText">
+		<TextBlock v:ViewportPanel.ViewportHorizontalAlignment="Left"
+				   v:ViewportPanel.X="{Binding Center.X}"
+				   v:ViewportPanel.Y="{Binding Center.Y}"
+				   v:ViewportPanel.ScreenOffsetY="{Binding M, Converter={StaticResource verticalScreenOffsetConverter}}"
+				   v:ViewportPanel.ViewportVerticalAlignment="{Binding M, Converter={StaticResource verticalAlignmentConverter}}">
+			<Run Text="m = "/>
+			<Run Text="{Binding M, StringFormat=F}"/>
+		</TextBlock>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="leftPointGrid">
+		<Grid v:ViewportPanel.X="{Binding Point1.X}"
+			  v:ViewportPanel.Y="{Binding Point1.Y}"
+			  v:ViewportPanel.ViewportHorizontalAlignment="Left"
+			  v:ViewportPanel.ViewportVerticalAlignment="{Binding M, Converter={StaticResource verticalAlignmentConverter}}">
+			<Rectangle Stroke="Black" StrokeThickness="1"/>
+			<TextBlock Margin="3"
+					   Text="{Binding LeftName}"/>
+		</Grid>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="rightPointGrid">
+		<Grid v:ViewportPanel.X="{Binding Point2.X}"
+			  v:ViewportPanel.Y="{Binding Point2.Y}"
+			  v:ViewportPanel.ViewportHorizontalAlignment="Left"
+			  v:ViewportPanel.ViewportVerticalAlignment="{Binding M, Converter={StaticResource verticalAlignmentConverter}}">
+			<Rectangle Stroke="Black" StrokeThickness="1"/>
+			<TextBlock Margin="3" 
+					   Text="{Binding RightName}"/>
+		</Grid>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="leftText">
+		<Grid v:ViewportPanel.ViewportHorizontalAlignment="Left"
+				v:ViewportPanel.Y="{Binding LeftY}"
+				v:ViewportPanel.X="{Binding Plotter.Viewport.Visible.XMin}"
+				v:ViewportPanel.ViewportVerticalAlignment="{Binding M, Converter={StaticResource verticalAlignmentConverter}}">
+
+			<Rectangle Stroke="{Binding LineStroke}"
+					   StrokeThickness="{Binding LineThickness}"/>
+			<TextBlock Margin="3" Text="{Binding LeftY, StringFormat=F2}"/>
+		</Grid>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="rightText">
+		<Grid v:ViewportPanel.ViewportHorizontalAlignment="Right"
+				v:ViewportPanel.Y="{Binding RightY}"
+				v:ViewportPanel.X="{Binding Plotter.Viewport.Visible.XMax}"
+				v:ViewportPanel.ViewportVerticalAlignment="{Binding M, Converter={StaticResource verticalAlignmentInvertedConverter}}">
+			<Rectangle Stroke="{Binding LineStroke}"
+					   StrokeThickness="{Binding LineThickness}"/>
+			<TextBlock Margin="3" Text="{Binding RightY, StringFormat=F2}"/>
+		</Grid>
+	</ControlTemplate>
+
+
+</ResourceDictionary>

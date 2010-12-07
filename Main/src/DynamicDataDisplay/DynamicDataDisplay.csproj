@@ -245,6 +245,7 @@
     <Compile Include="Charts\Axes\AxisBase.cs" />
     <Compile Include="Charts\Shapes\PivotSegmentEditor.cs" />
     <Compile Include="Charts\Shapes\PolylineEditor.cs" />
+    <Compile Include="Charts\Shapes\SimpleGrid.cs" />
     <Compile Include="Charts\Shapes\TemplateableDraggablePoint.cs" />
     <Compile Include="Charts\Shapes\ViewportLine.cs" />
     <Compile Include="Charts\Shapes\ViewportPolyBezierCurve.cs" />
@@ -573,6 +574,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charts\Shapes\PivotSegmentEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Charts\Shapes\RangeHighlightStyle.xaml">
       <SubType>Designer</SubType>

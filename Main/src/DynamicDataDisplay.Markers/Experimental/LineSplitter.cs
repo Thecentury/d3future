@@ -56,7 +56,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.NewLine
 						Data = list,
 						Parameter = parameter,
 						MinIndex = minIndex,
-						MaxIndex = maxIndex
+						MaxIndex = maxIndex,
+						Splitted = true
 					};
 					list = new List<IndexWrapper<Point>>();
 				}
@@ -69,13 +70,16 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.NewLine
 			}
 
 			if (!split)
+			{
 				yield return new LinePart
 				{
 					Data = list,
 					Parameter = 0,
 					MinIndex = minIndex,
-					MaxIndex = maxIndex
+					MaxIndex = maxIndex,
+					Splitted = false
 				};
+			}
 		}
 	}
 }

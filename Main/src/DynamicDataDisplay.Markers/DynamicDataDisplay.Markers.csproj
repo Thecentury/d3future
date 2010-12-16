@@ -130,7 +130,7 @@
     <Compile Include="DataSources\Composite\CompositeEnumerator.cs" />
     <Compile Include="DataSources\Composite\DataSourcePartCollection.cs" />
     <Compile Include="DataSources\Composite\DynamicItem.cs" />
-    <Compile Include="DataSources\Composite\New\NewCompositeDataSource.cs" />
+    <Compile Include="DataSources\Composite\New\TwoEnumerableOfDoubleDataSource.cs" />
     <Compile Include="DataSources\DataSource2DPiece.cs" />
     <Compile Include="DataSources\DataSourceFactories\DataSourceDataSourceFactory.cs" />
     <Compile Include="DataSources\DataSourceFactories\DataSourceFactory.cs" />

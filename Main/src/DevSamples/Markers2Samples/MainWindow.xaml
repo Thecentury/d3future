@@ -12,6 +12,8 @@
 						  DetailedDescription="Some detailed description"/>-->
 			<d3:CursorCoordinateGraph/>
 			
+			<df:LineChart Name="xAndYSeqChart" Stroke="LimeGreen"/>
+			
 			<RepeatButton Click="RepeatButton_Click" 
 						  Content="Click me!"
 						  Canvas.Bottom="10" Canvas.Right="10"/>

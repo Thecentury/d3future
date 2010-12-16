@@ -7,6 +7,8 @@ using System.Security.Permissions;
 using System;
 using System.Linq;
 using Microsoft.Research.DynamicDataDisplay.Charts.Axes;
+using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
+using System.Windows.Threading;
 
 namespace DynamicDataDisplay.Test
 {
@@ -83,6 +85,21 @@ namespace DynamicDataDisplay.Test
 			axis.IsDefaultAxis = true;
 			Assert.AreEqual(plotter.MainVerticalAxis, axis);
 			Assert.IsFalse(axis2.IsDefaultAxis);
+		}
+
+		[TestMethod]
+		public void RemovingWhileViewportChange()
+		{
+			ChartPlotter plotter = new ChartPlotter();
+			HorizontalAxis axis = new HorizontalAxis();
+			plotter.Children.Add(axis);
+
+			plotter.PerformLoad();
+
+			plotter.Viewport.Visible = new DataRect(2, 3, 4, 5);
+			plotter.Children.Remove(axis);
+
+			plotter.Wait(DispatcherPriority.Background);
 		}
 	}
 }

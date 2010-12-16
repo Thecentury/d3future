@@ -15,6 +15,8 @@ using Microsoft.Research.DynamicDataDisplay.Markers2;
 using Microsoft.Research.DynamicDataDisplay.Charts.Axes.Numeric;
 using Microsoft.Research.DynamicDataDisplay.Charts;
 using System.Collections.ObjectModel;
+using Microsoft.Research.DynamicDataDisplay.Markers.DataSources;
+using Microsoft.Research.DynamicDataDisplay.Charts.NewLine;
 
 namespace Markers2Samples
 {
@@ -59,6 +61,11 @@ namespace Markers2Samples
 				StrokeThickness = 3
 			};
 			plotter.Children.Add(chart);
+
+			List<double> xs = Enumerable.Range(0, count).Select(i => (double)i).ToList();
+			List<double> ys = Enumerable.Range(0, count).Select(i => Math.Sin(i / 10.0)).ToList();
+
+			xAndYSeqChart.DataSource = DataSource.Create(xs, ys);
 		}
 
 		int i = count;

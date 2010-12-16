@@ -17,6 +17,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.NewLine
 		private int minIndex = -1;
 		private int maxIndex = -1;
 
+		public LinePart()
+		{
+			Splitted = false;
+		}
+
 		/// <summary>
 		/// Gets or sets the data.
 		/// </summary>
@@ -61,5 +66,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.NewLine
 			get { return maxIndex; }
 			set { maxIndex = value; }
 		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="LinePart"/> was splitted.
+		/// </summary>
+		/// <value><c>true</c> if splitted; otherwise, <c>false</c>.</value>
+		public bool Splitted { get; set; }
 	}
 }

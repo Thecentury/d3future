@@ -1,0 +1,2 @@
+﻿This is a sample for http://d3future.codeplex.com/Thread/View.aspx?ThreadId=237551
+Sample creates a new panel, which arranges its children not in a rectangle region, but in square inscribed into such rectangle.

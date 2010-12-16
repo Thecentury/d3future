@@ -101,6 +101,7 @@ namespace DynamicDataDisplay.Markers.DataSources
 			return data.Cast<object>().Select(o => DataToPoint(o));
 		}
 
+		// todo make this method abstract
 		public virtual IEnumerable<Point> GetPointData(Range<int> range)
 		{
 			throw new NotImplementedException();

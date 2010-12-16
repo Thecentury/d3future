@@ -70,6 +70,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		{
 			base.OnCollectionChanged(e);
 
+			// todo temp
+			HandleCollectionReset();
+			return;
+
 			if (e.Action == NotifyCollectionChangedAction.Reset)
 			{
 				HandleCollectionReset();
@@ -288,6 +292,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 					if (list.Count == 0)
 						continue;
 
+					if (part.Splitted)
+						lastPoint = null;
+
 					StreamGeometry geometry = new StreamGeometry();
 					using (var context = geometry.Open())
 					{
@@ -311,10 +318,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 					if (path.CacheMode == null)
 						path.CacheMode = new BitmapCache();
 
-					path.Stroke = ColorHelper.RandomBrush;
+					// todo for debug purpose
+					//path.Stroke = ColorHelper.RandomBrush;
 
-					// todo revert
-					//path.SetBinding(Path.StrokeProperty, strokeBinding);
+					path.SetBinding(Path.StrokeProperty, strokeBinding);
 					path.SetBinding(Path.StrokeThicknessProperty, strokeThicknessBinding);
 					path.SetBinding(Path.StrokeDashArrayProperty, strokeDashArrayBinding);
 					path.SetBinding(Panel.ZIndexProperty, zIndexBinding);

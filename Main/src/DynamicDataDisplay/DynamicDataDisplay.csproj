@@ -253,6 +253,7 @@
     <Compile Include="Charts\Shapes\ViewportPolyline.cs" />
     <Compile Include="Charts\Shapes\ViewportPolylineBase.cs" />
     <Compile Include="Charts\Shapes\ViewportRay.cs" />
+    <Compile Include="Charts\TemplateChart.cs" />
     <Compile Include="Charts\ViewportHostPanel.cs" />
     <Compile Include="Charts\ViewportPanel.cs" />
     <Compile Include="Charts\ViewportPanel.Properties.cs" />
@@ -328,7 +329,6 @@
     <Compile Include="DataSources\MultiDimensional\NonUniformDataSource2D.cs" />
     <Compile Include="GenericChartPlotter.cs" />
     <Compile Include="InjectedPlotter.cs" />
-    <Compile Include="InjectedPlotterHorizontalSyncConverter.cs" />
     <Compile Include="PlotterLoadMode.cs" />
     <Compile Include="PointMarkers\RectElementPointMarker.cs" />
     <Compile Include="Resources\D3IconHelper.cs" />
@@ -419,7 +419,6 @@
     <Compile Include="PointMarkers\CirclePointMarker.cs" />
     <Compile Include="PointMarkers\ShapePointMarker.cs" />
     <Compile Include="PointMarkers\ElementPointMarker.cs" />
-    <Compile Include="ScaleConverter.cs" />
     <Compile Include="Strings\Exceptions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -492,6 +491,8 @@
     <Compile Include="Viewport2dDeferredPanningProxy.cs" />
     <Compile Include="Viewport2DExtensions.cs" />
     <Compile Include="Viewport2DPanningState.cs" />
+    <Compile Include="InjectedViewport2D.cs" />
+    <Compile Include="ViewportConjunctionMode.cs" />
     <Compile Include="ViewportElement2D.cs" />
     <Compile Include="ViewportConstraints\DateTimeHorizontalAxisConstraint.cs" />
     <Compile Include="ViewportConstraints\DateTimeVerticalAxisConstraint.cs" />

@@ -18,7 +18,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// <param name="chart">The chart.</param>
 		/// <param name="stroke">The stroke.</param>
 		/// <returns></returns>
-		public static LineChartBase WithStroke(this LineChartBase chart, Brush stroke)
+		public static T WithStroke<T>(this T chart, Brush stroke) where T : LineChartBase
 		{
 			if (chart == null)
 				throw new ArgumentNullException("chart");
@@ -34,7 +34,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// <param name="chart">The chart.</param>
 		/// <param name="strokeThickness">The stroke thickness.</param>
 		/// <returns></returns>
-		public static LineChartBase WithStrokeThickness(this LineChartBase chart, double strokeThickness)
+		public static T WithStrokeThickness<T>(this T chart, double strokeThickness) where T : LineChartBase
 		{
 			if (chart == null)
 				throw new ArgumentNullException("chart");
@@ -50,7 +50,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// <param name="chart">The chart.</param>
 		/// <param name="pattern">The pattern.</param>
 		/// <returns></returns>
-		public static LineChartBase WithStrokeDashArray(this LineChartBase chart, IEnumerable<double> pattern)
+		public static T WithStrokeDashArray<T>(this T chart, IEnumerable<double> pattern) where T : LineChartBase
 		{
 			if (chart == null)
 				throw new ArgumentNullException("chart");

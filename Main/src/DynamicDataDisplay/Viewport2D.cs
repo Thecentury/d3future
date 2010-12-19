@@ -22,7 +22,9 @@ namespace Microsoft.Research.DynamicDataDisplay
 		private int updateVisibleCounter = 0;
 		private readonly RingDictionary<DataRect> prevVisibles = new RingDictionary<DataRect>(2);
 		private bool fromContentBounds = false;
-		private readonly DispatcherPriority invocationPriority = DispatcherPriority.Background;
+		private readonly DispatcherPriority invocationPriority = DispatcherPriority.Send;
+
+		public const string VisiblePropertyName = "Visible";
 
 		public bool FromContentBounds
 		{
@@ -173,20 +175,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		private readonly ConstraintCollection fitToViewConstraints;
 
-		private bool enforceConstraints = true;
-
-		public bool EnforceRestrictions
-		{
-			get
-			{
-				return enforceConstraints;
-			}
-			set
-			{
-				enforceConstraints = value;
-			}
-		}
-
 		/// <summary>
 		/// Gets the collection of <see cref="ViewportConstraint"/>s that are applied only when Viewport is fitted to view.
 		/// </summary>
@@ -299,9 +287,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 				}
 			}
 
-			FromContentBounds = false;
-			UpdateVisible();
+			bool prevFromContentBounds = FromContentBounds;
 			FromContentBounds = true;
+			UpdateVisible();
+			FromContentBounds = prevFromContentBounds;
 		}
 
 		private readonly ObservableCollection<DependencyObject> contentBoundsHosts = new ObservableCollection<DependencyObject>();
@@ -340,7 +329,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		private DataRect prevContentBounds = DataRect.Empty;
 		protected virtual DataRect CoerceVisible(DataRect newVisible)
 		{
-			 if (Plotter == null)
+			if (Plotter == null)
 			{
 				return newVisible;
 			}
@@ -364,7 +353,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 					if (plotterElement.Plotter == null)
 						continue;
 
-					var plotter = (Plotter2D)plotterElement.Plotter;
 					DataRect contentBounds = Viewport2D.GetContentBounds(item);
 					if (contentBounds.Width.IsNaN() || contentBounds.Height.IsNaN())
 						continue;
@@ -445,8 +433,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			newVisible = domainConstraint.Apply(Visible, newVisible, this);
 
 			// apply other restrictions
-			if (enforceConstraints)
-				newVisible = constraints.Apply(Visible, newVisible, this);
+			newVisible = constraints.Apply(Visible, newVisible, this);
 
 			// applying transform's data domain constraint
 			if (!transform.DataTransform.DataDomain.IsEmpty)

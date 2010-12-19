@@ -193,12 +193,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 		private const double zoomInCoeff = 0.9;
 		private void ZoomInExecute(object target, ExecutedRoutedEventArgs e)
 		{
-			Viewport.FromContentBounds = true;
-
 			Viewport.Zoom(zoomInCoeff);
 			e.Handled = true;
-
-			//Viewport.FromKeyboardNavigation = false;
 		}
 
 		private void ZoomInCanExecute(object target, CanExecuteRoutedEventArgs e)
@@ -213,12 +209,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 		private const double zoomOutCoeff = 1 / zoomInCoeff;
 		private void ZoomOutExecute(object target, ExecutedRoutedEventArgs e)
 		{
-			Viewport.FromContentBounds = true;
-
 			Viewport.Zoom(zoomOutCoeff);
 			e.Handled = true;
-
-			//Viewport.FromKeyboardNavigation = false;
 		}
 
 		private void ZoomOutCanExecute(object target, CanExecuteRoutedEventArgs e)
@@ -258,9 +250,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 			double reverseCoeff = isReversed ? -1 : 1;
 			visible.Offset(reverseCoeff * xShiftCoeff * width, reverseCoeff * yShiftCoeff * height);
 
-			Viewport.FromContentBounds = true;
 			Viewport.Visible = visible;
-			//Viewport.FromKeyboardNavigation = false;
 
 			plotter2D.UndoProvider.AddAction(new DependencyPropertyChangedUndoAction(Viewport, Viewport2D.VisibleProperty, oldVisible, visible));
 		}
@@ -403,12 +393,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 
 		private void UndoExecute(object target, ExecutedRoutedEventArgs e)
 		{
-			plotter2D.Viewport.FromContentBounds = true;
-
 			plotter2D.UndoProvider.Undo();
 			e.Handled = true;
-
-			//plotter2D.Viewport.FromKeyboardNavigation = false;
 		}
 
 		private void UndoCanExecute(object target, CanExecuteRoutedEventArgs e)
@@ -422,12 +408,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 
 		private void RedoExecute(object target, ExecutedRoutedEventArgs e)
 		{
-			plotter2D.Viewport.FromContentBounds = true;
-
 			plotter2D.UndoProvider.Redo();
 			e.Handled = true;
-
-			//plotter2D.Viewport.FromKeyboardNavigation = false;
 		}
 
 		private void RedoCanExecute(object target, CanExecuteRoutedEventArgs e)

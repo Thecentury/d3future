@@ -17,7 +17,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// <param name="chart">The chart.</param>
 		/// <param name="description">The description.</param>
 		/// <returns></returns>
-		public static PointChartBase WithDescription(this PointChartBase chart, string description)
+		public static T WithDescription<T>(this T chart, string description) where T : PointChartBase
 		{
 			if (chart == null)
 				throw new ArgumentNullException("chart");
@@ -33,13 +33,13 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// <param name="chart">The chart.</param>
 		/// <param name="detailedDescription">The detailed description.</param>
 		/// <returns></returns>
-		public static PointChartBase WithDetailedDescription(this PointChartBase chart, string detailedDescription)
+		public static T WithDetailedDescription<T>(this T chart, string detailedDescription) where T : PointChartBase
 		{
 			if (chart == null)
 				throw new ArgumentNullException("chart");
 
 			chart.DetailedDescription = detailedDescription;
-			
+
 			return chart;
 		}
 	}

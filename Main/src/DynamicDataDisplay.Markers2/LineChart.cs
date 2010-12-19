@@ -25,7 +25,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 	/// </summary>
 	public class LineChart : LineChartBase
 	{
-		private readonly ViewportHostPanel panel = new ViewportHostPanel();
+		private readonly ViewportHostPanel panel = new ViewportHostPanel { Name = "NNN" };
 		private readonly List<Path> drawnPaths = new List<Path>();
 		private readonly Panel canvas = new Canvas();
 		private readonly ResourcePool<Path> pathsPool = new ResourcePool<Path>();
@@ -36,6 +36,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 		private readonly Binding zIndexBinding;
 		private readonly Binding isHitTestVisibleBinding;
 		private readonly Binding visibilityBinding;
+		private readonly Binding tooltipBinding;
 
 		private const int pathLength = 500;
 		private readonly MissingValueSplitter missingValueSplitter = new MissingValueSplitter();
@@ -53,7 +54,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			strokeDashArrayBinding = new Binding(StrokeDashArrayProperty.Name) { Source = this };
 			zIndexBinding = new Binding("(Panel.ZIndex)") { Source = this };
 			isHitTestVisibleBinding = new Binding(FrameworkElement.IsHitTestVisibleProperty.Name) { Source = this };
-			visibilityBinding = new Binding(Path.VisibilityProperty.Name) { Source = this };
+			visibilityBinding = new Binding(VisibilityProperty.Name) { Source = this };
+			tooltipBinding = new Binding(ToolTipProperty.Name) { Source = this };
 		}
 
 		#region Overrides
@@ -242,11 +244,14 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 			if (canvas.Parent == null)
 				panel.Children.Add(canvas);
 
-			Plotter.Dispatcher.BeginInvoke(() =>
+			if (panel.Plotter == null)
 			{
-				if (panel.Plotter == null)
-					Plotter.Children.Add(panel);
-			});
+				Plotter.Dispatcher.BeginInvoke(() =>
+				{
+					if (panel.Plotter == null && Plotter != null)
+						Plotter.Children.Add(panel);
+				});
+			}
 
 			DataRect bounds = DataRect.Empty;
 			if (environment.ContentBounds != null)
@@ -315,8 +320,8 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 					DataRect localBounds = list.GetBounds();
 					PointChartBase.SetContentBounds(path, localBounds);
 
-					if (path.CacheMode == null)
-						path.CacheMode = new BitmapCache();
+					//if (path.CacheMode == null)
+					//    path.CacheMode = new BitmapCache();
 
 					// todo for debug purpose
 					//path.Stroke = ColorHelper.RandomBrush;
@@ -327,6 +332,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 					path.SetBinding(Panel.ZIndexProperty, zIndexBinding);
 					path.SetBinding(Path.IsHitTestVisibleProperty, isHitTestVisibleBinding);
 					path.SetBinding(Path.VisibilityProperty, visibilityBinding);
+					path.SetBinding(Path.ToolTipProperty, tooltipBinding);
 
 					path.Data = geometry;
 

@@ -6,17 +6,24 @@
 		Icon="{x:Static d3:D3IconHelper.DynamicDataDisplayWhiteIcon}">
 	<Grid>
 		<d3:ChartPlotter Name="plotter">
-			<d3:InjectedPlotter Name="innerPlotter" Background="Aqua" SetViewportBinding="True">
+			<d3:InjectedPlotter Name="innerPlotter" Background="Aqua" >
 				<d3:VerticalAxis Placement="Right"/>
 				<d3:VerticalAxisTitle Content="Torque" Placement="Right"/>
+				<d3:AxisNavigation Placement="Right"/>
 			</d3:InjectedPlotter>
-			
-			<d3:AxisNavigation Placement="Bottom"/>
-			<d3:AxisNavigation Placement="Right"/>
-			
+
 			<d3:VerticalAxisTitle Content="HP"/>
 			<d3:HorizontalAxisTitle>RPM</d3:HorizontalAxisTitle>
-			
+
+			<GroupBox Header="Conjunction Mode" Canvas.Left="10" Canvas.Bottom="10">
+				<StackPanel>
+					<RadioButton Content="None" Name="None" Checked="RadioButton_Checked"/>
+					<RadioButton Content="X"  Name="X" Checked="RadioButton_Checked"/>
+					<RadioButton Content="Y" Name="Y" Checked="RadioButton_Checked"/>
+					<RadioButton Content="XY" Name="XY" IsChecked="True" Checked="RadioButton_Checked"/>
+				</StackPanel>
+			</GroupBox>
+
 			<Button Content="Remove all charts" Name="removeAllChartsBtn" Click="removeAllChartsBtn_Click"/>
 		</d3:ChartPlotter>
 	</Grid>

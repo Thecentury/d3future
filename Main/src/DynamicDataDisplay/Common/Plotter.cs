@@ -78,7 +78,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 			ContextMenu = null;
 
-			foreach (var panel in GetAllPanels())
+			foreach (var panel in GetAllPanels().Where(panel => panel != null))
 			{
 				Plotter.SetIsDefaultPanel(panel, true);
 			}
@@ -387,7 +387,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			if (child != null)
 			{
 				// todo probably here child.Plotter can be null.
-				if (performChildChecks && child.Plotter != this && child.Plotter != null)
+				if (performChildChecks && child.Plotter != this)
 				{
 					throw new InvalidOperationException(Strings.Exceptions.InvalidParentPlotterValueRemoving);
 				}

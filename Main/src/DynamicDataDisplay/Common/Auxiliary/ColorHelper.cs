@@ -87,7 +87,12 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// <value>The random brush.</value>
 		public static SolidColorBrush RandomBrush
 		{
-			get { return new SolidColorBrush(CreateRandomHsbColor()); }
+			get
+			{
+				Color color = CreateColorWithRandomHue();
+				SolidColorBrush brush = new SolidColorBrush(color);
+				return brush;
+			}
 		}
 
 		public static int ToArgb(this Color color)

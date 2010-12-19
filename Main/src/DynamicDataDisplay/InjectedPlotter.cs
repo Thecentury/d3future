@@ -7,42 +7,97 @@ using Microsoft.Research.DynamicDataDisplay.Common;
 using System.Windows.Data;
 using System.Windows;
 using System.Windows.Threading;
+using System.Windows.Media;
+using System.ComponentModel;
 
 namespace Microsoft.Research.DynamicDataDisplay
 {
 	[SkipPropertyCheck]
 	public class InjectedPlotter : ChartPlotter, IPlotterElement
 	{
+		private double xScale = 1.0;
+		private double xShift = 0.0;
+		private double yScale = 1.0;
+		private double yShift = 0.0;
+
 		public InjectedPlotter()
 			: base(PlotterLoadMode.Empty)
 		{
-			ViewportPanel = new Canvas();
-			Grid.SetColumn(ViewportPanel, 1);
-			Grid.SetRow(ViewportPanel, 1);
+			ViewportPanel = new Canvas { Background = Brushes.IndianRed.MakeTransparent(0.3) };
 
-			Viewport = new Viewport2D(ViewportPanel, this);
-			Viewport.PropertyChanged += new EventHandler<ExtendedPropertyChangedEventArgs>(Viewport_PropertyChanged);
+			Viewport = new InjectedViewport2D(ViewportPanel, this) { CoerceVisibleFunc = CoerceVisible };
+			Viewport.PropertyChanged += SelfViewport_PropertyChanged;
 		}
 
-		void Viewport_PropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
+		private DataRect CoerceVisible(DataRect newVisible, DataRect baseVisible)
 		{
+			DataRect result = newVisible;
+
+			if (Plotter == null)
+				return baseVisible;
+
+			DataRect outerVisible = Plotter.Viewport.Visible;
+
+			double xMin = outerVisible.XMin * xScale + xShift;
+			double xMax = outerVisible.XMax * xScale + xShift;
+			double yMin = outerVisible.YMin * yScale + yShift;
+			double yMax = outerVisible.YMax * yScale + yShift;
+
+			outerVisible = DataRect.Create(xMin, yMin, xMax, yMax);
+
+			switch (ConjunctionMode)
+			{
+				case ViewportConjunctionMode.None:
+					result = baseVisible;
+					break;
+				case ViewportConjunctionMode.X:
+					result = new DataRect(outerVisible.XMin, baseVisible.YMin, outerVisible.Width, baseVisible.Height);
+					break;
+				case ViewportConjunctionMode.Y:
+					result = new DataRect(baseVisible.XMin, outerVisible.YMin, baseVisible.Width, outerVisible.Height);
+					break;
+				case ViewportConjunctionMode.XY:
+					result = outerVisible;
+					break;
+				default:
+					break;
+			}
+
+			return result;
+		}
+
+		private void UpdateTransform()
+		{
+			xScale = (SelfXMax - SelfXMin) / (ParentXMax - ParentXMin);
+			xShift = SelfXMin - ParentXMin;
+
+			yScale = (SelfYMax - SelfYMin) / (ParentYMax - ParentYMin);
+			yShift = SelfYMin - ParentYMin;
+		}
+
+		private void CoerceVisible()
+		{
+			Viewport.CoerceValue(Viewport2D.VisibleProperty);
+		}
+
+		private void SelfViewport_PropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
+		{
+		}
+
+		private void OuterViewport_PropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
+		{
+			CoerceVisible();
 		}
 
 		protected override void OnChildAdded(IPlotterElement child)
 		{
 			base.OnChildAdded(child);
 
-			if (plotter != null)
+			if (plotter != null && !plotter.Children.Contains(child))
 			{
 				plotter.PerformChildChecks = false;
-				try
-				{
-					plotter.Children.Add(child);
-				}
-				finally
-				{
-					plotter.PerformChildChecks = true;
-				}
+				plotter.Children.Add(child);
+				plotter.PerformChildChecks = true;
 			}
 		}
 
@@ -50,91 +105,150 @@ namespace Microsoft.Research.DynamicDataDisplay
 		{
 			base.OnChildRemoving(child);
 
-			if (plotter != null)
+			if (plotter != null && plotter.Children.Contains(child))
 			{
 				plotter.PerformChildChecks = false;
-				try
-				{
-					plotter.Children.Remove(child);
-				}
-				finally
-				{
-					plotter.PerformChildChecks = true;
-				}
+				plotter.Children.Remove(child);
+				plotter.PerformChildChecks = true;
 			}
 		}
 
-		public void SetHorizontalTransform(double parentMin, double childMin, double parentMax, double childMax)
+		#region Properties
+
+		#region ConjunctionMode property
+
+		public ViewportConjunctionMode ConjunctionMode
 		{
-			converter.SetHorizontalTransform(parentMin, childMin, parentMax, childMax);
+			get { return (ViewportConjunctionMode)GetValue(ConjunctionModeProperty); }
+			set { SetValue(ConjunctionModeProperty, value); }
 		}
 
-		public void SetVerticalTransform(double parentMin, double childMin, double parentMax, double childMax)
+		public static readonly DependencyProperty ConjunctionModeProperty = DependencyProperty.Register(
+		  "ConjunctionMode",
+		  typeof(ViewportConjunctionMode),
+		  typeof(InjectedPlotter),
+		  new FrameworkPropertyMetadata(ViewportConjunctionMode.XY, OnConjunctionModeReplaced));
+
+		private static void OnConjunctionModeReplaced(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			converter.SetVerticalTransform(parentMin, childMin, parentMax, childMax);
+			InjectedPlotter owner = (InjectedPlotter)d;
+			owner.CoerceVisible();
 		}
 
-		private IValueConverter viewportBindingConverter;
-		public IValueConverter ViewportBindingConverter
+		#endregion
+
+		public double ParentXMin
 		{
-			get { return viewportBindingConverter; }
-			set
-			{
-				viewportBindingConverter = value;
-				if (viewportBinding != null)
-				{
-					viewportBinding.Converter = value;
-				}
-			}
+			get { return (double)GetValue(ParentXMinProperty); }
+			set { SetValue(ParentXMinProperty, value); }
 		}
 
-		private bool setViewportBinding = true;
-		public bool SetViewportBinding
+		public static readonly DependencyProperty ParentXMinProperty = DependencyProperty.Register(
+		  "ParentXMin",
+		  typeof(double),
+		  typeof(InjectedPlotter),
+		  new FrameworkPropertyMetadata(0.0, OnTransformChanged));
+
+		public double ParentXMax
 		{
-			get { return setViewportBinding; }
-			set
-			{
-				if (setViewportBinding != value)
-				{
-					setViewportBinding = value;
-					UpdateViewportBinding();
-				}
-			}
+			get { return (double)GetValue(ParentXMaxProperty); }
+			set { SetValue(ParentXMaxProperty, value); }
 		}
 
-		private void UpdateViewportBinding()
-		{
-			if (plotter == null) return;
+		public static readonly DependencyProperty ParentXMaxProperty = DependencyProperty.Register(
+		  "ParentXMax",
+		  typeof(double),
+		  typeof(InjectedPlotter),
+		  new FrameworkPropertyMetadata(1.0, OnTransformChanged));
 
-			if (setViewportBinding)
-			{
-				var converter = viewportBindingConverter ?? this.converter;
-				viewportBinding = new Binding
-				{
-					Path = new PropertyPath("Visible"),
-					Source = this.plotter.Viewport,
-					Converter = converter,
-					Mode = BindingMode.TwoWay
-				};
-				this.Viewport.SetBinding(Viewport2D.VisibleProperty, viewportBinding);
-			}
-			else
-			{
-				BindingOperations.ClearBinding(Viewport, Viewport2D.VisibleProperty);
-			}
+		public double SelfXMin
+		{
+			get { return (double)GetValue(SelfXMinProperty); }
+			set { SetValue(SelfXMinProperty, value); }
 		}
+
+		public static readonly DependencyProperty SelfXMinProperty = DependencyProperty.Register(
+		  "SelfXMin",
+		  typeof(double),
+		  typeof(InjectedPlotter),
+		  new FrameworkPropertyMetadata(0.0, OnTransformChanged));
+
+		public double SelfXMax
+		{
+			get { return (double)GetValue(SelfXMaxProperty); }
+			set { SetValue(SelfXMaxProperty, value); }
+		}
+
+		public static readonly DependencyProperty SelfXMaxProperty = DependencyProperty.Register(
+		  "SelfXMax",
+		  typeof(double),
+		  typeof(InjectedPlotter),
+		  new FrameworkPropertyMetadata(1.0, OnTransformChanged));
+
+		public double ParentYMin
+		{
+			get { return (double)GetValue(ParentYMinProperty); }
+			set { SetValue(ParentYMinProperty, value); }
+		}
+
+		public static readonly DependencyProperty ParentYMinProperty = DependencyProperty.Register(
+		  "ParentYMin",
+		  typeof(double),
+		  typeof(InjectedPlotter),
+		  new FrameworkPropertyMetadata(0.0, OnTransformChanged));
+
+		public double ParentYMax
+		{
+			get { return (double)GetValue(ParentYMaxProperty); }
+			set { SetValue(ParentYMaxProperty, value); }
+		}
+
+		public static readonly DependencyProperty ParentYMaxProperty = DependencyProperty.Register(
+		  "ParentYMax",
+		  typeof(double),
+		  typeof(InjectedPlotter),
+		  new FrameworkPropertyMetadata(1.0, OnTransformChanged));
+
+		public double SelfYMin
+		{
+			get { return (double)GetValue(SelfYMinProperty); }
+			set { SetValue(SelfYMinProperty, value); }
+		}
+
+		public static readonly DependencyProperty SelfYMinProperty = DependencyProperty.Register(
+		  "SelfYMin",
+		  typeof(double),
+		  typeof(InjectedPlotter),
+		  new FrameworkPropertyMetadata(0.0, OnTransformChanged));
+
+		public double SelfYMax
+		{
+			get { return (double)GetValue(SelfYMaxProperty); }
+			set { SetValue(SelfYMaxProperty, value); }
+		}
+
+		public static readonly DependencyProperty SelfYMaxProperty = DependencyProperty.Register(
+		  "SelfYMax",
+		  typeof(double),
+		  typeof(InjectedPlotter),
+		  new FrameworkPropertyMetadata(1.0, OnTransformChanged));
+
+		private static void OnTransformChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			InjectedPlotter plotter = (InjectedPlotter)d;
+			plotter.UpdateTransform();
+		}
+
+		#endregion
 
 		#region IPlotterElement Members
 
-		Binding viewportBinding;
-		ScaleConverter converter = new ScaleConverter();
 		void IPlotterElement.OnPlotterAttached(Plotter plotter)
 		{
 			this.plotter = (Plotter2D)plotter;
+			this.plotter.Viewport.PropertyChanged += OuterViewport_PropertyChanged;
 
-			UpdateViewportBinding();
-
-			plotter.MainGrid.Children.Add(ViewportPanel);
+			plotter.CentralGrid.Children.Add(ViewportPanel);
 
 			HeaderPanel = plotter.HeaderPanel;
 			FooterPanel = plotter.FooterPanel;
@@ -149,12 +263,23 @@ namespace Microsoft.Research.DynamicDataDisplay
 			MainGrid = plotter.MainGrid;
 			ParallelCanvas = plotter.ParallelCanvas;
 
-			Dispatcher.BeginInvoke(new Action(() =>
-			{
-				//ExecuteWaitingChildrenAdditions();
-			}), DispatcherPriority.Background);
-
 			OnLoaded();
+			ExecuteWaitingChildrenAdditions();
+			AddAllChildrenToParentPlotter();
+			CoerceVisible();
+		}
+
+		private void AddAllChildrenToParentPlotter()
+		{
+			plotter.PerformChildChecks = false;
+			foreach (var child in Children)
+			{
+				if (plotter.Children.Contains(child))
+					continue;
+
+				plotter.Children.Add(child);
+			}
+			plotter.PerformChildChecks = true;
 		}
 
 		protected override bool IsLoadedInternal
@@ -167,10 +292,21 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		void IPlotterElement.OnPlotterDetaching(Plotter plotter)
 		{
-			plotter.MainGrid.Children.Remove(ViewportPanel);
-			BindingOperations.ClearBinding(this.Viewport, Viewport2D.VisibleProperty);
+			plotter.CentralGrid.Children.Remove(ViewportPanel);
+			this.plotter.Viewport.PropertyChanged -= OuterViewport_PropertyChanged;
+			RemoveAllChildrenFromParentPlotter();
 
 			this.plotter = null;
+		}
+
+		private void RemoveAllChildrenFromParentPlotter()
+		{
+			plotter.PerformChildChecks = false;
+			foreach (var child in Children)
+			{
+				plotter.Children.Remove(child);
+			}
+			plotter.PerformChildChecks = true;
 		}
 
 		private Plotter2D plotter;

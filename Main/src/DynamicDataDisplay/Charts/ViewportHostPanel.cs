@@ -17,7 +17,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 	{
 		static ViewportHostPanel()
 		{
-			EventManager.RegisterClassHandler(typeof(ViewportHostPanel), d3.Plotter.PlotterChangedEvent, new PlotterChangedEventHandler(OnPlotterChanged));
+			//EventManager.RegisterClassHandler(typeof(ViewportHostPanel), d3.Plotter.PlotterChangedEvent, new PlotterChangedEventHandler(OnPlotterChanged));
 		}
 
 		public ViewportHostPanel()
@@ -108,7 +108,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 		DataRect visibleWhileCreation;
 		protected virtual void Viewport_PropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == "Visible")
+			if (e.PropertyName == Viewport2D.VisiblePropertyName)
 			{
 				DataRect visible = (DataRect)e.NewValue;
 				DataRect prevVisible = (DataRect)e.OldValue;

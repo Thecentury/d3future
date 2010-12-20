@@ -12,6 +12,16 @@ using System.ComponentModel;
 
 namespace Microsoft.Research.DynamicDataDisplay
 {
+	/// <summary>
+	/// Represents a nested plotter, which can control the way how its children are drawn in dependency of parent ChartPlotter Visible rect.
+	/// This plotter is designed to work inside of some other plotter.
+	/// <remarks>
+	/// There are 8 properties (ParentXMin, SelfXMin, etc) which can be used to tune the size and position of inner plotter
+	/// in dependence on parent Plotter's Visible rect.
+	/// For example, you can specify that when parent x coordinates are from 0.0 to 1.0, inner plotter's visible x coordinates are
+	/// from -1.0 to 2.0. This data will be used to calculate next positions of inner plotter's children charts.
+	/// </remarks>
+	/// </summary>
 	[SkipPropertyCheck]
 	public class InjectedPlotter : ChartPlotter, IPlotterElement
 	{
@@ -20,13 +30,15 @@ namespace Microsoft.Research.DynamicDataDisplay
 		private double yScale = 1.0;
 		private double yShift = 0.0;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="InjectedPlotter"/> class.
+		/// </summary>
 		public InjectedPlotter()
 			: base(PlotterLoadMode.Empty)
 		{
 			ViewportPanel = new Canvas { Background = Brushes.IndianRed.MakeTransparent(0.3) };
 
 			Viewport = new InjectedViewport2D(ViewportPanel, this) { CoerceVisibleFunc = CoerceVisible };
-			Viewport.PropertyChanged += SelfViewport_PropertyChanged;
 		}
 
 		private DataRect CoerceVisible(DataRect newVisible, DataRect baseVisible)
@@ -80,10 +92,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 			Viewport.CoerceValue(Viewport2D.VisibleProperty);
 		}
 
-		private void SelfViewport_PropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
-		{
-		}
-
 		private void OuterViewport_PropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
 		{
 			CoerceVisible();
@@ -117,6 +125,11 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		#region ConjunctionMode property
 
+		/// <summary>
+		/// Gets or sets the conjunction mode - the way of how inner plotter calculates its Visible rect in dependence of outer plotter's Visible.
+		/// This is a DependencyProperty.
+		/// </summary>
+		/// <value>The conjunction mode.</value>
 		public ViewportConjunctionMode ConjunctionMode
 		{
 			get { return (ViewportConjunctionMode)GetValue(ConjunctionModeProperty); }

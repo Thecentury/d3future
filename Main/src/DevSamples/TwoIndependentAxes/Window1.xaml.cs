@@ -41,6 +41,7 @@ namespace TwoIndependentAxes
 			var hps = new double[] { 0, 24, 52, 74, 98, 112, 124, 122, 116 };
 
 			var horsePowersDS = DataSource.Create(rpms, hps);
+			// shown at main ChartPlotter
 			var hpsLine = plotter.AddLineChart(horsePowersDS).
 				WithStroke(Brushes.Red).
 				WithStrokeThickness(2).
@@ -49,6 +50,7 @@ namespace TwoIndependentAxes
 			var torque = new double[] { 0, 22, 45, 54, 58, 55, 50, 47, 45 };
 			var torqueDS = DataSource.Create(rpms, torque);
 
+			// shown at inner InjectedPlotter
 			var line = innerPlotter.AddLineChart(torqueDS).
 				WithStroke(Brushes.Blue).
 				WithStrokeThickness(2).

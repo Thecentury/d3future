@@ -6,7 +6,11 @@ using System.Windows;
 
 namespace Microsoft.Research.DynamicDataDisplay
 {
-	public sealed class InjectedViewport2D : Viewport2D
+	/// <summary>
+	/// Represents a Viewport of InjectedPlotter, which has a way for InjectedPlottter to change the behavior of
+	/// how Visible property is coerced in dependence on Parent plotter's Visible.
+	/// </summary>
+	internal sealed class InjectedViewport2D : Viewport2D
 	{
 		internal InjectedViewport2D(FrameworkElement host, Plotter2D plotter) : base(host, plotter) { }
 

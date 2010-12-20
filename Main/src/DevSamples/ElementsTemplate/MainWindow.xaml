@@ -8,7 +8,7 @@
 		<d3:ChartPlotter Name="plotter">
 			<d3:TemplateChart Name="chart" Items="{Binding}">
 				<ControlTemplate>
-					<d3a:LineChart ItemsSource="{Binding}"/>
+					<d3a:LineChart ItemsSource="{Binding}" Stroke="{Binding Brush}"/>
 				</ControlTemplate>
 			</d3:TemplateChart>
 

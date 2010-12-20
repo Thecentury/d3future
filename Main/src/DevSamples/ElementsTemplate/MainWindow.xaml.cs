@@ -27,7 +27,7 @@ namespace ElementsTemplate
 
 		private readonly Random rnd = new Random();
 		private const int count = 300;
-		private readonly ObservableCollection<IEnumerable<Point>> data = new ObservableCollection<IEnumerable<Point>>();
+		private readonly ObservableCollection<DataLine> data = new ObservableCollection<DataLine>();
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			AddData();
@@ -38,8 +38,11 @@ namespace ElementsTemplate
 
 		private void AddData()
 		{
-			var newData = Enumerable.Range(0, count).Select(i => new Point(i, rnd.NextDouble())).ToList();
-			data.Add(newData);
+			double phase = rnd.NextDouble();
+			var newData = Enumerable.Range(0, count).Select(i => new Point(i, phase * Math.Sin(phase + i / 10.0))).ToList();
+
+
+			data.Add(new DataLine(newData));
 		}
 
 		private void RemoveData()

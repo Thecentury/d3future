@@ -25,7 +25,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Markers2
 	/// </summary>
 	public class LineChart : LineChartBase
 	{
-		private readonly ViewportHostPanel panel = new ViewportHostPanel { Name = "NNN" };
+		private readonly ViewportHostPanel panel = new ViewportHostPanel();
 		private readonly List<Path> drawnPaths = new List<Path>();
 		private readonly Panel canvas = new Canvas();
 		private readonly ResourcePool<Path> pathsPool = new ResourcePool<Path>();

@@ -378,10 +378,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DynamicDataDisplay\DynamicDataDisplay.csproj">
-      <Project>{ECD37682-DF7E-409F-912D-0965634556B5}</Project>
-      <Name>DynamicDataDisplay</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Parser\Parser.csproj">
       <Project>{B66BEACE-2567-4077-9DCB-4358AEE68C90}</Project>
       <Name>Parser</Name>

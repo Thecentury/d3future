@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElementsTemplate", "..\..\s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "..\..\src\Parser\Parser.csproj", "{B66BEACE-2567-4077-9DCB-4358AEE68C90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Coastline", "..\..\src\DynamicDataDisplay.Coastline\DynamicDataDisplay.Coastline.csproj", "{F14D455C-E581-41FF-8C33-561C85A83449}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -254,6 +256,21 @@ Global
 		{B66BEACE-2567-4077-9DCB-4358AEE68C90}.ReleaseXBAP|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B66BEACE-2567-4077-9DCB-4358AEE68C90}.ReleaseXBAP|Mixed Platforms.Build.0 = Release|Any CPU
 		{B66BEACE-2567-4077-9DCB-4358AEE68C90}.ReleaseXBAP|x86.ActiveCfg = Release|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.Release|x86.ActiveCfg = Release|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.ReleaseXBAP|Any CPU.ActiveCfg = ReleaseXBAP|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.ReleaseXBAP|Any CPU.Build.0 = ReleaseXBAP|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.ReleaseXBAP|Mixed Platforms.ActiveCfg = ReleaseXBAP|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.ReleaseXBAP|Mixed Platforms.Build.0 = ReleaseXBAP|Any CPU
+		{F14D455C-E581-41FF-8C33-561C85A83449}.ReleaseXBAP|x86.ActiveCfg = ReleaseXBAP|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

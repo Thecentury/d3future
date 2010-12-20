@@ -12,13 +12,25 @@ using System.Windows.Data;
 
 namespace Microsoft.Research.DynamicDataDisplay.Charts
 {
+	/// <summary>
+	/// Represents a MVVM-friendly way to manage charts.
+	/// </summary>
 	[ContentProperty("Template")]
 	public sealed class TemplateChart : FrameworkElement, IPlotterElement
 	{
-		private readonly List<IPlotterElement> elements = new List<IPlotterElement>();
+		private readonly Dictionary<object, IPlotterElement> cache = new Dictionary<object, IPlotterElement>();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TemplateChart"/> class.
+		/// </summary>
+		public TemplateChart() { }
 
 		#region Properties
 
+		/// <summary>
+		/// Gets or sets the data items, used as a dataSource for generated charts. This is a DependencyProperty.
+		/// </summary>
+		/// <value>The items.</value>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public IEnumerable Items
 		{
@@ -53,21 +65,26 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			if (Items == null)
 				return;
 
-			foreach (var element in elements)
+			foreach (var element in cache.Values)
 			{
 				plotter.Children.Remove(element);
 			}
-			elements.Clear();
+			cache.Clear();
 
 			foreach (var item in Items)
 			{
-				FrameworkElement chart = (FrameworkElement)Template.LoadContent();
-				chart.DataContext = item;
-
-				IPlotterElement plotterElement = (IPlotterElement)chart;
-				plotter.Children.Add(plotterElement);
-				elements.Add(plotterElement);
+				CreateElementAndAdd(item);
 			}
+		}
+
+		private void CreateElementAndAdd(object item)
+		{
+			FrameworkElement chart = (FrameworkElement)Template.LoadContent();
+			chart.DataContext = item;
+
+			IPlotterElement plotterElement = (IPlotterElement)chart;
+			plotter.Children.Add(plotterElement);
+			cache.Add(item, plotterElement);
 		}
 
 		private void AttachNewItems(IEnumerable items)
@@ -81,18 +98,51 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 		private void OnItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			UpdateItems();
+			if (plotter == null)
+				return;
+			if (Template == null)
+				return;
+
+			if (e.Action == NotifyCollectionChangedAction.Reset)
+			{
+				UpdateItems();
+				return;
+			}
+
+			if (e.OldItems != null)
+			{
+				foreach (var removedData in e.OldItems)
+				{
+					var plotterElement = cache[removedData];
+
+					plotter.Children.Remove(plotterElement);
+
+					cache.Remove(removedData);
+				}
+			}
+
+			if (e.NewItems != null)
+			{
+				foreach (var addedData in e.NewItems)
+				{
+					CreateElementAndAdd(addedData);
+				}
+			}
 		}
 
 		private void DetachOldItems(IEnumerable items)
 		{
 			INotifyCollectionChanged observable = items as INotifyCollectionChanged;
 			if (observable != null)
-			{
+			{ 
 				observable.CollectionChanged -= OnItems_CollectionChanged;
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the template, used to generate charts for each data item. This is a DependencyProperty.
+		/// </summary>
+		/// <value>The template.</value>
 		public ControlTemplate Template
 		{
 			get { return (ControlTemplate)GetValue(TemplateProperty); }
@@ -117,6 +167,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 
 		#region IPlotterElement Members
 
+		/// <summary>
+		/// Called when parent plotter is attached.
+		/// Allows to, for example, add custom UI parts to ChartPlotter's visual tree or subscribe to ChartPlotter's events.
+		/// </summary>
+		/// <param name="plotter">The parent plotter.</param>
 		public void OnPlotterAttached(Plotter plotter)
 		{
 			this.plotter = (Plotter2D)plotter;
@@ -124,9 +179,15 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			UpdateItems();
 		}
 
+		/// <summary>
+		/// Called when item is being detached from parent plotter.
+		/// Allows to remove added in OnPlotterAttached method UI parts or unsubscribe from events.
+		/// This should be done as each chart can be added only one Plotter at one moment of time.
+		/// </summary>
+		/// <param name="plotter">The plotter.</param>
 		public void OnPlotterDetaching(Plotter plotter)
 		{
-			foreach (var element in elements)
+			foreach (var element in cache.Values)
 			{
 				plotter.Children.Remove(element);
 			}
@@ -134,11 +195,21 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts
 			this.plotter = null;
 		}
 
+		/// <summary>
+		/// Gets the parent plotter of chart.
+		/// Should be equal to null if item is not connected to any plotter.
+		/// </summary>
+		/// <value>The plotter.</value>
 		public Plotter2D Plotter
 		{
 			get { return plotter; }
 		}
 
+		/// <summary>
+		/// Gets the parent plotter of chart.
+		/// Should be equal to null if item is not connected to any plotter.
+		/// </summary>
+		/// <value>The plotter.</value>
 		Plotter IPlotterElement.Plotter
 		{
 			get { return plotter; }

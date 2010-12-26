@@ -15,7 +15,10 @@ namespace Microsoft.Research.DynamicDataDisplay
 			DataRect oldVisible = visible;
 			Point center = visible.GetCenter();
 			Vector halfSize = new Vector(visible.Width * factor / 2, visible.Height * factor / 2);
+
+			viewport.SetChangeType(ChangeType.Zoom);
 			viewport.Visible = new DataRect(center - halfSize, center + halfSize);
+			viewport.SetChangeType();
 
 			viewport.Plotter.UndoProvider.AddAction(new DependencyPropertyChangedUndoAction(viewport, Viewport2D.VisibleProperty, oldVisible, visible));
 		}

@@ -6,13 +6,21 @@
 		Icon="{x:Static d3:D3IconHelper.DynamicDataDisplayWhiteIcon}">
 	<Grid>
 		<d3:ChartPlotter Name="plotter">
-			<d3:InjectedPlotter Name="innerPlotter" Background="Aqua" >
+			<d3:InjectedPlotter Name="innerPlotter">
 				<d3:VerticalAxis Placement="Right" Background="#33554433"/>
 				<d3:VerticalAxisTitle Content="Torque" Placement="Right"/>
 				<d3:AxisNavigation Placement="Right"/>
 				<d3:HorizontalAxis Placement="Bottom" Background="#33554433"/>
 				<d3:AxisNavigation Placement="Bottom"/>
 			</d3:InjectedPlotter>
+			
+			<d3:DependentPlotter Name="dependentPlotter">
+				<d3:VerticalAxis Placement="Right" Background="#33662211"/>
+				<d3:VerticalAxisTitle Content="Value" Placement="Right"/>
+				<d3:AxisNavigation Placement="Right"/>
+				<d3:HorizontalAxis Placement="Bottom" Background="#33662211"/>
+				<d3:AxisNavigation Placement="Bottom"/>
+			</d3:DependentPlotter>
 
 			<d3:VerticalAxisTitle Content="HP"/>
 			<d3:HorizontalAxisTitle>RPM</d3:HorizontalAxisTitle>

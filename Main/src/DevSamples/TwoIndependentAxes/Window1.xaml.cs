@@ -55,6 +55,15 @@ namespace TwoIndependentAxes
 				WithStroke(Brushes.Blue).
 				WithStrokeThickness(2).
 				WithDescription("Torque per RPM");
+
+			var values = new double[] { 10, 9, 7, 8, 5, 6, 4, 3, 2, 1 };
+			var valuesDS = DataSource.Create(rpms, values);
+
+			// shown at inner DependentPlotter
+			dependentPlotter.AddLineChart(valuesDS).
+				WithStroke(Brushes.LawnGreen).
+				WithStrokeThickness(2).
+				WithDescription("Some fake values");
 		}
 
 		private void removeAllChartsBtn_Click(object sender, RoutedEventArgs e)

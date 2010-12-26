@@ -197,7 +197,6 @@
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Charts\Navigation\AxisCursorGraph.cs" />
-    <Compile Include="Charts\Navigation\OldAxisNavigation.cs" />
     <Compile Include="Charts\Navigation\EndlessRectAnimation.cs" />
     <Compile Include="Charts\Navigation\InertialMouseNavigation.cs" />
     <Compile Include="Charts\Navigation\PhysicalNavigation.cs" />
@@ -259,6 +258,7 @@
     <Compile Include="Charts\ViewportPanel.Properties.cs" />
     <Compile Include="Charts\ViewportUIContainer.cs" />
     <Compile Include="Charts\VisualDebug.cs" />
+    <Compile Include="Common\Auxiliary\AxisPlacementExtensions.cs" />
     <Compile Include="Common\Auxiliary\BindingHelper.cs" />
     <Compile Include="Common\Auxiliary\ColorExtensions.cs" />
     <Compile Include="Common\Auxiliary\DataSearch\GenericSearcher1d.cs" />
@@ -327,8 +327,10 @@
     <Compile Include="DataSources\MultiDimensional\DataSource2DHelper.cs" />
     <Compile Include="DataSources\MultiDimensional\INonUniformDataSource2D.cs" />
     <Compile Include="DataSources\MultiDimensional\NonUniformDataSource2D.cs" />
+    <Compile Include="DependentPlotter.cs" />
     <Compile Include="GenericChartPlotter.cs" />
     <Compile Include="InjectedPlotter.cs" />
+    <Compile Include="InjectedPlotterBase.cs" />
     <Compile Include="PlotterLoadMode.cs" />
     <Compile Include="PointMarkers\RectElementPointMarker.cs" />
     <Compile Include="Resources\D3IconHelper.cs" />

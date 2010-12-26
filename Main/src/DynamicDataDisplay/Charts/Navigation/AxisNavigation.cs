@@ -199,7 +199,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Navigation
 				visible.XMin = oldVisible.XMin;
 				visible.Width = oldVisible.Width;
 			}
+
+			activePlotter.Viewport.SetChangeType(Placement.GetZoomChangeType());
 			activePlotter.Viewport.Visible = visible;
+			activePlotter.Viewport.SetChangeType(ChangeType.None);
 
 			e.Handled = true;
 		}
@@ -237,7 +240,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Navigation
 					listeningPanel.Cursor = Placement.IsBottomOrTop() ? Cursors.ScrollWE : Cursors.ScrollNS;
 				}
 
+				activePlotter.Viewport.SetChangeType(Placement.GetPanChangeType());
 				activePlotter.Viewport.Visible = visible;
+				activePlotter.Viewport.SetChangeType();
 
 				e.Handled = true;
 			}
@@ -286,8 +291,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Navigation
 					listeningPanel.Cursor = Placement.IsBottomOrTop() ? Cursors.ScrollWE : Cursors.ScrollNS;
 				}
 
-
+				activePlotter.Viewport.SetChangeType(Placement.GetZoomChangeType());
 				activePlotter.Viewport.Visible = visible;
+				activePlotter.Viewport.SetChangeType();
 
 				//e.Handled = true;
 			}

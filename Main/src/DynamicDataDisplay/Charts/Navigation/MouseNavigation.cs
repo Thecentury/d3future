@@ -266,7 +266,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 					DataRect visible = Viewport.Visible;
 
 					visible.Location = loc;
+
+					Viewport.SetChangeType(ChangeType.Pan);
 					Viewport.Visible = visible;
+					Viewport.SetChangeType();
 				}
 
 				e.Handled = true;
@@ -351,7 +354,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 				Point p1 = zoomRect.Value.TopLeft.ScreenToViewport(Viewport.Transform);
 				Point p2 = zoomRect.Value.BottomRight.ScreenToViewport(Viewport.Transform);
 				DataRect newVisible = new DataRect(p1, p2);
+
+				Viewport.SetChangeType(ChangeType.Zoom);
 				Viewport.Visible = newVisible;
+				Viewport.SetChangeType();
 
 				zoomRect = null;
 				ReleaseMouseCapture();
@@ -400,7 +406,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 			{
 				zoomSpeed = 1 / zoomSpeed;
 			}
+
+			Viewport.SetChangeType(ChangeType.Zoom);
 			Viewport.Visible = Viewport.Visible.Zoom(zoomTo, zoomSpeed);
+			Viewport.SetChangeType();
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 	/// </remarks>
 	/// </summary>
 	[SkipPropertyCheck]
-	public class InjectedPlotter : ChartPlotter, IPlotterElement
+	public class InjectedPlotter : InjectedPlotterBase, IPlotterElement
 	{
 		private double xScale = 1.0;
 		private double xShift = 0.0;
@@ -33,15 +33,9 @@ namespace Microsoft.Research.DynamicDataDisplay
 		/// <summary>
 		/// Initializes a new instance of the <see cref="InjectedPlotter"/> class.
 		/// </summary>
-		public InjectedPlotter()
-			: base(PlotterLoadMode.Empty)
-		{
-			ViewportPanel = new Canvas { Background = Brushes.IndianRed.MakeTransparent(0.3) };
+		public InjectedPlotter() : base() { }
 
-			Viewport = new InjectedViewport2D(ViewportPanel, this) { CoerceVisibleFunc = CoerceVisible };
-		}
-
-		private DataRect CoerceVisible(DataRect newVisible, DataRect baseVisible)
+		protected override DataRect CoerceVisible(DataRect newVisible, DataRect baseVisible)
 		{
 			DataRect result = newVisible;
 
@@ -87,40 +81,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 			yShift = SelfYMin - ParentYMin;
 		}
 
-		private void CoerceVisible()
-		{
-			Viewport.CoerceValue(Viewport2D.VisibleProperty);
-		}
-
-		private void OuterViewport_PropertyChanged(object sender, ExtendedPropertyChangedEventArgs e)
-		{
-			CoerceVisible();
-		}
-
-		protected override void OnChildAdded(IPlotterElement child)
-		{
-			base.OnChildAdded(child);
-
-			if (plotter != null && !plotter.Children.Contains(child))
-			{
-				plotter.PerformChildChecks = false;
-				plotter.Children.Add(child);
-				plotter.PerformChildChecks = true;
-			}
-		}
-
-		protected override void OnChildRemoving(IPlotterElement child)
-		{
-			base.OnChildRemoving(child);
-
-			if (plotter != null && plotter.Children.Contains(child))
-			{
-				plotter.PerformChildChecks = false;
-				plotter.Children.Remove(child);
-				plotter.PerformChildChecks = true;
-			}
-		}
-
 		#region Properties
 
 		#region ConjunctionMode property
@@ -149,6 +109,8 @@ namespace Microsoft.Research.DynamicDataDisplay
 		}
 
 		#endregion
+
+		#region Conversion properties
 
 		public double ParentXMin
 		{
@@ -253,85 +215,6 @@ namespace Microsoft.Research.DynamicDataDisplay
 		}
 
 		#endregion
-
-		#region IPlotterElement Members
-
-		void IPlotterElement.OnPlotterAttached(Plotter plotter)
-		{
-			this.plotter = (Plotter2D)plotter;
-			this.plotter.Viewport.PropertyChanged += OuterViewport_PropertyChanged;
-
-			plotter.CentralGrid.Children.Add(ViewportPanel);
-
-			HeaderPanel = plotter.HeaderPanel;
-			FooterPanel = plotter.FooterPanel;
-
-			LeftPanel = plotter.LeftPanel;
-			BottomPanel = plotter.BottomPanel;
-			RightPanel = plotter.RightPanel;
-			TopPanel = plotter.BottomPanel;
-
-			MainCanvas = plotter.MainCanvas;
-			CentralGrid = plotter.CentralGrid;
-			MainGrid = plotter.MainGrid;
-			ParallelCanvas = plotter.ParallelCanvas;
-
-			OnLoaded();
-			ExecuteWaitingChildrenAdditions();
-			AddAllChildrenToParentPlotter();
-			CoerceVisible();
-		}
-
-		private void AddAllChildrenToParentPlotter()
-		{
-			plotter.PerformChildChecks = false;
-			foreach (var child in Children)
-			{
-				if (plotter.Children.Contains(child))
-					continue;
-
-				plotter.Children.Add(child);
-			}
-			plotter.PerformChildChecks = true;
-		}
-
-		protected override bool IsLoadedInternal
-		{
-			get
-			{
-				return plotter != null;
-			}
-		}
-
-		void IPlotterElement.OnPlotterDetaching(Plotter plotter)
-		{
-			plotter.CentralGrid.Children.Remove(ViewportPanel);
-			this.plotter.Viewport.PropertyChanged -= OuterViewport_PropertyChanged;
-			RemoveAllChildrenFromParentPlotter();
-
-			this.plotter = null;
-		}
-
-		private void RemoveAllChildrenFromParentPlotter()
-		{
-			plotter.PerformChildChecks = false;
-			foreach (var child in Children)
-			{
-				plotter.Children.Remove(child);
-			}
-			plotter.PerformChildChecks = true;
-		}
-
-		private Plotter2D plotter;
-		public Plotter2D Plotter
-		{
-			get { return plotter; }
-		}
-
-		Plotter IPlotterElement.Plotter
-		{
-			get { return plotter; }
-		}
 
 		#endregion
 	}

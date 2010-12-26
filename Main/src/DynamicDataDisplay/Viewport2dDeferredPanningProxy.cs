@@ -76,7 +76,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
-		protected override void RaisePropertyChanged(ExtendedPropertyChangedEventArgs args)
+		protected override void RaisePropertyChanged(ExtendedPropertyChangedEventArgs args, ChangeType changeType = ChangeType.None)
 		{
 			if (args.PropertyName == "Visible")
 			{

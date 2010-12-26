@@ -141,7 +141,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 			Point dataPoint = Viewport.Transform.ScreenToData(pt);
 			DataRect visible = Viewport.Visible;
 
+			Viewport.SetChangeType(ChangeType.Zoom);
 			Viewport.Visible = visible.Zoom(dataPoint, coeff);
+			Viewport.SetChangeType();
 		}
 
 		private void ZoomOutToMouseExecute(object target, ExecutedRoutedEventArgs e)
@@ -250,7 +252,9 @@ namespace Microsoft.Research.DynamicDataDisplay.Navigation
 			double reverseCoeff = isReversed ? -1 : 1;
 			visible.Offset(reverseCoeff * xShiftCoeff * width, reverseCoeff * yShiftCoeff * height);
 
+			Viewport.SetChangeType(xShiftCoeff == 0 ? ChangeType.PanY : ChangeType.PanX);
 			Viewport.Visible = visible;
+			Viewport.SetChangeType();
 
 			plotter2D.UndoProvider.AddAction(new DependencyPropertyChangedUndoAction(Viewport, Viewport2D.VisibleProperty, oldVisible, visible));
 		}

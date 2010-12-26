@@ -107,8 +107,11 @@ namespace Microsoft.Research.DynamicDataDisplay
 			{
 				ClearValue(VisibleProperty);
 				CoerceValue(VisibleProperty);
+				FittedToView.Raise(this);
 			}
 		}
+
+		public event EventHandler FittedToView;
 
 		/// <summary>
 		/// Gets a value indicating whether Viewport is fitted to view.
@@ -586,42 +589,60 @@ namespace Microsoft.Research.DynamicDataDisplay
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the type of viewport change.
+		/// </summary>
+		/// <value>The type of the change.</value>
+		public ChangeType ChangeType { get; internal set; }
+
+		/// <summary>
+		/// Sets the type of viewport change.
+		/// </summary>
+		/// <param name="changeType">Type of the change.</param>
+		public void SetChangeType(ChangeType changeType = ChangeType.None)
+		{
+			this.ChangeType = changeType;
+		}
+
 		int propertyChangedCounter = 0;
 		private DispatcherOperation notifyOperation = null;
 		private void RaisePropertyChangedEvent(DependencyPropertyChangedEventArgs e)
 		{
 			if (notifyOperation == null)
 			{
+				ChangeType changeType = ChangeType;
 				notifyOperation = Dispatcher.BeginInvoke(() =>
 				{
-					RaisePropertyChangedEventBody(e);
+					RaisePropertyChangedEventBody(e, changeType);
 				}, invocationPriority);
 				return;
 			}
 			else if (notifyOperation.Status == DispatcherOperationStatus.Pending)
 			{
 				notifyOperation.Abort();
+				ChangeType changeType = ChangeType;
 				notifyOperation = Dispatcher.BeginInvoke(() =>
 				{
-					RaisePropertyChangedEventBody(e);
+					RaisePropertyChangedEventBody(e, changeType);
 				}, invocationPriority);
 			}
 		}
 
-		private void RaisePropertyChangedEventBody(DependencyPropertyChangedEventArgs e)
+		private void RaisePropertyChangedEventBody(DependencyPropertyChangedEventArgs e, ChangeType changeType)
 		{
 			if (propertyChangedCounter > 0)
 				return;
 
 			propertyChangedCounter++;
-			RaisePropertyChanged(ExtendedPropertyChangedEventArgs.FromDependencyPropertyChanged(e));
+			RaisePropertyChanged(ExtendedPropertyChangedEventArgs.FromDependencyPropertyChanged(e), changeType);
 			propertyChangedCounter--;
 
 			notifyOperation = null;
 		}
 
-		protected virtual void RaisePropertyChanged(ExtendedPropertyChangedEventArgs args)
+		protected virtual void RaisePropertyChanged(ExtendedPropertyChangedEventArgs args, ChangeType changeType = ChangeType.None)
 		{
+			args.ChangeType = changeType;
 			PropertyChanged.Raise(this, args);
 		}
 
@@ -661,5 +682,16 @@ namespace Microsoft.Research.DynamicDataDisplay
 		public event EventHandler EndPanning;
 
 		#endregion // end of Panning state
+	}
+
+	public enum ChangeType
+	{
+		None = 0,
+		Pan,
+		PanX,
+		PanY,
+		Zoom,
+		ZoomX,
+		ZoomY
 	}
 }

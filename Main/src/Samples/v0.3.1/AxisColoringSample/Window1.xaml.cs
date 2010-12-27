@@ -5,6 +5,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Research.DynamicDataDisplay;
 using Microsoft.Research.DynamicDataDisplay.Charts;
+using Microsoft.Research.DynamicDataDisplay.Charts.Axes.Numeric;
+using Microsoft.Research.DynamicDataDisplay.Charts.Axes.GenericLocational;
+using System.Collections.Generic;
 
 namespace AxisColoringSample
 {
@@ -77,6 +80,71 @@ namespace AxisColoringSample
 				return null;
 			});
 			plotter.Children.Add(thirdAxis);
+
+			SetupLocationalAxis();
+
+			SetupPiAxis();
+
+			SetupOneThirdAxis();
 		}
+
+		private void SetupLocationalAxis()
+		{
+			HorizontalAxis axis = new HorizontalAxis();
+
+			List<CityInfo> cities = new List<CityInfo>
+			{
+				new CityInfo{ Name = "Paris", Coordinate = 0.05},
+				new CityInfo{ Name = "Berlin", Coordinate = 0.2},
+				new CityInfo{ Name = "Minsk", Coordinate = 0.3},
+				new CityInfo{ Name = "Moscow", Coordinate = 0.5},
+				new CityInfo{ Name = "Perm", Coordinate = 0.7},
+				new CityInfo{ Name = "Ekaterinburg", Coordinate = 0.85},
+				new CityInfo{ Name = "Vladivostok", Coordinate = 0.9}
+			};
+
+			GenericLocationalLabelProvider<CityInfo, double> labelProvider = new GenericLocationalLabelProvider<CityInfo, double>(cities, city => city.Name);
+			labelProvider.SetCustomView((li, uiElement) =>
+			{
+				FrameworkElement element = (FrameworkElement)uiElement;
+				element.LayoutTransform = new RotateTransform(-15, 0, 0);
+			});
+			GenericLocationalTicksProvider<CityInfo, double> ticksProvider = new GenericLocationalTicksProvider<CityInfo, double>(cities, city => city.Coordinate);
+
+			axis.LabelProvider = labelProvider;
+			axis.TicksProvider = ticksProvider;
+
+			plotter.Children.Add(axis);
+		}
+
+		private void SetupPiAxis()
+		{
+			HorizontalAxis axis = new HorizontalAxis();
+
+			CustomBaseNumericTicksProvider ticksProvider = new CustomBaseNumericTicksProvider(Math.PI);
+			CustomBaseNumericLabelProvider labelProvider = new CustomBaseNumericLabelProvider(Math.PI, "π");
+			axis.LabelProvider = labelProvider;
+			axis.TicksProvider = ticksProvider;
+
+			plotter.Children.Add(axis);
+		}
+
+		private void SetupOneThirdAxis()
+		{
+			HorizontalAxis axis = new HorizontalAxis();
+
+			CustomBaseNumericTicksProvider ticksProvider = new CustomBaseNumericTicksProvider(0.5);
+			CustomBaseNumericLabelProvider labelProvider = new CustomBaseNumericLabelProvider(0.5, "·½");
+			axis.LabelProvider = labelProvider;
+			axis.TicksProvider = ticksProvider;
+
+			plotter.Children.Add(axis);
+		}
+	}
+
+	internal class CityInfo
+	{
+		public string Name { get; set; }
+		public double Coordinate { get; set; }
 	}
 }

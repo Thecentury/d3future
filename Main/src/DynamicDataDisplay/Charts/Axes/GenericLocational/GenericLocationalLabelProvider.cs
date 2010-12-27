@@ -7,11 +7,22 @@ using System.Windows.Controls;
 
 namespace Microsoft.Research.DynamicDataDisplay.Charts.Axes.GenericLocational
 {
+
+	/// <summary>
+	/// Represents a label provider which takes labels' names from given collection.
+	/// </summary>
+	/// <typeparam name="TItem"></typeparam>
+	/// <typeparam name="TAxis"></typeparam>
 	public class GenericLocationalLabelProvider<TItem, TAxis> : LabelProviderBase<TAxis>
 	{
 		private readonly IList<TItem> collection;
 		private readonly Func<TItem, string> displayMemberMapping;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GenericLocationalLabelProvider&lt;TItem, TAxis&gt;"/> class.
+		/// </summary>
+		/// <param name="collection">The collection.</param>
+		/// <param name="displayMemberMapping">The display member mapping.</param>
 		public GenericLocationalLabelProvider(IList<TItem> collection, Func<TItem, string> displayMemberMapping)
 		{
 			if (collection == null)

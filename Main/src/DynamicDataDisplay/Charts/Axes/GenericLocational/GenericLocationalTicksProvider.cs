@@ -9,9 +9,18 @@ using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 
 namespace Microsoft.Research.DynamicDataDisplay.Charts.Axes.GenericLocational
 {
+	/// <summary>
+	/// Represents a ticks provider which takes its ticks from given collection.
+	/// </summary>
+	/// <typeparam name="TCollection"></typeparam>
+	/// <typeparam name="TAxis"></typeparam>
 	public class GenericLocationalTicksProvider<TCollection, TAxis> : ITicksProvider<TAxis> where TAxis : IComparable<TAxis>
 	{
 		private IList<TCollection> collection;
+		/// <summary>
+		/// Gets or sets the collection that is used to generate ticks.
+		/// </summary>
+		/// <value>The collection.</value>
 		public IList<TCollection> Collection
 		{
 			get { return collection; }
@@ -26,6 +35,10 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Axes.GenericLocational
 		}
 
 		private Func<TCollection, TAxis> axisMapping;
+		/// <summary>
+		/// Gets or sets the axis mapping - user defined conversion from collection type to axis type.
+		/// </summary>
+		/// <value>The axis mapping.</value>
 		public Func<TCollection, TAxis> AxisMapping
 		{
 			get { return axisMapping; }
@@ -53,6 +66,11 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Axes.GenericLocational
 			Collection = collection;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GenericLocationalTicksProvider&lt;TCollection, TAxis&gt;"/> class.
+		/// </summary>
+		/// <param name="collection">The collection.</param>
+		/// <param name="coordinateMapping">The coordinate mapping.</param>
 		public GenericLocationalTicksProvider(IList<TCollection> collection, Func<TCollection, TAxis> coordinateMapping)
 		{
 			Collection = collection;

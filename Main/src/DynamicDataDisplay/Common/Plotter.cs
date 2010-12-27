@@ -389,7 +389,7 @@ namespace Microsoft.Research.DynamicDataDisplay
 				// todo probably here child.Plotter can be null.
 				if (performChildChecks && child.Plotter != this)
 				{
-					throw new InvalidOperationException(Strings.Exceptions.InvalidParentPlotterValueRemoving);
+					//throw new InvalidOperationException(Strings.Exceptions.InvalidParentPlotterValueRemoving);
 				}
 
 				if (performChildChecks)

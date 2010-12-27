@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Samples", "..\..\src\DynamicDataDisplay.Samples\DynamicDataDisplay.Samples.csproj", "{16CA59CE-4664-4739-A1B1-1FCD0447595E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{CB7803FE-9EC4-4288-8E66-84498EAAE3EB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevSamples", "DevSamples", "{CB7803FE-9EC4-4288-8E66-84498EAAE3EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentEditor", "..\..\src\DevSamples\SegmentEditor\SegmentEditor.csproj", "{0BF1DA6C-7136-4C3F-BE2C-83EF212CF8E0}"
 EndProject
@@ -32,6 +32,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "..\..\src\Parser\Parser.csproj", "{B66BEACE-2567-4077-9DCB-4358AEE68C90}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Coastline", "..\..\src\DynamicDataDisplay.Coastline\DynamicDataDisplay.Coastline.csproj", "{F14D455C-E581-41FF-8C33-561C85A83449}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{1531850F-9BD4-4BDF-BDE2-76B85C9754F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AxisColoringSample", "..\..\src\Samples\v0.3.1\AxisColoringSample\AxisColoringSample.csproj", "{4DC68125-3427-4819-B2FF-91A344939850}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -271,6 +275,21 @@ Global
 		{F14D455C-E581-41FF-8C33-561C85A83449}.ReleaseXBAP|Mixed Platforms.ActiveCfg = ReleaseXBAP|Any CPU
 		{F14D455C-E581-41FF-8C33-561C85A83449}.ReleaseXBAP|Mixed Platforms.Build.0 = ReleaseXBAP|Any CPU
 		{F14D455C-E581-41FF-8C33-561C85A83449}.ReleaseXBAP|x86.ActiveCfg = ReleaseXBAP|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.Release|x86.ActiveCfg = Release|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.ReleaseXBAP|Any CPU.ActiveCfg = ReleaseXBAP|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.ReleaseXBAP|Any CPU.Build.0 = ReleaseXBAP|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.ReleaseXBAP|Mixed Platforms.ActiveCfg = ReleaseXBAP|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.ReleaseXBAP|Mixed Platforms.Build.0 = ReleaseXBAP|Any CPU
+		{4DC68125-3427-4819-B2FF-91A344939850}.ReleaseXBAP|x86.ActiveCfg = ReleaseXBAP|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -282,5 +301,6 @@ Global
 		{0E409CF1-B5E0-48CD-B77B-1884AD5E2360} = {CB7803FE-9EC4-4288-8E66-84498EAAE3EB}
 		{475A88B6-95BB-4859-A070-2DB02F08FFC1} = {CB7803FE-9EC4-4288-8E66-84498EAAE3EB}
 		{2E06EF92-8ABB-40D7-9D46-6F557F3A3083} = {CB7803FE-9EC4-4288-8E66-84498EAAE3EB}
+		{4DC68125-3427-4819-B2FF-91A344939850} = {1531850F-9BD4-4BDF-BDE2-76B85C9754F3}
 	EndGlobalSection
 EndGlobal

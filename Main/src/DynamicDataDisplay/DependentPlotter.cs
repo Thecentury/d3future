@@ -6,6 +6,11 @@ using System.Diagnostics;
 
 namespace Microsoft.Research.DynamicDataDisplay
 {
+	/// <summary>
+	/// Represents a special embedded kind of plotter.
+	/// Follows an outer's plotter Visible change when this is general panning or zooming via MouseNavigation.
+	/// Does not reacts on panning or zooming only in one direction (via AxisNavigation or KeyboardNavigation.
+	/// </summary>
 	public class DependentPlotter : InjectedPlotterBase
 	{
 		/// <summary>

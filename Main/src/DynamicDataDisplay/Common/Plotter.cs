@@ -235,7 +235,8 @@ namespace Microsoft.Research.DynamicDataDisplay
 			Content = contentsGrid;
 			AddLogicalChild(contentsGrid);
 
-			ExecuteWaitingChildrenAdditions();
+			if (contentsGrid != null)
+				ExecuteWaitingChildrenAdditions();
 		}
 
 		private void MigrateChildren(Panel previousParent, Panel currentParent)

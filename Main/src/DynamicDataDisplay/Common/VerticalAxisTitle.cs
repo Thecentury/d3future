@@ -76,6 +76,9 @@ namespace Microsoft.Research.DynamicDataDisplay
 
 		private int GetInsertPosition(Panel panel)
 		{
+			if (panel == null)
+				throw new ArgumentNullException("panel = null");
+
 			if (placement == AxisPlacement.Left)
 				return 0;
 			else

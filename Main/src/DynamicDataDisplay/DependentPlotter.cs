@@ -23,12 +23,33 @@ namespace Microsoft.Research.DynamicDataDisplay
 			return baseVisible;
 		}
 
+		private bool IsHandledChangeType(ChangeType changeType)
+		{
+			bool handled = false;
+			switch (changeType)
+			{
+				case ChangeType.Pan:
+				case ChangeType.Zoom:
+					handled = true;
+					break;
+				case ChangeType.PanX:
+				case ChangeType.ZoomX:
+					handled = (ConjunctionMode == ViewportConjunctionMode.X) || (ConjunctionMode == ViewportConjunctionMode.XY);
+					break;
+				case ChangeType.PanY:
+				case ChangeType.ZoomY:
+					handled = (ConjunctionMode == ViewportConjunctionMode.Y) || (ConjunctionMode == ViewportConjunctionMode.XY);
+					break;
+			}
+			return handled;
+		}
+
 		protected override void OuterViewport_PropertyChanged(ExtendedPropertyChangedEventArgs e)
 		{
 			if(e.PropertyName != Viewport2D.VisiblePropertyName)
 				return;
 
-			if (e.ChangeType == ChangeType.Pan || e.ChangeType == ChangeType.Zoom)
+			if (IsHandledChangeType(e.ChangeType))
 			{
 				DataRect newRect = (DataRect)e.NewValue;
 				DataRect oldRect = (DataRect)e.OldValue;
@@ -66,6 +87,11 @@ namespace Microsoft.Research.DynamicDataDisplay
 		private void Viewport_FittedToView(object sender, EventArgs e)
 		{
 			FitToView();
+		}
+
+		protected override void OnConjunctionModeChanged()
+		{
+			// do nothing
 		}
 	}
 }

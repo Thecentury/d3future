@@ -33,6 +33,15 @@
 					<RadioButton Content="XY" Name="XY" IsChecked="True" Checked="RadioButton_Checked"/>
 				</StackPanel>
 			</GroupBox>
+			
+			<GroupBox Header="Dependent Plotter Conjunction Mode" Canvas.Left="160" Canvas.Bottom="10">
+				<StackPanel>
+					<RadioButton Content="None" Name="None2" Checked="DependentRadioButton_Checked"/>
+					<RadioButton Content="X"  Name="X2" Checked="DependentRadioButton_Checked"/>
+					<RadioButton Content="Y" Name="Y2" Checked="DependentRadioButton_Checked"/>
+					<RadioButton Content="XY" Name="XY2" IsChecked="True" Checked="DependentRadioButton_Checked"/>
+				</StackPanel>
+			</GroupBox>
 
 			<Button Content="Remove all charts" Name="removeAllChartsBtn" Click="removeAllChartsBtn_Click"/>
 		</d3:ChartPlotter>

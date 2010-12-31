@@ -81,34 +81,12 @@ namespace Microsoft.Research.DynamicDataDisplay
 			yShift = SelfYMin - ParentYMin;
 		}
 
+		protected override void OnConjunctionModeChanged()
+		{
+			CoerceVisible();
+		}
+
 		#region Properties
-
-		#region ConjunctionMode property
-
-		/// <summary>
-		/// Gets or sets the conjunction mode - the way of how inner plotter calculates its Visible rect in dependence of outer plotter's Visible.
-		/// This is a DependencyProperty.
-		/// </summary>
-		/// <value>The conjunction mode.</value>
-		public ViewportConjunctionMode ConjunctionMode
-		{
-			get { return (ViewportConjunctionMode)GetValue(ConjunctionModeProperty); }
-			set { SetValue(ConjunctionModeProperty, value); }
-		}
-
-		public static readonly DependencyProperty ConjunctionModeProperty = DependencyProperty.Register(
-		  "ConjunctionMode",
-		  typeof(ViewportConjunctionMode),
-		  typeof(InjectedPlotter),
-		  new FrameworkPropertyMetadata(ViewportConjunctionMode.XY, OnConjunctionModeReplaced));
-
-		private static void OnConjunctionModeReplaced(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			InjectedPlotter owner = (InjectedPlotter)d;
-			owner.CoerceVisible();
-		}
-
-		#endregion
 
 		#region Conversion properties
 

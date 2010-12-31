@@ -83,5 +83,16 @@ namespace TwoIndependentAxes
 			else if (XY.IsChecked == true)
 				innerPlotter.ConjunctionMode = ViewportConjunctionMode.XY;
 		}
+
+		private void DependentRadioButton_Checked(object sender, RoutedEventArgs e) {
+			if (None2.IsChecked == true)
+				dependentPlotter.ConjunctionMode = ViewportConjunctionMode.None;
+			else if (X2.IsChecked == true)
+				dependentPlotter.ConjunctionMode = ViewportConjunctionMode.X;
+			else if (Y2.IsChecked == true)
+				dependentPlotter.ConjunctionMode = ViewportConjunctionMode.Y;
+			else if (XY2.IsChecked == true)
+				dependentPlotter.ConjunctionMode = ViewportConjunctionMode.XY;
+		}
 	}
 }

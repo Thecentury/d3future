@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace Microsoft.Research.DynamicDataDisplay
 {
@@ -59,6 +60,38 @@ namespace Microsoft.Research.DynamicDataDisplay
 				plotter.PerformChildChecks = true;
 			}
 		}
+
+		#region Properties
+
+		#region ConjunctionMode property
+
+		/// <summary>
+		/// Gets or sets the conjunction mode - the way of how inner plotter calculates its Visible rect in dependence of outer plotter's Visible.
+		/// This is a DependencyProperty.
+		/// </summary>
+		/// <value>The conjunction mode.</value>
+		public ViewportConjunctionMode ConjunctionMode
+		{
+			get { return (ViewportConjunctionMode)GetValue(ConjunctionModeProperty); }
+			set { SetValue(ConjunctionModeProperty, value); }
+		}
+
+		public static readonly DependencyProperty ConjunctionModeProperty = DependencyProperty.Register(
+		  "ConjunctionMode",
+		  typeof(ViewportConjunctionMode),
+		  typeof(InjectedPlotterBase),
+		  new FrameworkPropertyMetadata(ViewportConjunctionMode.XY, OnConjunctionModeReplaced));
+
+		private static void OnConjunctionModeReplaced(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			InjectedPlotterBase owner = (InjectedPlotterBase)d;
+			owner.OnConjunctionModeChanged();
+		}
+
+		protected abstract void OnConjunctionModeChanged();
+
+		#endregion
+		#endregion
 
 		#region IPlotterElement methods
 

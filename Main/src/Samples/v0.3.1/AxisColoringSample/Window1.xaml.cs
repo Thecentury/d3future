@@ -6,8 +6,8 @@ using System.Windows.Media;
 using Microsoft.Research.DynamicDataDisplay;
 using Microsoft.Research.DynamicDataDisplay.Charts;
 using Microsoft.Research.DynamicDataDisplay.Charts.Axes.Numeric;
-using Microsoft.Research.DynamicDataDisplay.Charts.Axes.GenericLocational;
 using System.Collections.Generic;
+using Microsoft.Research.DynamicDataDisplay.Charts.Axes.GenericLocational;
 
 namespace AxisColoringSample
 {
@@ -48,6 +48,7 @@ namespace AxisColoringSample
 					TextBlock text = (TextBlock)ui;
 					text.Foreground = Brushes.Red;
 					text.FontSize = 20;
+
 				}
 			});
 

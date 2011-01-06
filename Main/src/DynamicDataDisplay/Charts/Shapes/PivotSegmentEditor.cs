@@ -258,6 +258,7 @@ namespace Microsoft.Research.DynamicDataDisplay.Charts.Shapes
 		public double M
 		{
 			get { return (Point1.Y - Point2.Y) / (Point1.X - Point2.X); }
+			set { Debug.WriteLine("M set = " + value.ToString()); }
 		}
 
 		public string LeftName

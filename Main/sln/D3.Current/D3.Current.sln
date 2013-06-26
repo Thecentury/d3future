@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay", "..\..\src\DynamicDataDisplay\DynamicDataDisplay.csproj", "{ECD37682-DF7E-409F-912D-0965634556B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDataDisplay.Controls", "..\..\src\DynamicDataDisplay.Controls\DynamicDataDisplay.Controls.csproj", "{8AEE9DA5-83F5-401F-8C58-9BAC660A0E6E}"
@@ -38,6 +38,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AxisColoringSample", "..\..\src\Samples\v0.3.1\AxisColoringSample\AxisColoringSample.csproj", "{4DC68125-3427-4819-B2FF-91A344939850}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InjectedPlotterSample", "..\..\src\DevSamples\InjectedPlotterSample\InjectedPlotterSample.csproj", "{31CF7B99-A760-44BB-AD7B-B1C1E9B05F9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynchronizedPlotters", "..\..\src\DevSamples\SynchronizedPlotters\SynchronizedPlotters.csproj", "{875D81E7-4AC2-4424-8BBC-23F988D60DEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -307,6 +309,21 @@ Global
 		{31CF7B99-A760-44BB-AD7B-B1C1E9B05F9E}.ReleaseXBAP|Mixed Platforms.Build.0 = Release|x86
 		{31CF7B99-A760-44BB-AD7B-B1C1E9B05F9E}.ReleaseXBAP|x86.ActiveCfg = Release|x86
 		{31CF7B99-A760-44BB-AD7B-B1C1E9B05F9E}.ReleaseXBAP|x86.Build.0 = Release|x86
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.Release|x86.ActiveCfg = Release|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.ReleaseXBAP|Any CPU.ActiveCfg = Release|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.ReleaseXBAP|Any CPU.Build.0 = Release|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.ReleaseXBAP|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.ReleaseXBAP|Mixed Platforms.Build.0 = Release|Any CPU
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA}.ReleaseXBAP|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -319,6 +336,7 @@ Global
 		{475A88B6-95BB-4859-A070-2DB02F08FFC1} = {CB7803FE-9EC4-4288-8E66-84498EAAE3EB}
 		{2E06EF92-8ABB-40D7-9D46-6F557F3A3083} = {CB7803FE-9EC4-4288-8E66-84498EAAE3EB}
 		{31CF7B99-A760-44BB-AD7B-B1C1E9B05F9E} = {CB7803FE-9EC4-4288-8E66-84498EAAE3EB}
+		{875D81E7-4AC2-4424-8BBC-23F988D60DEA} = {CB7803FE-9EC4-4288-8E66-84498EAAE3EB}
 		{4DC68125-3427-4819-B2FF-91A344939850} = {1531850F-9BD4-4BDF-BDE2-76B85C9754F3}
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Research.DynamicDataDisplay;
 
 namespace SynchronizedPlotters
 {
@@ -26,6 +25,8 @@ namespace SynchronizedPlotters
             InitializeComponent();
 
             plotter1.Viewport.Constraints.Add( new EqualXConstraint( plotter2.Viewport ) );
+            plotter1.Viewport.SetBinding( Viewport2D.VisibleProperty,
+                new Binding( "Visible" ) { Source = plotter2.Viewport, Converter = new XConverter( plotter1.Viewport ) } );
         }
     }
 }
